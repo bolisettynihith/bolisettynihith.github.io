@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+
+
+<html lang="en">
+
+
+<head>
+  <meta charset="utf-8" />
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <title>
+    HackTM Quals 20 – Find my Pass Writeup |  Nihith&#39;s blog
+  </title>
+  <meta name="generator" content="hexo-theme-ayer">
+  
+  <link rel="shortcut icon" href="/logo.jpg" />
+  
+  
+<link rel="stylesheet" href="/dist/main.css">
+
+  
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/css/remixicon.min.css">
+
+  
+<link rel="stylesheet" href="/css/custom.css">
+
+  
+  
+<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+
+  
+  
+
+  
+
+</head>
+
+</html>
+
+<body>
+  
+  <div id="app">
+    <main class="content on">
+      <section class="outer">
+  <article id="post-HackTM-Quals-20–Find-my-Pass-Writeup" class="article article-type-post" itemscope
+  itemprop="blogPost" data-scroll-reveal>
+
+  <div class="article-inner">
+    
+    <header class="article-header">
+       
+<h1 class="article-title sea-center" style="border-left:0" itemprop="name">
+  HackTM Quals 20 – Find my Pass Writeup
+</h1>
+ 
+
+    </header>
+    
+
+    
+    <div class="article-meta">
+      <a href="/2020/04/11/HackTM-Quals-20%E2%80%93Find-my-Pass-Writeup/" class="article-date">
+  <time datetime="2020-04-11T12:22:40.000Z" itemprop="datePublished">2020-04-11</time>
+</a>
+      
+  <div class="article-category">
+    <a class="article-category-link" href="/categories/Writeups/">Writeups</a> / <a class="article-category-link" href="/categories/Writeups/Memory-Forensics/">Memory Forensics</a>
+  </div>
+
+      
+      
+<div class="word_count">
+    <span class="post-time">
+        <span class="post-meta-item-icon">
+            <i class="ri-quill-pen-line"></i>
+            <span class="post-meta-item-text"> Word count:</span>
+            <span class="post-count">508</span>
+        </span>
+    </span>
+
+    <span class="post-time">
+        &nbsp; | &nbsp;
+        <span class="post-meta-item-icon">
+            <i class="ri-book-open-line"></i>
+            <span class="post-meta-item-text"> Reading time≈</span>
+            <span class="post-count">3 min</span>
+        </span>
+    </span>
+</div>
+
+      
+    </div>
+    
+
+    
+    
+    <div class="tocbot"></div>
+
+
+
+
+
+    
+
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+      
+
+      
+      <p><strong>tl;dr</strong></p>
+<ul>
+<li>Memory dump analysis using Volatility.</li>
+<li>Extracting Keepass Master Password from the memory.</li>
+<li>Extracting flag from ZIP archive attached in the Keepass database.</li>
+</ul>
+<a id="more"></a>
+
+<h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><p>I managed to forget my password for my KeePass Database but luckily I had it still open and managed to get a dump of the system’s memory. Can you please help me recover my password?</p>
+<p>Challenge file: <a href="https://mega.nz/#!IdUVwY6I!uJWGZ932xab44H4EJ-zVAqu6_UWNJcCVA4_PPXdqCyc" target="_blank" rel="noopener">Mega Drive</a> or <a href="https://drive.google.com/open?id=1hUlGqJZYgbWaEu7w0JnPMqgYdFr8qVJe" target="_blank" rel="noopener">Google Drive</a></p>
+<p>Password: <strong>eD99mLkU</strong></p>
+<p>Hint: I am not very good with computers, I use my one safe password where I want to keep everything safe from hackers.</p>
+<p>I solved this challenge after the CTF has ended.</p>
+<p>According to the description, In this challenge, we have to retrieve the Master Password of a Keepass database from the memory.</p>
+<h2 id="Initial-Anaysis"><a href="#Initial-Anaysis" class="headerlink" title="Initial Anaysis"></a>Initial Anaysis</h2><p>First, you need to find what OS his system was using. For that, I used imageinfo plugin.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ volatility -f HackTM.vmem imageinfo</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Find-my-Pass/imageinfo.png" alt="Imageinfo Output"></p>
+<p>I choose <strong>Win7SP1x86</strong> profile.<br>Let’s check what all processes are running in the system. We can expect that keepass.exe will be present, as the description says that the database was kept open.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ volatility -f HackTM.vmem --profile=Win7SP1x86 pslist</span><br></pre></td></tr></table></figure>
+<p><img src="/images/Find-my-Pass/pslist_1.png" alt="pslist output"><br><img src="/images/Find-my-Pass/pslist_2.png" alt="pslist output"></p>
+<p>We can see that the keepass.exe process was running and going further.</p>
+<h2 id="Extracting-Keepass-database"><a href="#Extracting-Keepass-database" class="headerlink" title="Extracting Keepass database"></a>Extracting Keepass database</h2><p>We need to find the .kdbx file as all KeePass databases are stored with extension .kdbx. For that, we will use filescan plugin and grep for kdbx files.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ volatility -f HackTM.vmem --profile=Win7SP1x86 filescan | grep <span class="string">".kdbx"</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Find-my-Pass/kdbx_filescan.png" alt="Filescan Kdbx"></p>
+<p>We can see a database.kdbx was open and the further step is to dump that file to our host system. For that, we will use dumpfiles plugin.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ volatility -f HackTM.vmem --profile=Win7SP1x86 dumpfiles -Q 0x000000007df37c88 -D .</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Find-my-Pass/kdbx_dumpfiles.png" alt="Dumpfiles kdbx"></p>
+<p>When I attempted to open the database, it asked for the master password. The description says that the user has forgotten his password which means we have to recover it.</p>
+<h2 id="Retriving-Master-Password"><a href="#Retriving-Master-Password" class="headerlink" title="Retriving Master Password"></a>Retriving Master Password</h2><p>But the hint says user used the same password everywhere ie: he must have copied the password and user it somewhere else. So let’s check what’s there in his clipboard. For that, we use the clipboard plugin.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ volatility -f HackTM.vmem --profile=Win7SP1x86 clipboard</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Find-my-Pass/clipboard.png" alt="Clipboard"></p>
+<p>We can’t find anything in the clipboard. It seems to be suspicious. So let’s check the verbose data of the clipboard.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ volatility -f HackTM.vmem --profile=Win7SP1x86 clipboard -v</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Find-my-Pass/clipboard-v.png" alt="clipboard -v"></p>
+<p>Hurrah! We found it.</p>
+<p>By removing the dots and using it (<strong>dmVZQmdzOlUrcEBlRj87dHQ3USVBIn</strong>) as the master password we got into the Keepass database.</p>
+<p>In the bottom, in attachments, we can see that there is <strong>nothinghere.7z</strong> file that was attached to the password entry.</p>
+<p>We can extract that from the <strong>File Attachments</strong> in the <strong>Advanced tab</strong> of <strong>Edit Entry</strong>.</p>
+<p>The 7z file asked for a password and on using the database master password we successfully extracted the text file. It contained the flag.</p>
+<p>Flag: <strong>HackTM{d14c02244b17f4f9dfc0f71ce7ab10e276a5880a05fca64d39a716bab92cda90}</strong></p>
+<p>The another way of solving this challenge is mentioned in <a href="https://blog.bi0s.in/2020/02/09/Forensics/HackTM-FindMyPass/" target="_blank" rel="noopener">blog.bi0s.in</a> by my mentor <a href="https://twitter.com/_abhiramkumar" target="_blank" rel="noopener">@_abhiramkumar</a>.</p>
+<p>If you like my solution, please do share it. I’m availabe on Twitter: <a href="https://twitter.com/NihithNihi" target="_blank" rel="noopener">@NihithNihi</a></p>
+
+      
+      <!-- reward -->
+      
+    </div>
+    
+    
+      <!-- copyright -->
+      
+    <footer class="article-footer">
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Memory/" rel="tag">Memory</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Volatility/" rel="tag">Volatility</a></li></ul>
+
+
+    </footer>
+
+  </div>
+
+  
+  
+  <nav class="article-nav">
+    
+      <a href="/2020/05/26/Securinets-CTF%E2%80%9920%E2%80%93Time-Matters/" class="article-nav-link">
+        <strong class="article-nav-caption">Previous Post</strong>
+        <div class="article-nav-title">
+          
+            Securinets-CTF’20–Time-Matters
+          
+        </div>
+      </a>
+    
+    
+      <a href="/2020/01/25/Memlabs-Lab-1-writeup/" class="article-nav-link">
+        <strong class="article-nav-caption">Next Post</strong>
+        <div class="article-nav-title">Memlabs Lab - 1 writeup</div>
+      </a>
+    
+  </nav>
+
+
+  
+
+  
+
+  
+  
+  
+  
+  
+
+</article>
+</section>
+      <footer class="footer">
+  <div class="outer">
+    <ul>
+      <li>
+        Copyrights &copy;
+        2020
+        <i class="ri-heart-fill heart_icon"></i> Nihith
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+        
+        
+        Powered by <a href="https://hexo.io" target="_blank">Hexo</a>
+        <span class="division">|</span>
+        Theme - <a href="https://github.com/Shen-Yu/hexo-theme-ayer" target="_blank">Ayer</a>
+        
+      </li>
+    </ul>
+    <ul>
+      <li>
+        
+      </li>
+    </ul>
+    <ul>
+      
+    </ul>
+    <ul>
+      <li>
+        <!-- cnzz统计 -->
+        
+      </li>
+    </ul>
+  </div>
+</footer>
+      <div class="float_btns">
+        <div class="totop" id="totop">
+  <i class="ri-arrow-up-line"></i>
+</div>
+
+<div class="todark" id="todark">
+  <i class="ri-moon-line"></i>
+</div>
+
+      </div>
+    </main>
+    <aside class="sidebar on">
+      <button class="navbar-toggle"></button>
+<nav class="navbar">
+  
+  <div class="logo">
+    <a href="/"><img src="/logo.jpg" alt="Nihith&#39;s blog"></a>
+  </div>
+  
+  <ul class="nav nav-main">
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/">Home</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/archives">Archives</a>
+    </li>
+    
+    <li class="nav-item">
+      <a class="nav-item-link" href="/about">About</a>
+    </li>
+    
+  </ul>
+</nav>
+<nav class="navbar navbar-bottom">
+  <ul class="nav">
+    <li class="nav-item">
+      
+      <a class="nav-item-link nav-item-search"  title="Search">
+        <i class="ri-search-line"></i>
+      </a>
+      
+      
+      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
+        <i class="ri-rss-line"></i>
+      </a>
+      
+    </li>
+  </ul>
+</nav>
+<div class="search-form-wrap">
+  <div class="local-search local-search-plugin">
+  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
+  <div id="local-search-result" class="local-search-result"></div>
+</div>
+</div>
+    </aside>
+    <script>
+      if (window.matchMedia("(max-width: 768px)").matches) {
+        document.querySelector('.content').classList.remove('on');
+        document.querySelector('.sidebar').classList.remove('on');
+      }
+    </script>
+    <div id="mask"></div>
+
+<!-- #reward -->
+<div id="reward">
+  <span class="close"><i class="ri-close-line"></i></span>
+  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
+  <div class="reward-box">
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/alipay.jpg">
+      <span class="reward-type">支付宝</span>
+    </div>
+    
+    
+    <div class="reward-item">
+      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/wechat.jpg">
+      <span class="reward-type">微信</span>
+    </div>
+    
+  </div>
+</div>
+    
+<script src="/js/jquery-2.0.3.min.js"></script>
+
+
+<script src="/js/lazyload.min.js"></script>
+
+<!-- Subtitle -->
+
+<!-- Tocbot -->
+
+
+<script src="/js/tocbot.min.js"></script>
+
+<script>
+  tocbot.init({
+    tocSelector: '.tocbot',
+    contentSelector: '.article-entry',
+    headingSelector: 'h1, h2, h3, h4, h5, h6',
+    hasInnerContainers: true,
+    scrollSmooth: true,
+    scrollContainer: 'main',
+    positionFixedSelector: '.tocbot',
+    positionFixedClass: 'is-position-fixed',
+    fixedSidebarOffset: 'auto'
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
+<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
+
+<script src="/dist/main.js"></script>
+
+<!-- ImageViewer -->
+
+<!-- Root element of PhotoSwipe. Must have class pswp. -->
+<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
+
+    <!-- Background of PhotoSwipe. 
+         It's a separate element as animating opacity is faster than rgba(). -->
+    <div class="pswp__bg"></div>
+
+    <!-- Slides wrapper with overflow:hidden. -->
+    <div class="pswp__scroll-wrap">
+
+        <!-- Container that holds slides. 
+            PhotoSwipe keeps only 3 of them in the DOM to save memory.
+            Don't modify these 3 pswp__item elements, data is added later on. -->
+        <div class="pswp__container">
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+            <div class="pswp__item"></div>
+        </div>
+
+        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
+        <div class="pswp__ui pswp__ui--hidden">
+
+            <div class="pswp__top-bar">
+
+                <!--  Controls are self-explanatory. Order can be changed. -->
+
+                <div class="pswp__counter"></div>
+
+                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
+
+                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
+
+                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
+
+                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
+
+                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
+                <!-- element will get class pswp__preloader--active when preloader is running -->
+                <div class="pswp__preloader">
+                    <div class="pswp__preloader__icn">
+                        <div class="pswp__preloader__cut">
+                            <div class="pswp__preloader__donut"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
+                <div class="pswp__share-tooltip"></div>
+            </div>
+
+            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
+            </button>
+
+            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
+            </button>
+
+            <div class="pswp__caption">
+                <div class="pswp__caption__center"></div>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+
+<script>
+    function viewer_init() {
+        let pswpElement = document.querySelectorAll('.pswp')[0];
+        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
+
+        $imgArr.forEach(($em, i) => {
+            $em.onclick = () => {
+                // slider展开状态
+                // todo: 这样不好，后面改成状态
+                if (document.querySelector('.left-col.show')) return
+                let items = []
+                $imgArr.forEach(($em2, i2) => {
+                    let img = $em2.getAttribute('data-idx', i2)
+                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
+                    let title = $em2.getAttribute('alt')
+                    // 获得原图尺寸
+                    const image = new Image()
+                    image.src = src
+                    items.push({
+                        src: src,
+                        w: image.width || $em2.width,
+                        h: image.height || $em2.height,
+                        title: title
+                    })
+                })
+                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
+                    index: parseInt(i)
+                });
+                gallery.init()
+            }
+        })
+    }
+    viewer_init()
+</script>
+
+<!-- MathJax -->
+
+<!-- Katex -->
+
+<!-- busuanzi  -->
+
+<!-- ClickLove -->
+
+<!-- ClickBoom -->
+
+<!-- CodeCopy -->
+
+
+<link rel="stylesheet" href="/css/clipboard.css">
+
+<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
+<script>
+  function wait(callback, seconds) {
+    var timelag = null;
+    timelag = window.setTimeout(callback, seconds);
+  }
+  !function (e, t, a) {
+    var initCopyCode = function(){
+      var copyHtml = '';
+      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
+      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
+      copyHtml += '</button>';
+      $(".highlight .code pre").before(copyHtml);
+      $(".article pre code").before(copyHtml);
+      var clipboard = new ClipboardJS('.btn-copy', {
+        target: function(trigger) {
+          return trigger.nextElementSibling;
+        }
+      });
+      clipboard.on('success', function(e) {
+        let $btn = $(e.trigger);
+        $btn.addClass('copied');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-checkbox-circle-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPIED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-checkbox-circle-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+      clipboard.on('error', function(e) {
+        e.clearSelection();
+        let $btn = $(e.trigger);
+        $btn.addClass('copy-failed');
+        let $icon = $($btn.find('i'));
+        $icon.removeClass('ri-file-copy-2-line');
+        $icon.addClass('ri-time-line');
+        let $span = $($btn.find('span'));
+        $span[0].innerText = 'COPY FAILED';
+        
+        wait(function () { // 等待两秒钟后恢复
+          $icon.removeClass('ri-time-line');
+          $icon.addClass('ri-file-copy-2-line');
+          $span[0].innerText = 'COPY';
+        }, 2000);
+      });
+    }
+    initCopyCode();
+  }(window, document);
+</script>
+
+
+
+    
+  </div>
+</body>
+
+</html>
