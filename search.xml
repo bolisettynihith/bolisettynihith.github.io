@@ -165,48 +165,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Securinets CTF’19 – Rare to win Writeup</title>
-    <url>/2019/08/17/Securinets-CTF%E2%80%9919-%E2%80%93-Rare-to-win-Challenge/</url>
-    <content><![CDATA[<p><strong>tl;dr</strong></p>
-<ul>
-<li>Chrome history analysis</li>
-<li>ACE file analysis</li>
-<li>Detecting the virus</li>
-</ul>
-<a id="more"></a>
-
-<h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><p><img src="/images/Raretowin/description.png" alt="Description"></p>
-<p>I could not solve this challenge at the time of the CTF. But it is a nice challenge.</p>
-<p>Given with an Windows 7 memory dump, lets see what all processes are running in the machine/system.</p>
-<h2 id="Initial-Analysis"><a href="#Initial-Analysis" class="headerlink" title="Initial Analysis"></a>Initial Analysis</h2><p>As the description of the says that the operator was browsing web the he might be using one of the browsers like Chrome, Firefox, or inbuilt Explorer. So lets go and see the pslist.</p>
-<p><img src="/images/Raretowin/pslist.png" alt="PSlist output"></p>
-<p>As we can see that chrome was running in system at the time when the dump was captured. So as the Chrome was running in the system we can use chrome history plugin and get the users history data.</p>
-<p><img src="/images/Raretowin/chromehistory.png" alt="Chrome History"></p>
-<h2 id="Further-Analysis"><a href="#Further-Analysis" class="headerlink" title="Further Analysis"></a>Further Analysis</h2><p>As we can see that, there is file called <strong>music.rar</strong> was downloaded from the chrome. So we will search for the file in the dump, using filescan plugin.</p>
-<p><img src="/images/Raretowin/filescan_music_rar.png" alt="filescan_music_rar"></p>
-<p>It resulted that there is no file relating to it. So I have downloaded the file from the <a href="https://www.mediafire.com/file/2t7bb2mflg2lwwj/music.rar/file" target="_blank" rel="noopener">link</a> he browsed.</p>
-<p>I tried opening the rar but it does not shown any files and it was in <strong>Read Only</strong> mode. So tried running <strong>file command</strong> on it and got to know that it is an <strong>ACE</strong> file.</p>
-<p><img src="/images/Raretowin/file_music.png" alt="file command"></p>
-<p>After a quick search in google, i came to know that there are some tools to open and extract the file from the ace file. So I renamed it and tried the unace command line tool which was provided by the Ubuntu software. But it doesn’t gave any results. So I checked for other alternatives and found <a href="http://webdiis.unizar.es/pub/unix/archive/linunace25.tgz" target="_blank" rel="noopener">this</a>.</p>
-<p>After using that tool, I can see that there is a firefox.exe and it is unable to override the build in firefox of the host system as I didn’t run with sudo permission.</p>
-<p><img src="/images/Raretowin/unace.png" alt="unace"></p>
-<p>And also if we use binwalk on the that ace file, we can see an <strong>ELF</strong> file present in it. And loading that in gdb and seeing the main function of the elf, there is only one operation going on that is the <strong>printf function</strong>. So we can say that the exe was the <strong>virus</strong> that the challenge author has asked.</p>
-<h2 id="Flag"><a href="#Flag" class="headerlink" title="Flag"></a>Flag</h2><p>But the flag is the <strong>path_to_the_virus</strong>. So as we can see that the exe file was extracting to <strong>C:/Users/Public/Data/firefox.exe</strong> therefore that will be the path that they have asked.</p>
-<p>But in windows the folders are divided using “\\” so the resulting path is <strong>C:\\Users\\Public\\Data\\firefox.exe</strong>.</p>
-<p>And the flag will be,</p>
-<p>Flag : <strong>securinets{84117b4eb400242a9db464e84220e672}</strong></p>
-<p>If you liked my solution, please do share it. I’m available on Twitter: <a href="https://twitter.com/NihithNihi" target="_blank" rel="noopener">@NihithNihi</a></p>
-]]></content>
-      <categories>
-        <category>Writeups</category>
-        <category>Memory Forensics</category>
-      </categories>
-      <tags>
-        <tag>Volatility</tag>
-        <tag>Memory</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Memlabs Lab - 1 writeup</title>
     <url>/2020/01/25/Memlabs-Lab-1-writeup/</url>
     <content><![CDATA[<p>MemLabs is an educational, introductory set of CTF-styled challenges which is aimed to encourage students, security researchers and also CTF players to get started with the field of Memory Forensics.</p>
@@ -263,38 +221,45 @@
       </tags>
   </entry>
   <entry>
-    <title>Swamp CTF’18 – Orcish Writeup</title>
-    <url>/2019/08/11/Swamp-CTF%E2%80%9918-%E2%80%93-Orcish-challenge/</url>
+    <title>Securinets CTF’19 – Rare to win Writeup</title>
+    <url>/2019/08/17/Securinets-CTF%E2%80%9919-%E2%80%93-Rare-to-win-Challenge/</url>
     <content><![CDATA[<p><strong>tl;dr</strong></p>
 <ul>
-<li>Analysing ICMP type field and extracting GIF file</li>
+<li>Chrome history analysis</li>
+<li>ACE file analysis</li>
+<li>Detecting the virus</li>
 </ul>
 <a id="more"></a>
 
-<h2 id="Descritpion"><a href="#Descritpion" class="headerlink" title="Descritpion"></a>Descritpion</h2><p><img src="/images/orcish/description.png" alt="Description"></p>
-<p>This is a good challenge and very useful challenge for learning about Networking and it’s related concepts.</p>
-<h2 id="Initial-Analysis"><a href="#Initial-Analysis" class="headerlink" title="Initial Analysis"></a>Initial Analysis</h2><p>In this challenge on opening the pcap file and checking the protocol hierarchy, we can see so many protocols are present in it.</p>
-<p><img src="/images/orcish/protocol_hiercy.png" alt="Protocol Hierarchy"></p>
-<p>As usually, as there are so many HTTP and TCP packets in that, so using the Export objects we can extract the HTTP data from the packets. But could not find anything interesting from that. As we know that the same HTTP data is transferred via TCP also no need of extracting the TCP data from the TCP packets. I have wasted a lot of time in analysing those data and those packets.</p>
-<p>After going into ICMP packets, we can see the <strong>GIF file signature(GIF89a)</strong>, splitted through upcoming packets. So we can assume that a <strong>GIF file</strong> is transferred in ICMP packets.</p>
-<p><img src="/images/orcish/gif_1.png" alt="first byte"> <img src="/images/orcish/gif_2.png" alt="second byte"> <img src="/images/orcish/gif_3.png" alt="third byte"> <img src="/images/orcish/gif_4.png" alt="forth byte"> <img src="/images/orcish/gif_5.png" alt="fifth byte"> <img src="/images/orcish/gif_6.png" alt="sixth byte"></p>
-<h2 id="Further-Analysis"><a href="#Further-Analysis" class="headerlink" title="Further Analysis"></a>Further Analysis</h2><p>So, we know that scapy a powerful packet manipulation program. Extracting the specified packets(ICMP) and reading the packet through scapy, we can see that, type layer of the ICMP packets was transferring the data.</p>
-<p><img src="/images/orcish/display_scapy.png" alt="Load Scapy"></p>
-<p>So, I have written an exploit script, to get the whole required data <strong>(ICMP type)</strong> from the ICMP packets. You need to export all the ICMP packets and save it as <strong>exported.pcap</strong>, and run the script below.</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> scapy.all <span class="keyword">import</span> *</span><br><span class="line">f=rdpcap(<span class="string">'exported.pcap'</span>)</span><br><span class="line">x=<span class="string">''</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(f)):</span><br><span class="line">        x+=chr(f[i][ICMP].type)</span><br><span class="line"> </span><br><span class="line">b=open(<span class="string">'flag.gif'</span>,<span class="string">'w'</span>)</span><br><span class="line">b.write(x)</span><br><span class="line">b.close()</span><br></pre></td></tr></table></figure>
-
-<h2 id="Flag"><a href="#Flag" class="headerlink" title="Flag"></a>Flag</h2><p>After running the above code it will create a new file named <strong>flag.gif</strong> and after opening it we got the flag.</p>
-<p><img src="/images/orcish/flag.gif" alt="Flag"></p>
+<h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><p><img src="/images/Raretowin/description.png" alt="Description"></p>
+<p>I could not solve this challenge at the time of the CTF. But it is a nice challenge.</p>
+<p>Given with an Windows 7 memory dump, lets see what all processes are running in the machine/system.</p>
+<h2 id="Initial-Analysis"><a href="#Initial-Analysis" class="headerlink" title="Initial Analysis"></a>Initial Analysis</h2><p>As the description of the says that the operator was browsing web the he might be using one of the browsers like Chrome, Firefox, or inbuilt Explorer. So lets go and see the pslist.</p>
+<p><img src="/images/Raretowin/pslist.png" alt="PSlist output"></p>
+<p>As we can see that chrome was running in system at the time when the dump was captured. So as the Chrome was running in the system we can use chrome history plugin and get the users history data.</p>
+<p><img src="/images/Raretowin/chromehistory.png" alt="Chrome History"></p>
+<h2 id="Further-Analysis"><a href="#Further-Analysis" class="headerlink" title="Further Analysis"></a>Further Analysis</h2><p>As we can see that, there is file called <strong>music.rar</strong> was downloaded from the chrome. So we will search for the file in the dump, using filescan plugin.</p>
+<p><img src="/images/Raretowin/filescan_music_rar.png" alt="filescan_music_rar"></p>
+<p>It resulted that there is no file relating to it. So I have downloaded the file from the <a href="https://www.mediafire.com/file/2t7bb2mflg2lwwj/music.rar/file" target="_blank" rel="noopener">link</a> he browsed.</p>
+<p>I tried opening the rar but it does not shown any files and it was in <strong>Read Only</strong> mode. So tried running <strong>file command</strong> on it and got to know that it is an <strong>ACE</strong> file.</p>
+<p><img src="/images/Raretowin/file_music.png" alt="file command"></p>
+<p>After a quick search in google, i came to know that there are some tools to open and extract the file from the ace file. So I renamed it and tried the unace command line tool which was provided by the Ubuntu software. But it doesn’t gave any results. So I checked for other alternatives and found <a href="http://webdiis.unizar.es/pub/unix/archive/linunace25.tgz" target="_blank" rel="noopener">this</a>.</p>
+<p>After using that tool, I can see that there is a firefox.exe and it is unable to override the build in firefox of the host system as I didn’t run with sudo permission.</p>
+<p><img src="/images/Raretowin/unace.png" alt="unace"></p>
+<p>And also if we use binwalk on the that ace file, we can see an <strong>ELF</strong> file present in it. And loading that in gdb and seeing the main function of the elf, there is only one operation going on that is the <strong>printf function</strong>. So we can say that the exe was the <strong>virus</strong> that the challenge author has asked.</p>
+<h2 id="Flag"><a href="#Flag" class="headerlink" title="Flag"></a>Flag</h2><p>But the flag is the <strong>path_to_the_virus</strong>. So as we can see that the exe file was extracting to <strong>C:/Users/Public/Data/firefox.exe</strong> therefore that will be the path that they have asked.</p>
+<p>But in windows the folders are divided using “\\” so the resulting path is <strong>C:\\Users\\Public\\Data\\firefox.exe</strong>.</p>
+<p>And the flag will be,</p>
+<p>Flag : <strong>securinets{84117b4eb400242a9db464e84220e672}</strong></p>
 <p>If you liked my solution, please do share it. I’m available on Twitter: <a href="https://twitter.com/NihithNihi" target="_blank" rel="noopener">@NihithNihi</a></p>
 ]]></content>
       <categories>
         <category>Writeups</category>
-        <category>Network</category>
+        <category>Memory Forensics</category>
       </categories>
       <tags>
-        <tag>Python</tag>
-        <tag>Wireshark</tag>
-        <tag>Network</tag>
+        <tag>Volatility</tag>
+        <tag>Memory</tag>
       </tags>
   </entry>
   <entry>
@@ -343,6 +308,41 @@
       <tags>
         <tag>Volatility</tag>
         <tag>Memory</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Swamp CTF’18 – Orcish Writeup</title>
+    <url>/2019/08/11/Swamp-CTF%E2%80%9918-%E2%80%93-Orcish-challenge/</url>
+    <content><![CDATA[<p><strong>tl;dr</strong></p>
+<ul>
+<li>Analysing ICMP type field and extracting GIF file</li>
+</ul>
+<a id="more"></a>
+
+<h2 id="Descritpion"><a href="#Descritpion" class="headerlink" title="Descritpion"></a>Descritpion</h2><p><img src="/images/orcish/description.png" alt="Description"></p>
+<p>This is a good challenge and very useful challenge for learning about Networking and it’s related concepts.</p>
+<h2 id="Initial-Analysis"><a href="#Initial-Analysis" class="headerlink" title="Initial Analysis"></a>Initial Analysis</h2><p>In this challenge on opening the pcap file and checking the protocol hierarchy, we can see so many protocols are present in it.</p>
+<p><img src="/images/orcish/protocol_hiercy.png" alt="Protocol Hierarchy"></p>
+<p>As usually, as there are so many HTTP and TCP packets in that, so using the Export objects we can extract the HTTP data from the packets. But could not find anything interesting from that. As we know that the same HTTP data is transferred via TCP also no need of extracting the TCP data from the TCP packets. I have wasted a lot of time in analysing those data and those packets.</p>
+<p>After going into ICMP packets, we can see the <strong>GIF file signature(GIF89a)</strong>, splitted through upcoming packets. So we can assume that a <strong>GIF file</strong> is transferred in ICMP packets.</p>
+<p><img src="/images/orcish/gif_1.png" alt="first byte"> <img src="/images/orcish/gif_2.png" alt="second byte"> <img src="/images/orcish/gif_3.png" alt="third byte"> <img src="/images/orcish/gif_4.png" alt="forth byte"> <img src="/images/orcish/gif_5.png" alt="fifth byte"> <img src="/images/orcish/gif_6.png" alt="sixth byte"></p>
+<h2 id="Further-Analysis"><a href="#Further-Analysis" class="headerlink" title="Further Analysis"></a>Further Analysis</h2><p>So, we know that scapy a powerful packet manipulation program. Extracting the specified packets(ICMP) and reading the packet through scapy, we can see that, type layer of the ICMP packets was transferring the data.</p>
+<p><img src="/images/orcish/display_scapy.png" alt="Load Scapy"></p>
+<p>So, I have written an exploit script, to get the whole required data <strong>(ICMP type)</strong> from the ICMP packets. You need to export all the ICMP packets and save it as <strong>exported.pcap</strong>, and run the script below.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> scapy.all <span class="keyword">import</span> *</span><br><span class="line">f=rdpcap(<span class="string">'exported.pcap'</span>)</span><br><span class="line">x=<span class="string">''</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(f)):</span><br><span class="line">        x+=chr(f[i][ICMP].type)</span><br><span class="line"> </span><br><span class="line">b=open(<span class="string">'flag.gif'</span>,<span class="string">'w'</span>)</span><br><span class="line">b.write(x)</span><br><span class="line">b.close()</span><br></pre></td></tr></table></figure>
+
+<h2 id="Flag"><a href="#Flag" class="headerlink" title="Flag"></a>Flag</h2><p>After running the above code it will create a new file named <strong>flag.gif</strong> and after opening it we got the flag.</p>
+<p><img src="/images/orcish/flag.gif" alt="Flag"></p>
+<p>If you liked my solution, please do share it. I’m available on Twitter: <a href="https://twitter.com/NihithNihi" target="_blank" rel="noopener">@NihithNihi</a></p>
+]]></content>
+      <categories>
+        <category>Writeups</category>
+        <category>Network</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>Wireshark</tag>
+        <tag>Network</tag>
       </tags>
   </entry>
   <entry>
