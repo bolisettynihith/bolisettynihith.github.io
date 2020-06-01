@@ -1,0 +1,390 @@
+<?xml version="1.0" encoding="utf-8"?>
+<search>
+  <entry>
+    <title>Hackcon CTF’19 – GIMP IT Writeup</title>
+    <url>/2019/08/24/Hackcon-CTF%E2%80%9919-%E2%80%93-GIMP-IT-Writeup/</url>
+    <content><![CDATA[<p><strong>tl;dr</strong></p>
+<ul>
+<li>Analysing layers for an image</li>
+<li>PIL</li>
+</ul>
+<a id="more"></a>
+
+<h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><p><img src="/images/gimpit/description.png" alt="description"></p>
+<p>As the challenge name suggests, use GIMP we will proceed with it. After opening the image in GIMP, we can see another layer in the image. So on choosing/making that layer visible we can see the content in that layer.</p>
+<p><img src="/images/gimpitlayer_2_gimp.png" alt="layer 2"></p>
+<h2 id="Initial-Analysis"><a href="#Initial-Analysis" class="headerlink" title="Initial Analysis"></a>Initial Analysis</h2><p>We can see the “Nothing here” layer present in the image but we cannot understand the contents in it. These type of files also gives an additional advantage that the contents present in them are visible in original file data in form hex or in normal text. So after using strings we can see that there is a hex data present in it.</p>
+<p><img src="/images/gimpit/strings_output.png" alt="strings output"></p>
+<h2 id="Further-Analysis"><a href="#Further-Analysis" class="headerlink" title="Further Analysis"></a>Further Analysis</h2><p>The hex data is a zip file, so copying that data and making a file out it, we got an another file present in it. And that file contains of only 1’s and 0’s. First thought that it would an esolang(spoon) but didn’t anything. So there are somany 1’s and 0’s we thought of making an image from it. But we need the size of the image. And the len(whole binary string) is exactly the square of 370, we will use it as the image height &amp; width. Assuming 0 = (255, 255, 255) and 1 = (0, 0, 0).</p>
+<p>So performed the operation in ipython and got an QR code. Here is the code;</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line">f=open(<span class="string">'data.txt'</span>,<span class="string">'r'</span>).read()</span><br><span class="line">t=[]</span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(f)):</span><br><span class="line">    <span class="keyword">if</span>(f[i]==<span class="string">'0'</span>):</span><br><span class="line">        t.append((<span class="number">255</span>, <span class="number">255</span>, <span class="number">255</span>))</span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        t.append((<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>))</span><br><span class="line">im = Image.new(<span class="string">'RGB'</span>,(<span class="number">370</span>,<span class="number">370</span>))</span><br><span class="line">im.putdata(t)</span><br><span class="line">im.save(<span class="string">'test.png'</span>)</span><br></pre></td></tr></table></figure>
+
+<p>On running the above code in ipython got a QR code and after scanning it got the flag.</p>
+<h2 id="Flag"><a href="#Flag" class="headerlink" title="Flag"></a>Flag</h2><p>Flag: <strong>d4rk{L0t5_0f_th1ng5_t0_d0_1n_th15_chAll@ng3}c0de</strong></p>
+<p>If you like my solution, please do share it. I’m availabe on Twitter: <a href="https://twitter.com/NihithNihi" target="_blank" rel="noopener">@NihithNihi</a></p>
+]]></content>
+      <categories>
+        <category>Writeups</category>
+        <category>Steganography</category>
+      </categories>
+      <tags>
+        <tag>Steganography</tag>
+        <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hackcon CTF’19 – Too cold for steg Writeup</title>
+    <url>/2019/08/24/Hackcon-CTF%E2%80%9919-%E2%80%93-Too-cold-for-steg-Writeup/</url>
+    <content><![CDATA[<p><strong>tl;dr</strong></p>
+<ul>
+<li>Whitespace steganography</li>
+</ul>
+<a id="more"></a>
+
+<h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><p><img src="/images/Toocoldforsteg/description.png" alt="Description"></p>
+<h2 id="Initial-Analysis"><a href="#Initial-Analysis" class="headerlink" title="Initial Analysis"></a>Initial Analysis</h2><p>Got a text file and opening the text file in any text editor and selecting all the text we can find some whitespace present at the ending of the each each line.</p>
+<p>As the title is Too cold to steg we will get a tool known as stegsnow in our mind.</p>
+<p>But for using the stegsnow we need a password. After searching for the password in the file given we can get the password as <strong>d4rkc0de-IIITD</strong>.</p>
+<p><img src="/images/Toocoldforsteg/grep_password.png" alt="grep password"></p>
+<p>Then using the stegsnow we will get the flag.</p>
+<p><img src="/images/Toocoldforsteg/stegsnow.png" alt="stegsnow command"></p>
+<h2 id="Flag"><a href="#Flag" class="headerlink" title="Flag"></a>Flag</h2><p>Flag: <strong>d4rk{h@ving_fun_w1th_st3gsn0w?}c0de</strong></p>
+<p>If you like my solution, please do share it. I’m availabe on Twitter: <a href="https://twitter.com/NihithNihi" target="_blank" rel="noopener">@NihithNihi</a></p>
+]]></content>
+      <categories>
+        <category>Writeups</category>
+        <category>Steganography</category>
+      </categories>
+      <tags>
+        <tag>whitespace</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Fresh From The Oven - InCTF Internationals 2019 Writeup</title>
+    <url>/2019/10/03/InCTFi19-Fresh-From-the-Oven/</url>
+    <content><![CDATA[<p><strong>tl;dr</strong></p>
+<ul>
+<li>Decoding the strings found in TCP stream 0.</li>
+<li>Analysing and extracting data sent via different ports of TCP.</li>
+<li>Using character-wise caesar from the extracted data.</li>
+<li>Zip cracking</li>
+</ul>
+<a id="more"></a>
+
+<h2 id="Challenge-Description"><a href="#Challenge-Description" class="headerlink" title="Challenge Description"></a>Challenge Description</h2><p><img src="/images/FreshFromtheOven/description.png" alt="Description"></p>
+<p>You can download the challenge file from <a href="https://mega.nz/#!d6wEFICJ!u9XykRdIoJtloYDZQxFqXt1KvWR5aK3Ucisd2-a-qms" target="_blank" rel="noopener"><strong>Mega</strong></a> or <a href="https://drive.google.com/file/d/1ZBLNYqFOA0dOx8e1GnNoO3qn2V0Elpcm/view?usp=sharing" target="_blank" rel="noopener"><strong>G-Drive</strong></a></p>
+<p>This is a challenge which I made for InCTFi’19 along with my teammate(<a href="https://twitter.com/__Sh4d0w__" target="_blank" rel="noopener">@Sh4d0w</a>).</p>
+<h2 id="Initial-Analysis"><a href="#Initial-Analysis" class="headerlink" title="Initial Analysis"></a>Initial Analysis</h2><p>We are provided with a <strong>pcap</strong> file. Let’s start our initial analysis.</p>
+<p>We can see so many TCP packets in the capture file and the description says that it was a chat between two friends. So let’s follow the TCP stream and see if anything is interesting in it.</p>
+<p><img src="/images/FreshFromtheOven/tcp-stream-0.png" alt="TCP Stream"></p>
+<p>We do see a chat between 2 people. Also, we can find some encoded strings. The secret code: <strong>Remember remember the FIFTH of november :)</strong> does hint out something. We can assume the encoded strings are <strong>ROT5</strong>. Decoding them, we get;</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Rohith: This is a sample in that encoded way.</span><br><span class="line"></span><br><span class="line">Shyam: Oh, It&#39;s good and it took a lot of time to understand for me.</span><br><span class="line"></span><br><span class="line">Rohith: Sending you some interesting files, try to find the secret behind them and keep it confidential</span><br><span class="line"></span><br><span class="line">Shyam: Okay, sure:)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Further-Analysis"><a href="#Further-Analysis" class="headerlink" title="Further Analysis"></a>Further Analysis</h2><p>As the chat between them says that some files have transferred. And we can see that from <strong>TCP Stream 2</strong>, extra data with <strong>800 bytes</strong> is transferred in two different destination ports(<strong>444</strong> &amp; <strong>81</strong>). We can assume that the two files have been transferred.</p>
+<p>Extracting the data sent to the above-mentioned ports and applying <strong>Caesar cipher</strong> on the two files, we get the file structure of a <strong>PDF file</strong> and a <strong>ZIP file</strong>.</p>
+<p><img src="/images/FreshFromtheOven/file_pdf.png" alt="File PDF"></p>
+<p><img src="/images/FreshFromtheOven/file_zip.png" alt="File zip"></p>
+<p>After opening the PDF and we find extra spaces in the last page of that file. It says “<strong>NOTHING HERE :( DON’T WASTE YOUR TIME</strong>“.</p>
+<p>So it’s just a <strong>rabbit hole</strong>.</p>
+<p>After a brief observation, we see that the ZIP is password protected. So, we use <strong>fcrackzip</strong> in dictionary mode to crack the password,</p>
+<p><img src="/images/FreshFromtheOven/zip_cracking.png" alt="zip cracking"></p>
+<p>The password is <strong>johnjandroveclarkmichaelkent</strong>.</p>
+<p>Extracting the file from the zip gave a <strong>PNG</strong> image.</p>
+<p><img src="/images/FreshFromtheOven/flag.png" alt="flag"></p>
+<h2 id="Flag"><a href="#Flag" class="headerlink" title="Flag"></a>Flag</h2><p>Simple LSB steg can be used to get the flag. We used the popular tool <strong>zsteg</strong> for this.</p>
+<p>FLAG: <strong>inctf{3ach_4nd_3v3ry_s3cre7_inf0rm4t10n_w1ll_b3_kn0wn_by_wir3shark!!!!!_:)}</strong></p>
+<p>If you like my solution, please do share it. I’m availabe on Twitter: <a href="https://twitter.com/NihithNihi" target="_blank" rel="noopener">@NihithNihi</a></p>
+]]></content>
+      <categories>
+        <category>Writeups</category>
+        <category>Network</category>
+      </categories>
+      <tags>
+        <tag>Steganography</tag>
+        <tag>Wireshark</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>HackTM Quals 20 – Find my Pass Writeup</title>
+    <url>/2020/04/11/HackTM-Quals-20%E2%80%93Find-my-Pass-Writeup/</url>
+    <content><![CDATA[<p><strong>tl;dr</strong></p>
+<ul>
+<li>Memory dump analysis using Volatility.</li>
+<li>Extracting Keepass Master Password from the memory.</li>
+<li>Extracting flag from ZIP archive attached in the Keepass database.</li>
+</ul>
+<a id="more"></a>
+
+<h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><p>I managed to forget my password for my KeePass Database but luckily I had it still open and managed to get a dump of the system’s memory. Can you please help me recover my password?</p>
+<p>Challenge file: <a href="https://mega.nz/#!IdUVwY6I!uJWGZ932xab44H4EJ-zVAqu6_UWNJcCVA4_PPXdqCyc" target="_blank" rel="noopener">Mega Drive</a> or <a href="https://drive.google.com/open?id=1hUlGqJZYgbWaEu7w0JnPMqgYdFr8qVJe" target="_blank" rel="noopener">Google Drive</a></p>
+<p>Password: <strong>eD99mLkU</strong></p>
+<p>Hint: I am not very good with computers, I use my one safe password where I want to keep everything safe from hackers.</p>
+<p>I solved this challenge after the CTF has ended.</p>
+<p>According to the description, In this challenge, we have to retrieve the Master Password of a Keepass database from the memory.</p>
+<h2 id="Initial-Anaysis"><a href="#Initial-Anaysis" class="headerlink" title="Initial Anaysis"></a>Initial Anaysis</h2><p>First, you need to find what OS his system was using. For that, I used imageinfo plugin.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f HackTM.vmem imageinfo</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Find-my-Pass/imageinfo.png" alt="Imageinfo Output"></p>
+<p>I choose <strong>Win7SP1x86</strong> profile.<br>Let’s check what all processes are running in the system. We can expect that keepass.exe will be present, as the description says that the database was kept open.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f HackTM.vmem --profile=Win7SP1x86 pslist</span><br></pre></td></tr></table></figure>
+<p><img src="/images/Find-my-Pass/pslist_1.png" alt="pslist output"><br><img src="/images/Find-my-Pass/pslist_2.png" alt="pslist output"></p>
+<p>We can see that the keepass.exe process was running and going further.</p>
+<h2 id="Extracting-Keepass-database"><a href="#Extracting-Keepass-database" class="headerlink" title="Extracting Keepass database"></a>Extracting Keepass database</h2><p>We need to find the .kdbx file as all KeePass databases are stored with extension .kdbx. For that, we will use filescan plugin and grep for kdbx files.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f HackTM.vmem --profile=Win7SP1x86 filescan | grep <span class="string">".kdbx"</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Find-my-Pass/kdbx_filescan.png" alt="Filescan Kdbx"></p>
+<p>We can see a database.kdbx was open and the further step is to dump that file to our host system. For that, we will use dumpfiles plugin.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f HackTM.vmem --profile=Win7SP1x86 dumpfiles -Q 0x000000007df37c88 -D .</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Find-my-Pass/kdbx_dumpfiles.png" alt="Dumpfiles kdbx"></p>
+<p>When I attempted to open the database, it asked for the master password. The description says that the user has forgotten his password which means we have to recover it.</p>
+<h2 id="Retriving-Master-Password"><a href="#Retriving-Master-Password" class="headerlink" title="Retriving Master Password"></a>Retriving Master Password</h2><p>But the hint says user used the same password everywhere ie: he must have copied the password and user it somewhere else. So let’s check what’s there in his clipboard. For that, we use the clipboard plugin.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f HackTM.vmem --profile=Win7SP1x86 clipboard</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Find-my-Pass/clipboard.png" alt="Clipboard"></p>
+<p>We can’t find anything in the clipboard. It seems to be suspicious. So let’s check the verbose data of the clipboard.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f HackTM.vmem --profile=Win7SP1x86 clipboard -v</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Find-my-Pass/clipboard-v.png" alt="clipboard -v"></p>
+<p>Hurrah! We found it.</p>
+<p>By removing the dots and using it (<strong>dmVZQmdzOlUrcEBlRj87dHQ3USVBIn</strong>) as the master password we got into the Keepass database.</p>
+<p>In the bottom, in attachments, we can see that there is <strong>nothinghere.7z</strong> file that was attached to the password entry.</p>
+<p>We can extract that from the <strong>File Attachments</strong> in the <strong>Advanced tab</strong> of <strong>Edit Entry</strong>.</p>
+<p>The 7z file asked for a password and on using the database master password we successfully extracted the text file. It contained the flag.</p>
+<p>Flag: <strong>HackTM{d14c02244b17f4f9dfc0f71ce7ab10e276a5880a05fca64d39a716bab92cda90}</strong></p>
+<p>The another way of solving this challenge is mentioned in <a href="https://blog.bi0s.in/2020/02/09/Forensics/HackTM-FindMyPass/" target="_blank" rel="noopener">blog.bi0s.in</a> by my mentor <a href="https://twitter.com/_abhiramkumar" target="_blank" rel="noopener">@_abhiramkumar</a>.</p>
+<p>If you like my solution, please do share it. I’m availabe on Twitter: <a href="https://twitter.com/NihithNihi" target="_blank" rel="noopener">@NihithNihi</a></p>
+]]></content>
+      <categories>
+        <category>Writeups</category>
+        <category>Memory Forensics</category>
+      </categories>
+      <tags>
+        <tag>Volatility</tag>
+        <tag>Memory</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Swamp CTF’18 – Orcish Writeup</title>
+    <url>/2019/08/11/Swamp-CTF%E2%80%9918-%E2%80%93-Orcish-challenge/</url>
+    <content><![CDATA[<p><strong>tl;dr</strong></p>
+<ul>
+<li>Analysing ICMP type field and extracting GIF file</li>
+</ul>
+<a id="more"></a>
+
+<h2 id="Descritpion"><a href="#Descritpion" class="headerlink" title="Descritpion"></a>Descritpion</h2><p><img src="/images/orcish/description.png" alt="Description"></p>
+<p>This is a good challenge and very useful challenge for learning about Networking and it’s related concepts.</p>
+<h2 id="Initial-Analysis"><a href="#Initial-Analysis" class="headerlink" title="Initial Analysis"></a>Initial Analysis</h2><p>In this challenge on opening the pcap file and checking the protocol hierarchy, we can see so many protocols are present in it.</p>
+<p><img src="/images/orcish/protocol_hiercy.png" alt="Protocol Hierarchy"></p>
+<p>As usually, as there are so many HTTP and TCP packets in that, so using the Export objects we can extract the HTTP data from the packets. But could not find anything interesting from that. As we know that the same HTTP data is transferred via TCP also no need of extracting the TCP data from the TCP packets. I have wasted a lot of time in analysing those data and those packets.</p>
+<p>After going into ICMP packets, we can see the <strong>GIF file signature(GIF89a)</strong>, splitted through upcoming packets. So we can assume that a <strong>GIF file</strong> is transferred in ICMP packets.</p>
+<p><img src="/images/orcish/gif_1.png" alt="first byte"> <img src="/images/orcish/gif_2.png" alt="second byte"> <img src="/images/orcish/gif_3.png" alt="third byte"> <img src="/images/orcish/gif_4.png" alt="forth byte"> <img src="/images/orcish/gif_5.png" alt="fifth byte"> <img src="/images/orcish/gif_6.png" alt="sixth byte"></p>
+<h2 id="Further-Analysis"><a href="#Further-Analysis" class="headerlink" title="Further Analysis"></a>Further Analysis</h2><p>So, we know that scapy a powerful packet manipulation program. Extracting the specified packets(ICMP) and reading the packet through scapy, we can see that, type layer of the ICMP packets was transferring the data.</p>
+<p><img src="/images/orcish/display_scapy.png" alt="Load Scapy"></p>
+<p>So, I have written an exploit script, to get the whole required data <strong>(ICMP type)</strong> from the ICMP packets. You need to export all the ICMP packets and save it as <strong>exported.pcap</strong>, and run the script below.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">from</span> scapy.all <span class="keyword">import</span> *</span><br><span class="line">f=rdpcap(<span class="string">'exported.pcap'</span>)</span><br><span class="line">x=<span class="string">''</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(len(f)):</span><br><span class="line">        x+=chr(f[i][ICMP].type)</span><br><span class="line"> </span><br><span class="line">b=open(<span class="string">'flag.gif'</span>,<span class="string">'w'</span>)</span><br><span class="line">b.write(x)</span><br><span class="line">b.close()</span><br></pre></td></tr></table></figure>
+
+<h2 id="Flag"><a href="#Flag" class="headerlink" title="Flag"></a>Flag</h2><p>After running the above code it will create a new file named <strong>flag.gif</strong> and after opening it we got the flag.</p>
+<p><img src="/images/orcish/flag.gif" alt="Flag"></p>
+<p>If you liked my solution, please do share it. I’m available on Twitter: <a href="https://twitter.com/NihithNihi" target="_blank" rel="noopener">@NihithNihi</a></p>
+]]></content>
+      <categories>
+        <category>Writeups</category>
+        <category>Network</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>Wireshark</tag>
+        <tag>Network</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Swamp CTF’19 - The Cyber War Continues Writeup</title>
+    <url>/2019/04/09/Swamp-CTF%E2%80%9919-The-Cyber-War-Continues/</url>
+    <content><![CDATA[<p><strong>tl;dr</strong></p>
+<ul>
+<li>USB leftover Capture data extraction.</li>
+</ul>
+<a id="more"></a>
+
+<h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><blockquote>
+<p>As you and your convoy circle the barren lands on your light cycles you notice something strange in the distance. Upon further investigation you find what seems to be the remnants of a battle.</p>
+<p>Bodies, robotic and organic alike, are strewn all over the place. You begin scavenging for supplies and weapons, suddenly a man near death thrusts his hand and grabs your arm. “Please” he croaks, “find my friends”.</p>
+<p>He hands you a USB as he takes his last breath. You plug the drive into your mechanical arm and the contents start flooding your HUD. It contains this message and an encrypted file.</p>
+</blockquote>
+<p>Click <a href="https://drive.google.com/drive/u/0/folders/1dTzkvMUmiqKmtkBgyFevXob9WOXsCZQA" target="_blank" rel="noopener">here</a>, to download challenge file.</p>
+<h2 id="Initial-Analysis"><a href="#Initial-Analysis" class="headerlink" title="Initial Analysis"></a>Initial Analysis</h2><p>In this challenge we got a 7z file which was password protected and a text file. I don’t know why they have given that text file, as of now my aim was to crack the password for the ‘7z file’.</p>
+<p><img src="7z.png" alt="Protected 7z"></p>
+<p>So, I used an <a href="https://www.lostmypass.com/file-types/7z/" target="_blank" rel="noopener">online tool</a> to crack the 7z password. And it gave me the password as “toor”, using this as the password for the archive and extracting it, got a pcap.</p>
+<p><img src="pcap.png" alt="Display pcap"></p>
+<p>On analysing that pcap file, all the packets present in that pcap file are related to USB Protocol and on observing the left over capture data got to know that it was based on the keyboard Strokes.</p>
+<h2 id="Futher-Analysis"><a href="#Futher-Analysis" class="headerlink" title="Futher Analysis"></a>Futher Analysis</h2><p>So, on googling found a <a href="https://bitvijays.github.io/LFC-Forensics.html" target="_blank" rel="noopener">script</a> for USB Keyboard Strokes and i have rewritten that code such that it will automate all the process we do manually and will give the flag out. The code follows,</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line">usb_codes = &#123;</span><br><span class="line">   <span class="number">0x04</span>:<span class="string">"aA"</span>, <span class="number">0x05</span>:<span class="string">"bB"</span>, <span class="number">0x06</span>:<span class="string">"cC"</span>, <span class="number">0x07</span>:<span class="string">"dD"</span>, <span class="number">0x08</span>:<span class="string">"eE"</span>, <span class="number">0x09</span>:<span class="string">"fF"</span>,</span><br><span class="line">   <span class="number">0x0A</span>:<span class="string">"gG"</span>, <span class="number">0x0B</span>:<span class="string">"hH"</span>, <span class="number">0x0C</span>:<span class="string">"iI"</span>, <span class="number">0x0D</span>:<span class="string">"jJ"</span>, <span class="number">0x0E</span>:<span class="string">"kK"</span>, <span class="number">0x0F</span>:<span class="string">"lL"</span>,</span><br><span class="line">   <span class="number">0x10</span>:<span class="string">"mM"</span>, <span class="number">0x11</span>:<span class="string">"nN"</span>, <span class="number">0x12</span>:<span class="string">"oO"</span>, <span class="number">0x13</span>:<span class="string">"pP"</span>, <span class="number">0x14</span>:<span class="string">"qQ"</span>, <span class="number">0x15</span>:<span class="string">"rR"</span>,</span><br><span class="line">   <span class="number">0x16</span>:<span class="string">"sS"</span>, <span class="number">0x17</span>:<span class="string">"tT"</span>, <span class="number">0x18</span>:<span class="string">"uU"</span>, <span class="number">0x19</span>:<span class="string">"vV"</span>, <span class="number">0x1A</span>:<span class="string">"wW"</span>, <span class="number">0x1B</span>:<span class="string">"xX"</span>,</span><br><span class="line">   <span class="number">0x1C</span>:<span class="string">"yY"</span>, <span class="number">0x1D</span>:<span class="string">"zZ"</span>, <span class="number">0x1E</span>:<span class="string">"1!"</span>, <span class="number">0x1F</span>:<span class="string">"2@"</span>, <span class="number">0x20</span>:<span class="string">"3#"</span>, <span class="number">0x21</span>:<span class="string">"4$"</span>,</span><br><span class="line">   <span class="number">0x22</span>:<span class="string">"5%"</span>, <span class="number">0x23</span>:<span class="string">"6^"</span>, <span class="number">0x24</span>:<span class="string">"7&amp;"</span>, <span class="number">0x25</span>:<span class="string">"8*"</span>, <span class="number">0x26</span>:<span class="string">"9("</span>, <span class="number">0x27</span>:<span class="string">"0)"</span>,</span><br><span class="line">   <span class="number">0x2C</span>:<span class="string">"  "</span>, <span class="number">0x2D</span>:<span class="string">"-_"</span>, <span class="number">0x2E</span>:<span class="string">"=+"</span>, <span class="number">0x2F</span>:<span class="string">"[&#123;"</span>, <span class="number">0x30</span>:<span class="string">"]&#125;"</span>,  <span class="number">0x32</span>:<span class="string">"#~"</span>,</span><br><span class="line">   <span class="number">0x33</span>:<span class="string">";:"</span>, <span class="number">0x34</span>:<span class="string">"'\""</span>,  <span class="number">0x36</span>:<span class="string">",&lt;"</span>,  <span class="number">0x37</span>:<span class="string">".&gt;"</span>, <span class="number">0x4f</span>:<span class="string">"&gt;"</span>, <span class="number">0x50</span>:<span class="string">"&lt;"</span></span><br><span class="line">   &#125;</span><br><span class="line">l = [<span class="string">""</span>,<span class="string">""</span>,<span class="string">""</span>,<span class="string">""</span>,<span class="string">""</span>]</span><br><span class="line"> </span><br><span class="line">pos = <span class="number">0</span></span><br><span class="line"> </span><br><span class="line">os.system(<span class="string">'tshark -r location.pcap -T fields -e usb.capdata &gt; d.txt'</span>)</span><br><span class="line"> </span><br><span class="line">f=open(<span class="string">"d.txt"</span>,<span class="string">"r"</span>).readlines()</span><br><span class="line"> </span><br><span class="line">a=[]</span><br><span class="line"> </span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,len(f)):</span><br><span class="line">  d=str(f[i])</span><br><span class="line">  d=d[<span class="number">0</span>:<span class="number">23</span>]</span><br><span class="line">  <span class="keyword">if</span>((d[<span class="number">0</span>:<span class="number">2</span>]==<span class="string">"00"</span> <span class="keyword">or</span> d[<span class="number">0</span>:<span class="number">2</span>]==<span class="string">"02"</span>) <span class="keyword">and</span> d[<span class="number">6</span>:<span class="number">8</span>] != <span class="string">"00"</span>):</span><br><span class="line">    a.append(d)</span><br><span class="line"> </span><br><span class="line">a=<span class="string">'\n'</span>.join(a)</span><br><span class="line"> </span><br><span class="line">b=open(<span class="string">'k1'</span>,<span class="string">'w'</span>)</span><br><span class="line">b.write(a)</span><br><span class="line">b.close()</span><br><span class="line"> </span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> open(<span class="string">"k1"</span>,<span class="string">"r"</span>).readlines():</span><br><span class="line">   c = int(x[<span class="number">6</span>:<span class="number">8</span>],<span class="number">16</span>) </span><br><span class="line">   <span class="keyword">if</span> c == <span class="number">0</span>:</span><br><span class="line">       <span class="keyword">continue</span></span><br><span class="line">   <span class="comment"># newline or down arrow - move down</span></span><br><span class="line">   <span class="keyword">if</span> c == <span class="number">0x51</span> <span class="keyword">or</span> c == <span class="number">0x28</span>:</span><br><span class="line">       pos += <span class="number">1</span></span><br><span class="line">       <span class="keyword">continue</span></span><br><span class="line">   <span class="comment"># up arrow - move up</span></span><br><span class="line">   <span class="keyword">if</span> c == <span class="number">0x52</span>:</span><br><span class="line">       pos -= <span class="number">1</span></span><br><span class="line">       <span class="keyword">continue</span></span><br><span class="line">   <span class="comment"># select the character based on the Shift key</span></span><br><span class="line">   <span class="keyword">if</span> int(x[<span class="number">0</span>:<span class="number">2</span>],<span class="number">16</span>) == <span class="number">2</span>:</span><br><span class="line">       l[pos] += usb_codes[c][<span class="number">1</span>]</span><br><span class="line">   <span class="keyword">else</span>:</span><br><span class="line">       l[pos] += usb_codes[c][<span class="number">0</span>]</span><br><span class="line"> </span><br><span class="line"><span class="keyword">print</span> l[<span class="number">0</span>]</span><br></pre></td></tr></table></figure>
+
+<p>After running the above code for USB keyboard hid keys, got an output as some random string,</p>
+<p><img src="random_string.png" alt="Random String"></p>
+<p>The random string is : <strong>synt{jne_arire_punatrf}</strong></p>
+<p>I understood that random string was a <strong>Caesar Cipher</strong>. So I re-modified the above code such a way that we get the deciphered flag as we can see that the difference between <strong>s</strong> and <strong>f</strong> is <strong>13</strong>, so I remodified like that. Modified code is,</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> os</span><br><span class="line">usb_codes = &#123;</span><br><span class="line">   <span class="number">0x04</span>:<span class="string">"aA"</span>, <span class="number">0x05</span>:<span class="string">"bB"</span>, <span class="number">0x06</span>:<span class="string">"cC"</span>, <span class="number">0x07</span>:<span class="string">"dD"</span>, <span class="number">0x08</span>:<span class="string">"eE"</span>, <span class="number">0x09</span>:<span class="string">"fF"</span>,</span><br><span class="line">   <span class="number">0x0A</span>:<span class="string">"gG"</span>, <span class="number">0x0B</span>:<span class="string">"hH"</span>, <span class="number">0x0C</span>:<span class="string">"iI"</span>, <span class="number">0x0D</span>:<span class="string">"jJ"</span>, <span class="number">0x0E</span>:<span class="string">"kK"</span>, <span class="number">0x0F</span>:<span class="string">"lL"</span>,</span><br><span class="line">   <span class="number">0x10</span>:<span class="string">"mM"</span>, <span class="number">0x11</span>:<span class="string">"nN"</span>, <span class="number">0x12</span>:<span class="string">"oO"</span>, <span class="number">0x13</span>:<span class="string">"pP"</span>, <span class="number">0x14</span>:<span class="string">"qQ"</span>, <span class="number">0x15</span>:<span class="string">"rR"</span>,</span><br><span class="line">   <span class="number">0x16</span>:<span class="string">"sS"</span>, <span class="number">0x17</span>:<span class="string">"tT"</span>, <span class="number">0x18</span>:<span class="string">"uU"</span>, <span class="number">0x19</span>:<span class="string">"vV"</span>, <span class="number">0x1A</span>:<span class="string">"wW"</span>, <span class="number">0x1B</span>:<span class="string">"xX"</span>,</span><br><span class="line">   <span class="number">0x1C</span>:<span class="string">"yY"</span>, <span class="number">0x1D</span>:<span class="string">"zZ"</span>, <span class="number">0x1E</span>:<span class="string">"1!"</span>, <span class="number">0x1F</span>:<span class="string">"2@"</span>, <span class="number">0x20</span>:<span class="string">"3#"</span>, <span class="number">0x21</span>:<span class="string">"4$"</span>,</span><br><span class="line">   <span class="number">0x22</span>:<span class="string">"5%"</span>, <span class="number">0x23</span>:<span class="string">"6^"</span>, <span class="number">0x24</span>:<span class="string">"7&amp;"</span>, <span class="number">0x25</span>:<span class="string">"8*"</span>, <span class="number">0x26</span>:<span class="string">"9("</span>, <span class="number">0x27</span>:<span class="string">"0)"</span>,</span><br><span class="line">   <span class="number">0x2C</span>:<span class="string">"  "</span>, <span class="number">0x2D</span>:<span class="string">"-_"</span>, <span class="number">0x2E</span>:<span class="string">"=+"</span>, <span class="number">0x2F</span>:<span class="string">"[&#123;"</span>, <span class="number">0x30</span>:<span class="string">"]&#125;"</span>,  <span class="number">0x32</span>:<span class="string">"#~"</span>,</span><br><span class="line">   <span class="number">0x33</span>:<span class="string">";:"</span>, <span class="number">0x34</span>:<span class="string">"'\""</span>,  <span class="number">0x36</span>:<span class="string">",&lt;"</span>,  <span class="number">0x37</span>:<span class="string">".&gt;"</span>, <span class="number">0x4f</span>:<span class="string">"&gt;"</span>, <span class="number">0x50</span>:<span class="string">"&lt;"</span></span><br><span class="line">   &#125;</span><br><span class="line">l = [<span class="string">""</span>,<span class="string">""</span>,<span class="string">""</span>,<span class="string">""</span>,<span class="string">""</span>]</span><br><span class="line"> </span><br><span class="line">pos = <span class="number">0</span></span><br><span class="line"> </span><br><span class="line">os.system(<span class="string">'tshark -r location.pcap -T fields -e usb.capdata &gt; d.txt'</span>)</span><br><span class="line"> </span><br><span class="line">f=open(<span class="string">"d.txt"</span>,<span class="string">"r"</span>).readlines()</span><br><span class="line"> </span><br><span class="line">a=[]</span><br><span class="line"> </span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,len(f)):</span><br><span class="line">  d=str(f[i])</span><br><span class="line">  d=d[<span class="number">0</span>:<span class="number">23</span>]</span><br><span class="line">  <span class="keyword">if</span>((d[<span class="number">0</span>:<span class="number">2</span>]==<span class="string">"00"</span> <span class="keyword">or</span> d[<span class="number">0</span>:<span class="number">2</span>]==<span class="string">"02"</span>) <span class="keyword">and</span> d[<span class="number">6</span>:<span class="number">8</span>] != <span class="string">"00"</span>):</span><br><span class="line">    a.append(d)</span><br><span class="line"> </span><br><span class="line">a=<span class="string">'\n'</span>.join(a)</span><br><span class="line"> </span><br><span class="line">b=open(<span class="string">'k1'</span>,<span class="string">'w'</span>)</span><br><span class="line">b.write(a)</span><br><span class="line">b.close()</span><br><span class="line"> </span><br><span class="line"><span class="keyword">for</span> x <span class="keyword">in</span> open(<span class="string">"k1"</span>,<span class="string">"r"</span>).readlines():</span><br><span class="line">   c = int(x[<span class="number">6</span>:<span class="number">8</span>],<span class="number">16</span>)</span><br><span class="line"> </span><br><span class="line">   <span class="keyword">if</span> c == <span class="number">0</span>:</span><br><span class="line">       <span class="keyword">continue</span></span><br><span class="line">   <span class="comment"># newline or down arrow - move down</span></span><br><span class="line">   <span class="keyword">if</span> c == <span class="number">0x51</span> <span class="keyword">or</span> c == <span class="number">0x28</span>:</span><br><span class="line">       pos += <span class="number">1</span></span><br><span class="line">       <span class="keyword">continue</span></span><br><span class="line">   <span class="comment"># up arrow - move up</span></span><br><span class="line">   <span class="keyword">if</span> c == <span class="number">0x52</span>:</span><br><span class="line">       pos -= <span class="number">1</span></span><br><span class="line">       <span class="keyword">continue</span></span><br><span class="line">   <span class="comment"># select the character based on the Shift key</span></span><br><span class="line">   <span class="keyword">if</span> int(x[<span class="number">0</span>:<span class="number">2</span>],<span class="number">16</span>) == <span class="number">2</span>:</span><br><span class="line">       l[pos] += usb_codes[c][<span class="number">1</span>]</span><br><span class="line">   <span class="keyword">else</span>:</span><br><span class="line">       l[pos] += usb_codes[c][<span class="number">0</span>]</span><br><span class="line"> </span><br><span class="line"><span class="keyword">print</span> l[<span class="number">0</span>]</span><br><span class="line"> </span><br><span class="line">new_str = <span class="string">''</span></span><br><span class="line">temp = []</span><br><span class="line"><span class="keyword">for</span> letter <span class="keyword">in</span> l[<span class="number">0</span>]:</span><br><span class="line">    <span class="keyword">if</span> ord(letter) &gt;= <span class="number">97</span> <span class="keyword">and</span> ord(letter) &lt;= <span class="number">122</span>:</span><br><span class="line">        temp.append(chr(<span class="number">97</span> + (ord(letter) - <span class="number">97</span> + <span class="number">13</span>) % <span class="number">26</span>))</span><br><span class="line">         </span><br><span class="line">    <span class="keyword">else</span>:</span><br><span class="line">        temp.append(letter)</span><br><span class="line">new_str = new_str.join(temp)</span><br><span class="line"> </span><br><span class="line"><span class="keyword">print</span> new_str</span><br></pre></td></tr></table></figure>
+
+<h2 id="Flag"><a href="#Flag" class="headerlink" title="Flag"></a>Flag</h2><p><img src="flag.png" alt="flag"></p>
+<p>Flag: <strong>flag{war_never_changes}</strong></p>
+<p>If you liked my solution, please do share it. I’m available on Twitter: <a href="https://twitter.com/NihithNihi" target="_blank" rel="noopener">@NihithNihi</a></p>
+]]></content>
+      <categories>
+        <category>Writeups</category>
+        <category>Network</category>
+      </categories>
+      <tags>
+        <tag>Python</tag>
+        <tag>Wireshark</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Securinets CTF’19 – Rare to win Writeup</title>
+    <url>/2019/08/17/Securinets-CTF%E2%80%9919-%E2%80%93-Rare-to-win-Challenge/</url>
+    <content><![CDATA[<p><strong>tl;dr</strong></p>
+<ul>
+<li>Chrome history analysis</li>
+<li>ACE file analysis</li>
+<li>Detecting the virus</li>
+</ul>
+<a id="more"></a>
+
+<h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><p><img src="/images/Raretowin/description.png" alt="Description"></p>
+<p>I could not solve this challenge at the time of the CTF. But it is a nice challenge.</p>
+<p>Given with an Windows 7 memory dump, lets see what all processes are running in the machine/system.</p>
+<h2 id="Initial-Analysis"><a href="#Initial-Analysis" class="headerlink" title="Initial Analysis"></a>Initial Analysis</h2><p>As the description of the says that the operator was browsing web the he might be using one of the browsers like Chrome, Firefox, or inbuilt Explorer. So lets go and see the pslist.</p>
+<p><img src="/images/Raretowin/pslist.png" alt="PSlist output"></p>
+<p>As we can see that chrome was running in system at the time when the dump was captured. So as the Chrome was running in the system we can use chrome history plugin and get the users history data.</p>
+<p><img src="/images/Raretowin/chromehistory.png" alt="Chrome History"></p>
+<h2 id="Further-Analysis"><a href="#Further-Analysis" class="headerlink" title="Further Analysis"></a>Further Analysis</h2><p>As we can see that, there is file called <strong>music.rar</strong> was downloaded from the chrome. So we will search for the file in the dump, using filescan plugin.</p>
+<p><img src="/images/Raretowin/filescan_music_rar.png" alt="filescan_music_rar"></p>
+<p>It resulted that there is no file relating to it. So I have downloaded the file from the <a href="https://www.mediafire.com/file/2t7bb2mflg2lwwj/music.rar/file" target="_blank" rel="noopener">link</a> he browsed.</p>
+<p>I tried opening the rar but it does not shown any files and it was in <strong>Read Only</strong> mode. So tried running <strong>file command</strong> on it and got to know that it is an <strong>ACE</strong> file.</p>
+<p><img src="/images/Raretowin/file_music.png" alt="file command"></p>
+<p>After a quick search in google, i came to know that there are some tools to open and extract the file from the ace file. So I renamed it and tried the unace command line tool which was provided by the Ubuntu software. But it doesn’t gave any results. So I checked for other alternatives and found <a href="http://webdiis.unizar.es/pub/unix/archive/linunace25.tgz" target="_blank" rel="noopener">this</a>.</p>
+<p>After using that tool, I can see that there is a firefox.exe and it is unable to override the build in firefox of the host system as I didn’t run with sudo permission.</p>
+<p><img src="/images/Raretowin/unace.png" alt="unace"></p>
+<p>And also if we use binwalk on the that ace file, we can see an <strong>ELF</strong> file present in it. And loading that in gdb and seeing the main function of the elf, there is only one operation going on that is the <strong>printf function</strong>. So we can say that the exe was the <strong>virus</strong> that the challenge author has asked.</p>
+<h2 id="Flag"><a href="#Flag" class="headerlink" title="Flag"></a>Flag</h2><p>But the flag is the <strong>path_to_the_virus</strong>. So as we can see that the exe file was extracting to <strong>C:/Users/Public/Data/firefox.exe</strong> therefore that will be the path that they have asked.</p>
+<p>But in windows the folders are divided using “\\” so the resulting path is <strong>C:\\Users\\Public\\Data\\firefox.exe</strong>.</p>
+<p>And the flag will be,</p>
+<p>Flag : <strong>securinets{84117b4eb400242a9db464e84220e672}</strong></p>
+<p>If you liked my solution, please do share it. I’m available on Twitter: <a href="https://twitter.com/NihithNihi" target="_blank" rel="noopener">@NihithNihi</a></p>
+]]></content>
+      <categories>
+        <category>Writeups</category>
+        <category>Memory Forensics</category>
+      </categories>
+      <tags>
+        <tag>Volatility</tag>
+        <tag>Memory</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Securinets-CTF’20–Time-Matters</title>
+    <url>/2020/05/26/Securinets-CTF%E2%80%9920%E2%80%93Time-Matters/</url>
+    <content><![CDATA[<p><strong>tl;dr</strong></p>
+<ul>
+<li>chrome history analysis</li>
+<li>File recovery from memory dump</li>
+<li>Simple stego</li>
+</ul>
+<a id="more"></a>
+
+<h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><p><img src="/images/TimeMatters/description.png" alt="Description"></p>
+<h2 id="Initial-Analysis"><a href="#Initial-Analysis" class="headerlink" title="Initial Analysis"></a>Initial Analysis</h2><p>We are given with a Windows 7 memory dump. Let’s see what all processes are running in the macine.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f for1.raw --profile=Win7SP1x86_23418 pslist</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/TimeMatters/pslist.png" alt="PSList"></p>
+<p>We can see Explorer and chrome are in open, lets check what’s there in Chrome’s history. We know that for their is a plugin <strong>chromehistory</strong>, we will use that.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">volatility --plugins=/home/g4rud4/Downloads/Tools/volatility-plugins -f for1.raw --profile=Win7SP1x86_23418 chromehistory</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/TimeMatters/chromehistory.png" alt="chrome history"></p>
+<p>We didn’t find any suspicious links in chrome’s history. </p>
+<h2 id="Further-Analysis"><a href="#Further-Analysis" class="headerlink" title="Further Analysis"></a>Further Analysis</h2><p>So let’s check what all files are there in the system.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">volatility --plugins=/home/g4rud4/Downloads/Tools/volatility-plugins -f for1.raw --profile=Win7SP1x86_23418 filescan | grep Desktop</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/TimeMatters/filescan_desktop.png" alt="Filescan Desktop"></p>
+<p>We can steghide and a jpg image on the desktop, So let’s dumpfile the jpg file and use steghide on it.</p>
+<p><img src="/images/TimeMatters/dumpfiles.png" alt="dumpfiles"></p>
+<p>When I used steghide for extaction, it asked for the password, I followed the same way as everyone does, just leaving it <strong>blink</strong> and clicking <strong>Enter</strong>. But no use.</p>
+<p><img src="/images/TimeMatters/steghide_wop.png" alt="Steghide Without PSSWD"></p>
+<p>So I thought to use the users password and got the NTLM hash using hashdump, but when cracked hash didn’t gave the result.</p>
+<p><img src="/images/TimeMatters/hashdump.png" alt="hashdump"> <img src="/images/TimeMatters/crackstation.png" alt="crackstation"></p>
+<h2 id="Flag"><a href="#Flag" class="headerlink" title="Flag"></a>Flag</h2><p>So after opening the image, it’s Messi’s image which was took on 2019. So the on looking at the challenge titile and relating that to the password of steghide, we can use <strong>Messi2019</strong> as password and try what we can get.</p>
+<p><img src="/images/TimeMatters/DS0394.jpg" alt="Messi Image"><br><img src="/images/TimeMatters/steghide_2.png" alt="Using Messi2019 as Password"></p>
+<p>Hoorah!! We got the output. One opening the resulted image, we got the flag.</p>
+<p><img src="/images/TimeMatters/image.png" alt="Flag"></p>
+<p>There is an other way also, by using <strong>mimikatz</strong> for getting the user password. But when I used the password that we got in <strong>mimikatz</strong>, I didn’t got anything, so after modifing the password by relating to the challenge title and modifying it to <strong>Messi2020</strong>, we can get the flag.</p>
+<p><img src="/images/TimeMatters/mimikatz.png" alt="mimikatz"><br><img src="/images/TimeMatters/steghide_1.png" alt="using Messi2020 as password"></p>
+<p>If you liked my solution, please do share it. I’m available on Twitter: <a href="https://twitter.com/NihithNihi" target="_blank" rel="noopener">@NihithNihi</a></p>
+]]></content>
+      <categories>
+        <category>Writeups</category>
+        <category>Memory Forensics</category>
+      </categories>
+      <tags>
+        <tag>Volatility</tag>
+        <tag>Memory</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Memlabs Lab - 1 writeup</title>
+    <url>/2020/01/25/Memlabs-Lab-1-writeup/</url>
+    <content><![CDATA[<p>MemLabs is an educational, introductory set of CTF-styled challenges which is aimed to encourage students, security researchers and also CTF players to get started with the field of Memory Forensics.</p>
+<a id="more"></a>
+
+<p>The labs given by <a href="https://twitter.com/_abhiramkumar/" target="_blank" rel="noopener">@_abhiramkumar</a> are really useful for the beginners to start with Memory Forensics.</p>
+<p>The memory files and Descriptions are available in his <a href="https://github.com/stuxnet999/MemLabs" target="_blank" rel="noopener">github repo</a>.<br>If you are having any troubles in the commands used, you can refer <a href="https://github.com/volatilityfoundation/volatility/wiki/Command-Reference" target="_blank" rel="noopener">volatility command referance</a>.</p>
+<h2 id="Lab-1-Writeup"><a href="#Lab-1-Writeup" class="headerlink" title="Lab - 1 Writeup"></a>Lab - 1 Writeup</h2><p>We are provided with the windows 7 memory dump. To know which OS’s memory dump we have, we can use imageinfo plugin to find the profile. Let’s begin with the initial level of analysis.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ Volatility -f MemoryDump_Lab1.raw imageinfo</span><br></pre></td></tr></table></figure>
+<p><img src="/images/Memlabs-Lab-1/imageinfo.png" alt="imageinfo output"></p>
+<p>As we got the profile, we can use it and get the processes running in at the time for memory capture.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f MemoryDump_Lab1.raw --profile=Win7SP1x64 pslist</span><br></pre></td></tr></table></figure>
+<p><img src="/images/Memlabs-Lab-1/pslist_1.png" alt="pslist output"><br><img src="/images/Memlabs-Lab-1/pslist_2.png" alt="pslist output"></p>
+<p>As we see above cmd, mspaint and WinRAR are the active running processes.</p>
+<h3 id="Flag-1"><a href="#Flag-1" class="headerlink" title="Flag - 1"></a>Flag - 1</h3><p>So let us see what is there in cmd.exe.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f MemoryDump_Lab1.raw --profile=Win7SP1x64 consoles</span><br></pre></td></tr></table></figure>
+<p><img src="/images/Memlabs-Lab-1/consoles.png" alt="consoles output"><br>You can see a base64 string. After decoding base64, we got the first flag: <strong>flag{th1s_1s_th3_1st_st4g3!!}</strong></p>
+<h3 id="Flag-2"><a href="#Flag-2" class="headerlink" title="Flag - 2"></a>Flag - 2</h3><p>As mspaint is also an active running process, Let us check it out.<br>To find what is running in mspaint, first we need to take dump the mspaint.exe (PID 2424) as shown below.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f MemoryDump_Lab1.raw --profile=Win7SP1x64 memdump -p 2424 -D dump</span><br></pre></td></tr></table></figure>
+<p><img src="/images/Memlabs-Lab-1/memdump_mspaint.png" alt="Memdump MSPaint"><br>Next, we need to change the extension of <strong>2424.dmp</strong> to <strong>2424.data</strong>. And we need to open 2424.data using <strong>GIMP(GNU Image Manipulation Program)</strong>.<br>After opening the image using GIMP, this is what we got,</p>
+<p><img src="/images/Memlabs-Lab-1/load_gimp.png" alt="load in gimp"></p>
+<p>After changing the values of width and height using up and down arrows, We will somehing similar to this.</p>
+<p><img src="/images/Memlabs-Lab-1/gimp_flag.png" alt="mogify height and width"></p>
+<p>After modifying the image to understandable side, we will get something similar to this,</p>
+<p><img src="/images/Memlabs-Lab-1/gimp_flag_1.png" alt="flag - 2"></p>
+<p>Here you get the second flag.<br>Flag: <strong>flag{G00d_BoY_good_girL}</strong></p>
+<h3 id="Flag-3"><a href="#Flag-3" class="headerlink" title="Flag - 3"></a>Flag - 3</h3><p>As WinRAR is also running that means some sort of archive has been opened. So let us check for an archive in the given memory dump.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f MemoryDump_Lab1.raw --profile=Win7SP1x64 filescan | grep Documents</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Memlabs-Lab-1/rar_filescan.png" alt="Documents filescan output"></p>
+<p>Here, we can see a file Important.rar in Documents Folder. So we will dump it and check it.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f MemoryDump_Lab1.raw --profile=Win7SP1x64 dumpfiles -Q 0x000000003fa3ebc0 -D dump</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Memlabs-Lab-1/rar_dumpfiles.png" alt="Dumpfiles Important.rar"></p>
+<p>However, the archive is password protected. Also, brute-forcing for the password is not at all intended. So let us use unrar command and check what we get.</p>
+<p><img src="/images/Memlabs-Lab-1/unrar.png" alt="unrar output"></p>
+<p>It’s written that, “<strong>Password is NTLM hash(in uppercase) of Alissa’s account passwd</strong>”.<br>We can get Alissa’s account NTLM hash from hashdump.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f MemoryDump_Lab1.raw --profile=Win7SP1x64 hashdump</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Memlabs-Lab-1/hashdump.png" alt="hashdump output"></p>
+<p>So using the Alissa Simpson’s hash (<strong>f4ff64c8baac57d22f22edc681055ba6</strong>) in upper case and entering it as the password for RAR, we get the flag.</p>
+<p>So finally we get the third flag.</p>
+<p><img src="/images/Memlabs-Lab-1/flag3.png" alt="flag - 3"></p>
+<p>That’s how you finish this <strong>MemLabs, Lab – 1</strong>.</p>
+<p>If you like my solution, please do share it. I’m availabe on Twitter: <a href="https://twitter.com/NihithNihi" target="_blank" rel="noopener">@NihithNihi</a></p>
+]]></content>
+      <categories>
+        <category>Memlabs</category>
+      </categories>
+      <tags>
+        <tag>Volatility</tag>
+        <tag>Memory</tag>
+        <tag>Memlabs</tag>
+      </tags>
+  </entry>
+</search>
