@@ -33,6 +33,33 @@
       </tags>
   </entry>
   <entry>
+    <title>Hackcon CTF’19 – Too cold for steg Writeup</title>
+    <url>/2019/08/24/Hackcon-CTF%E2%80%9919-%E2%80%93-Too-cold-for-steg-Writeup/</url>
+    <content><![CDATA[<p><strong>tl;dr</strong></p>
+<ul>
+<li>Whitespace steganography</li>
+</ul>
+<a id="more"></a>
+
+<h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><p><img src="/images/Toocoldforsteg/description.png" alt="Description"></p>
+<h2 id="Initial-Analysis"><a href="#Initial-Analysis" class="headerlink" title="Initial Analysis"></a>Initial Analysis</h2><p>Got a text file and opening the text file in any text editor and selecting all the text we can find some whitespace present at the ending of the each each line.</p>
+<p>As the title is Too cold to steg we will get a tool known as stegsnow in our mind.</p>
+<p>But for using the stegsnow we need a password. After searching for the password in the file given we can get the password as <strong>d4rkc0de-IIITD</strong>.</p>
+<p><img src="/images/Toocoldforsteg/grep_password.png" alt="grep password"></p>
+<p>Then using the stegsnow we will get the flag.</p>
+<p><img src="/images/Toocoldforsteg/stegsnow.png" alt="stegsnow command"></p>
+<h2 id="Flag"><a href="#Flag" class="headerlink" title="Flag"></a>Flag</h2><p>Flag: <strong>d4rk{h@ving_fun_w1th_st3gsn0w?}c0de</strong></p>
+<p>If you like my solution, please do share it. I’m availabe on Twitter: <a href="https://twitter.com/NihithNihi" target="_blank" rel="noopener">@NihithNihi</a></p>
+]]></content>
+      <categories>
+        <category>Writeups</category>
+        <category>Steganography</category>
+      </categories>
+      <tags>
+        <tag>whitespace</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Fresh From The Oven - InCTF Internationals 2019 Writeup</title>
     <url>/2019/10/03/InCTFi19-Fresh-From-the-Oven/</url>
     <content><![CDATA[<p><strong>tl;dr</strong></p>
@@ -75,33 +102,6 @@
       <tags>
         <tag>Steganography</tag>
         <tag>Wireshark</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Hackcon CTF’19 – Too cold for steg Writeup</title>
-    <url>/2019/08/24/Hackcon-CTF%E2%80%9919-%E2%80%93-Too-cold-for-steg-Writeup/</url>
-    <content><![CDATA[<p><strong>tl;dr</strong></p>
-<ul>
-<li>Whitespace steganography</li>
-</ul>
-<a id="more"></a>
-
-<h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><p><img src="/images/Toocoldforsteg/description.png" alt="Description"></p>
-<h2 id="Initial-Analysis"><a href="#Initial-Analysis" class="headerlink" title="Initial Analysis"></a>Initial Analysis</h2><p>Got a text file and opening the text file in any text editor and selecting all the text we can find some whitespace present at the ending of the each each line.</p>
-<p>As the title is Too cold to steg we will get a tool known as stegsnow in our mind.</p>
-<p>But for using the stegsnow we need a password. After searching for the password in the file given we can get the password as <strong>d4rkc0de-IIITD</strong>.</p>
-<p><img src="/images/Toocoldforsteg/grep_password.png" alt="grep password"></p>
-<p>Then using the stegsnow we will get the flag.</p>
-<p><img src="/images/Toocoldforsteg/stegsnow.png" alt="stegsnow command"></p>
-<h2 id="Flag"><a href="#Flag" class="headerlink" title="Flag"></a>Flag</h2><p>Flag: <strong>d4rk{h@ving_fun_w1th_st3gsn0w?}c0de</strong></p>
-<p>If you like my solution, please do share it. I’m availabe on Twitter: <a href="https://twitter.com/NihithNihi" target="_blank" rel="noopener">@NihithNihi</a></p>
-]]></content>
-      <categories>
-        <category>Writeups</category>
-        <category>Steganography</category>
-      </categories>
-      <tags>
-        <tag>whitespace</tag>
       </tags>
   </entry>
   <entry>
@@ -202,51 +202,6 @@
 <p><img src="/images/Memlabs-Lab-2/Important.png" alt="Flag 3"></p>
 <p>That’s how you finish this <strong>MemLabs, Lab – 2</strong>.</p>
 <p>If you like my solution, please do share it. I’m availabe on Twitter: <a href="https://twitter.com/NihithNihi" target="_blank" rel="noopener">@NihithNihi</a></p>
-]]></content>
-      <categories>
-        <category>Memlabs</category>
-      </categories>
-      <tags>
-        <tag>Volatility</tag>
-        <tag>Memory</tag>
-        <tag>Memlabs</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Memlabs Lab - 3 writeup</title>
-    <url>/2020/06/02/Memlabs-Lab-3-writeup/</url>
-    <content><![CDATA[<p>We are provided with a <strong>Windows 7</strong> memory dump. Let’s begin our initial analysis.</p>
-<h2 id="Initial-Analysis"><a href="#Initial-Analysis" class="headerlink" title="Initial Analysis"></a>Initial Analysis</h2><p>Let’s check what all processes are running.</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f MemoryDump_Lab3.raw --profile=Win7SP1x86 pslist</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/Memlabs-Lab-3/pslist1.png" alt="pslist output"><br><img src="/images/Memlabs-Lab-3/pslist2.png" alt="pslist output"></p>
-<p>As we can see only notepad is so let us try using <code>cmdline</code> plugin to check the process command line arguments.</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f MemoryDump_Lab3.raw --profile=Win7SP1x86 cmdline</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/Memlabs-Lab-3/cmdline.png" alt="cmdline output"></p>
-<p>Going through the cmdline plugon output. In the bottom we can see that,</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">notepad.exe pid:   3736</span><br><span class="line">Command line : &quot;C:\Windows\system32\NOTEPAD.EXE&quot; C:\Users\hello\Desktop\evilscript.py</span><br><span class="line">************************************************************************</span><br><span class="line">notepad.exe pid:   3432</span><br><span class="line">Command line : &quot;C:\Windows\system32\NOTEPAD.EXE&quot; C:\Users\hello\Desktop\vip.txt</span><br></pre></td></tr></table></figure>
-
-<p>using notepad the user <code>hello</code> accessed <code>evilscript.py</code> and <code>vip.txt</code>. Let us check if those files are still there in the memory.</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f MemoryDump_Lab3.raw --profile=Win7SP1x86 filescan | grep Desktop</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/Memlabs-Lab-3/filescan.png" alt="filescan output"></p>
-<p>As we can see that, those are still present in the memory so we can dump them. And we can see that there is an another file named <code>suspision1.jpeg</code> is also located on same folder. So let’s dump that too</p>
-<p><img src="/images/Memlabs-Lab-3/dumpfiles.png" alt="dumpfiles"></p>
-<p>So lets’s check what’s there in the python file.</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">xor</span><span class="params">(s)</span>:</span></span><br><span class="line">	a = <span class="string">''</span>.join(chr(ord(i)^<span class="number">3</span>) <span class="keyword">for</span> i <span class="keyword">in</span> s)</span><br><span class="line">	<span class="keyword">return</span> a</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">encoder</span><span class="params">(x)</span>:</span></span><br><span class="line">	<span class="keyword">return</span> x.encode(<span class="string">"base64"</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">	f = open(<span class="string">"C:\\Users\\hello\\Desktop\\vip.txt"</span>, <span class="string">"w"</span>)</span><br><span class="line">	arr = sys.argv[<span class="number">1</span>]</span><br><span class="line">	arr = encoder(xor(arr))</span><br><span class="line">	f.write(arr)</span><br><span class="line">	f.close()</span><br></pre></td></tr></table></figure>
-
-<p>As we can see the script is xoring a string with 3 and then encoding it to baste64 and writing it to vip.txt. So by doing the same exact thing in reverse way we can get the original string.</p>
-<p>I have done this in ipython:</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a=<span class="string">'am1gd2V4M20wXGs3b2U='</span>.decode(<span class="string">'base64'</span>)</span><br><span class="line">q=<span class="string">''</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> a:</span><br><span class="line">    q+=chr(ord(i)^<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
-
-<p>This gave the output as the first half of the flag: <strong>inctf{0n3_h4lf</strong>.</p>
-<p>As we have got a jpg file, </p>
-<p><img src="/images/Memlabs-Lab-3/suspision1.jpeg" alt="jpg file"></p>
-<p>So lets try steghide with out a password and using the first half of the flag as the password.</p>
-<p><img src="/images/Memlabs-Lab-3/steghide.png" alt="steghide output"></p>
-<p>After using the first half of the flag as the password, we got the result <code>secret text</code>. Opening it got the second part of the flag: <strong>_1s_n0t_3n0ugh}</strong></p>
-<p>Flag: <strong>inctf{0n3_h4lf_1s_n0t_3n0ugh}</strong></p>
 ]]></content>
       <categories>
         <category>Memlabs</category>
@@ -439,6 +394,51 @@
         <tag>Python</tag>
         <tag>Wireshark</tag>
         <tag>Network</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Memlabs Lab - 3 writeup</title>
+    <url>/2020/06/02/Memlabs-Lab-3-writeup/</url>
+    <content><![CDATA[<p>We are provided with a <strong>Windows 7</strong> memory dump. Let’s begin our initial analysis.</p>
+<h2 id="Initial-Analysis"><a href="#Initial-Analysis" class="headerlink" title="Initial Analysis"></a>Initial Analysis</h2><p>Let’s check what all processes are running.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f MemoryDump_Lab3.raw --profile=Win7SP1x86 pslist</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Memlabs-Lab-3/pslist1.png" alt="pslist output"><br><img src="/images/Memlabs-Lab-3/pslist2.png" alt="pslist output"></p>
+<p>As we can see only notepad is so let us try using <code>cmdline</code> plugin to check the process command line arguments.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f MemoryDump_Lab3.raw --profile=Win7SP1x86 cmdline</span><br></pre></td></tr></table></figure>
+
+<p>Going through the cmdline plugin output. In the bottom we can see that,</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">notepad.exe pid:   3736</span><br><span class="line">Command line : &quot;C:\Windows\system32\NOTEPAD.EXE&quot; C:\Users\hello\Desktop\evilscript.py</span><br><span class="line">************************************************************************</span><br><span class="line">notepad.exe pid:   3432</span><br><span class="line">Command line : &quot;C:\Windows\system32\NOTEPAD.EXE&quot; C:\Users\hello\Desktop\vip.txt</span><br></pre></td></tr></table></figure>
+
+<p>using notepad the user <code>hello</code> accessed <code>evilscript.py</code> and <code>vip.txt</code>. Let us check if those files are still there in the memory.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f MemoryDump_Lab3.raw --profile=Win7SP1x86 filescan | grep Desktop</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Memlabs-Lab-3/filescan.png" alt="filescan output"></p>
+<p>As we can see that, those are still present in the memory so we can dump them. And we can see that there is an another file named <code>suspision1.jpeg</code> is also located on same folder. So let’s dump that too</p>
+<p><img src="/images/Memlabs-Lab-3/dumpfiles.png" alt="dumpfiles"></p>
+<p>So lets’s check what’s there in the python file.</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"><span class="keyword">import</span> string</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">xor</span><span class="params">(s)</span>:</span></span><br><span class="line">	a = <span class="string">''</span>.join(chr(ord(i)^<span class="number">3</span>) <span class="keyword">for</span> i <span class="keyword">in</span> s)</span><br><span class="line">	<span class="keyword">return</span> a</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">encoder</span><span class="params">(x)</span>:</span></span><br><span class="line">	<span class="keyword">return</span> x.encode(<span class="string">"base64"</span>)</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">"__main__"</span>:</span><br><span class="line">	f = open(<span class="string">"C:\\Users\\hello\\Desktop\\vip.txt"</span>, <span class="string">"w"</span>)</span><br><span class="line">	arr = sys.argv[<span class="number">1</span>]</span><br><span class="line">	arr = encoder(xor(arr))</span><br><span class="line">	f.write(arr)</span><br><span class="line">	f.close()</span><br></pre></td></tr></table></figure>
+
+<p>As we can see the script is xoring a string with 3 and then encoding it to baste64 and writing it to vip.txt. So by doing the same exact thing in reverse way we can get the original string.</p>
+<p>I have done this in ipython:</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line">a=<span class="string">'am1gd2V4M20wXGs3b2U='</span>.decode(<span class="string">'base64'</span>)</span><br><span class="line">q=<span class="string">''</span></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> a:</span><br><span class="line">    q+=chr(ord(i)^<span class="number">3</span>)</span><br></pre></td></tr></table></figure>
+
+<p>This gave the output as the first half of the flag: <strong>inctf{0n3_h4lf</strong>.</p>
+<p>As we have got a jpg file, </p>
+<p><img src="/images/Memlabs-Lab-3/suspision1.jpeg" alt="jpg file"></p>
+<p>So lets try steghide with out a password and using the first half of the flag as the password.</p>
+<p><img src="/images/Memlabs-Lab-3/steghide.png" alt="steghide output"></p>
+<p>After using the first half of the flag as the password, we got the result <code>secret text</code>. Opening it got the second part of the flag: <strong>_1s_n0t_3n0ugh}</strong></p>
+<p>Flag: <strong>inctf{0n3_h4lf_1s_n0t_3n0ugh}</strong></p>
+<p>If you like my solution, please do share it. I’m availabe on Twitter: <a href="https://twitter.com/NihithNihi" target="_blank" rel="noopener">@NihithNihi</a></p>
+]]></content>
+      <categories>
+        <category>Memlabs</category>
+      </categories>
+      <tags>
+        <tag>Volatility</tag>
+        <tag>Memory</tag>
+        <tag>Memlabs</tag>
       </tags>
   </entry>
   <entry>
