@@ -74,7 +74,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">431</span>
+            <span class="post-count">433</span>
         </span>
     </span>
 
@@ -113,7 +113,7 @@
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ volatility -f MemoryDump_Lab2.raw --profile=Win7SP1x64 pslist</span><br></pre></td></tr></table></figure>
 
 <p><img src="/images/Memlabs-Lab-2/pslist1.png" alt="pslist output"><br><img src="/images/Memlabs-Lab-2/pslist2.png" alt="pslist output"></p>
-<p>As we can see chrome, keepass is running, lets check what’s there in them.</p>
+<p>As we can see <code>chrome</code>, <code>keepass</code> are active running processes, lets check what’s there in them.</p>
 <h2 id="Flag-1"><a href="#Flag-1" class="headerlink" title="Flag 1"></a>Flag 1</h2><p>Let us check the environmental variables. We can check it using <code>envars</code> plugin.</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ volatility --plugin=/home/g4rud4/Downloads/Tools/volatility-plugins -f MemoryDump_Lab2.raw --profile=Win7SP1x64 envars</span><br></pre></td></tr></table></figure>
 
@@ -176,9 +176,9 @@
       </a>
     
     
-      <a href="/2020/05/26/Securinets-CTF%E2%80%9920%E2%80%93Time-Matters/" class="article-nav-link">
+      <a href="/2020/06/01/Memlabs-Lab-1-writeup/" class="article-nav-link">
         <strong class="article-nav-caption">Next Post</strong>
-        <div class="article-nav-title">Securinets-CTF’20–Time-Matters</div>
+        <div class="article-nav-title">Memlabs Lab - 1 writeup</div>
       </a>
     
   </nav>

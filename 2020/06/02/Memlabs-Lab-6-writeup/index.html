@@ -9,7 +9,7 @@
     
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>
-    Memlabs Lab - 1 writeup |  Nihith&#39;s blog
+    Memlabs Lab - 6 writeup |  Nihith&#39;s blog
   </title>
   <meta name="generator" content="hexo-theme-ayer">
   
@@ -42,7 +42,7 @@
   <div id="app">
     <main class="content on">
       <section class="outer">
-  <article id="post-Memlabs-Lab-1-writeup" class="article article-type-post" itemscope
+  <article id="post-Memlabs-Lab-6-writeup" class="article article-type-post" itemscope
   itemprop="blogPost" data-scroll-reveal>
 
   <div class="article-inner">
@@ -50,7 +50,7 @@
     <header class="article-header">
        
 <h1 class="article-title sea-center" style="border-left:0" itemprop="name">
-  Memlabs Lab - 1 writeup
+  Memlabs Lab - 6 writeup
 </h1>
  
 
@@ -59,8 +59,8 @@
 
     
     <div class="article-meta">
-      <a href="/2020/01/25/Memlabs-Lab-1-writeup/" class="article-date">
-  <time datetime="2020-01-25T08:52:36.000Z" itemprop="datePublished">2020-01-25</time>
+      <a href="/2020/06/02/Memlabs-Lab-6-writeup/" class="article-date">
+  <time datetime="2020-06-02T10:01:08.000Z" itemprop="datePublished">2020-06-02</time>
 </a>
       
   <div class="article-category">
@@ -74,7 +74,7 @@
         <span class="post-meta-item-icon">
             <i class="ri-quill-pen-line"></i>
             <span class="post-meta-item-text"> Word count:</span>
-            <span class="post-count">504</span>
+            <span class="post-count">554</span>
         </span>
     </span>
 
@@ -108,51 +108,58 @@
       
 
       
-      <p>MemLabs is an educational, introductory set of CTF-styled challenges which is aimed to encourage students, security researchers and also CTF players to get started with the field of Memory Forensics.</p>
-<a id="more"></a>
+      <p>We are provided with a <strong>Windows 7</strong> memory dump. Let us begin our initial level of analysis.</p>
+<h2 id="Initial-Analysis"><a href="#Initial-Analysis" class="headerlink" title="Initial Analysis"></a>Initial Analysis</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ volatility -f MemoryDump_Lab6.raw --profile&#x3D;Win7SP1x64 pslist</span><br></pre></td></tr></table></figure>
 
-<p>The labs given by <a href="https://twitter.com/_abhiramkumar/" target="_blank" rel="noopener">@_abhiramkumar</a> are really useful for the beginners to start with Memory Forensics.</p>
-<p>The memory files and Descriptions are available in his <a href="https://github.com/stuxnet999/MemLabs" target="_blank" rel="noopener">github repo</a>.<br>If you are having any troubles in the commands used, you can refer <a href="https://github.com/volatilityfoundation/volatility/wiki/Command-Reference" target="_blank" rel="noopener">volatility command referance</a>.</p>
-<h2 id="Lab-1-Writeup"><a href="#Lab-1-Writeup" class="headerlink" title="Lab - 1 Writeup"></a>Lab - 1 Writeup</h2><p>We are provided with the windows 7 memory dump. To know which OS’s memory dump we have, we can use imageinfo plugin to find the profile. Let’s begin with the initial level of analysis.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ Volatility -f MemoryDump_Lab1.raw imageinfo</span><br></pre></td></tr></table></figure>
+<p><img src="/images/Memlabs-Lab-6/pslist1.png" alt="pslist"><br><img src="/images/Memlabs-Lab-6/pslist2.png" alt="pslist"></p>
+<p>As we see from the process list, <code>cmd.exe</code>, <code>chrome.exe</code>, <code>firefox.exe</code> and <code>WinRAR.exe</code> as active running processes.</p>
+<h2 id="First-part"><a href="#First-part" class="headerlink" title="First part"></a>First part</h2><p>Let us check the chrome’s history.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ volatility --plugins=/home/g4rud4/Downloads/Tools/volatility-plugins -f MemoryDump_Lab6.raw --profile=Win7SP1x64 chromehistory</span><br></pre></td></tr></table></figure>
 
-<p><img src="/images/Memlabs-Lab-1/imageinfo.png" alt="imageinfo output"></p>
-<p>As we got the profile, we can use it and get the processes running in at the time for memory capture.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ volatility -f MemoryDump_Lab1.raw --profile=Win7SP1x64 pslist</span><br></pre></td></tr></table></figure>
+<p><img src="/images/Memlabs-Lab-6/pastebin1.png" alt="chromehistory"></p>
+<p>This seem to be an interesting <a href="https://pastebin.com/RSGSi1hk" target="_blank" rel="noopener">pastebin</a> link.</p>
+<p><img src="/images/Memlabs-Lab-6/pastebin2.png" alt="PasteBin"></p>
+<p>The Pastebin link contains another Google Docs link, lets head there. The docs link is: <a href="https://www.google.com/url?q=https://docs.google.com/document/d/1lptcksPt1l_w7Y29V4o6vkEnHToAPqiCkgNNZfS9rCk/edit?usp%3Dsharing&sa=D&source=hangouts&ust=1566208765722000&usg=AFQjCNHXd6Ck6F22MNQEsxdZo21JayPKug" target="_blank" rel="noopener">click here</a></p>
+<p><img src="/images/Memlabs-Lab-6/mega_link.png" alt="Google-Doc"></p>
+<p>The doc contains a lot of spam but there is one interesting link which leads us to a mega drive: <strong><a href="https://mega.nz/#!SrxQxYTQ" target="_blank" rel="noopener">https://mega.nz/#!SrxQxYTQ</a></strong>.</p>
+<p>However, to download the file present in the mega drive, we need to find the KEY. However, the text in the Pastebin link tells us that “David sent the key in mail”.</p>
+<p>Okay, let me use the <code>Screenshot</code> plugin, it might help us.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ volatility --plugins&#x3D;&#x2F;home&#x2F;g4rud4&#x2F;Downloads&#x2F;Tools&#x2F;volatility-plugins -f MemoryDump_Lab6.raw --profile&#x3D;Win7SP1x64 screenshot -D .</span><br></pre></td></tr></table></figure>
 
-<p><img src="/images/Memlabs-Lab-1/pslist_1.png" alt="pslist output"><br><img src="/images/Memlabs-Lab-1/pslist_2.png" alt="pslist output"></p>
-<p>As we see above cmd, mspaint and WinRAR are the active running processes.</p>
-<h3 id="Flag-1"><a href="#Flag-1" class="headerlink" title="Flag - 1"></a>Flag - 1</h3><p>So let us see what is there in cmd.exe.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ volatility -f MemoryDump_Lab1.raw --profile=Win7SP1x64 consoles</span><br></pre></td></tr></table></figure>
-<p><img src="/images/Memlabs-Lab-1/consoles.png" alt="consoles output"><br>You can see a base64 string. After decoding base64, we got the first flag: <strong>flag{th1s_1s_th3_1st_st4g3!!}</strong></p>
-<h3 id="Flag-2"><a href="#Flag-2" class="headerlink" title="Flag - 2"></a>Flag - 2</h3><p>As mspaint is also an active running process, Let us check it out.<br>To find what is running in mspaint, first we need to take dump the mspaint.exe (PID 2424) as shown below.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ volatility -f MemoryDump_Lab1.raw --profile=Win7SP1x64 memdump -p 2424 -D dump</span><br></pre></td></tr></table></figure>
+<p><img src="/images/Memlabs-Lab-6/screenshot.png" alt="Screenshot"></p>
+<p>We can see that firefox window is open with the Gmail and has a subject <strong>Mega Drive Key</strong>. Now its time for some raw analysis. As the browser data is stored in JSON files. So we might get the message attached to that subject from raw analysis.</p>
+<p>So we can use the <code>strings</code> command, as we can get the data stored in JSON file from the memory.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ strings MemoryDump_Lab6.raw | grep <span class="string">"Mega Drive Key"</span></span><br></pre></td></tr></table></figure>
 
-<p><img src="/images/Memlabs-Lab-1/memdump_mspaint.png" alt="Memdump MSPaint"><br>Next, we need to change the extension of <strong>2424.dmp</strong> to <strong>2424.data</strong>. And we need to open 2424.data using <strong>GIMP(GNU Image Manipulation Program)</strong>.<br>After opening the image using GIMP, this is what we got,</p>
-<p><img src="/images/Memlabs-Lab-1/load_gimp.png" alt="load in gimp"></p>
-<p>After changing the values of width and height using up and down arrows, We will somehing similar to this.</p>
-<p><img src="/images/Memlabs-Lab-1/gimp_flag.png" alt="mogify height and width"></p>
-<p>After modifying the image to understandable side, we will get something similar to this,</p>
-<p><img src="/images/Memlabs-Lab-1/gimp_flag_1.png" alt="flag - 2"></p>
-<p>Here you get the second flag.<br>Flag: <strong>flag{G00d_BoY_good_girL}</strong></p>
-<h3 id="Flag-3"><a href="#Flag-3" class="headerlink" title="Flag - 3"></a>Flag - 3</h3><p>As WinRAR is also running that means some sort of archive has been opened. So let us check for an archive in the given memory dump.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ volatility -f MemoryDump_Lab1.raw --profile=Win7SP1x64 filescan | grep Documents</span><br></pre></td></tr></table></figure>
+<p><img src="/images/Memlabs-Lab-6/mega_key.png" alt="strings"></p>
+<p>So the key is <strong>zyWxCjCYYSEMA-hZe552qWVXiPwa5TecODbjnsscMIU</strong>.</p>
+<p>So we find a PNG image in the Mega drive. However, PNG is corrupted. Fixing the IHDR of the image gives us the 1st part of the flag.</p>
+<p><img src="/images/Memlabs-Lab-6/flag1.png" alt="flag 1stpart"></p>
+<p>The first part is: <strong>inctf{thi5_cH4LL3Ng3_!s_g0nn4_b3_?_</strong></p>
+<h2 id="Second-part"><a href="#Second-part" class="headerlink" title="Second part"></a>Second part</h2><p>As WinRAR is running, that imply that user opened a rar archive, So we will search for a <code>rar archive</code> in the memory.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ volatility --plugins=/home/g4rud4/Downloads/Tools/volatility-plugins -f MemoryDump_Lab6.raw --profile=Win7SP1x64 filescan | grep rar</span><br></pre></td></tr></table></figure>
 
-<p><img src="/images/Memlabs-Lab-1/rar_filescan.png" alt="Documents filescan output"></p>
-<p>Here, we can see a file Important.rar in Documents Folder. So we will dump it and check it.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ volatility -f MemoryDump_Lab1.raw --profile=Win7SP1x64 dumpfiles -Q 0x000000003fa3ebc0 -D dump</span><br></pre></td></tr></table></figure>
+<p>we see a folder named <strong>pr0t3ct3d</strong> and which contains a RAR archive with the name <strong>flag.rar</strong></p>
+<p><img src="/images/Memlabs-Lab-6/filescan_rar.png" alt="filescan"></p>
+<p>Let us dump the RAR archive with the help of the dumpfiles plugin.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ volatility --plugins=/home/g4rud4/Downloads/Tools/volatility-plugins -f MemoryDump_Lab6.raw --profile=Win7SP1x64 dumpfiles -Q 0x000000005fcfc4b0 -D .</span><br></pre></td></tr></table></figure>
 
-<p><img src="/images/Memlabs-Lab-1/rar_dumpfiles.png" alt="Dumpfiles Important.rar"></p>
-<p>However, the archive is password protected. Also, brute-forcing for the password is not at all intended. So let us use unrar command and check what we get.</p>
-<p><img src="/images/Memlabs-Lab-1/unrar.png" alt="unrar output"></p>
-<p>It’s written that, “<strong>Password is NTLM hash(in uppercase) of Alissa’s account passwd</strong>”.<br>We can get Alissa’s account NTLM hash from hashdump.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ volatility -f MemoryDump_Lab1.raw --profile=Win7SP1x64 hashdump</span><br></pre></td></tr></table></figure>
+<p><img src="/images/Memlabs-Lab-6/dump_rar.png" alt="Dump Rar"></p>
+<p>However, the archive is password protected. Also, brute-forcing for the password might not help us. So lets check the other running processes.</p>
+<p>As <code>cmd.exe</code> is running, Using the <code>cmdscan</code> plugin, we see that <code>env</code> command has been used. So let us look at the Environment variables.</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ volatility --plugins=/home/g4rud4/Downloads/Tools/volatility-plugins -f MemoryDump_Lab6.raw --profile=Win7SP1x64 cmdscan</span><br></pre></td></tr></table></figure>
 
-<p><img src="/images/Memlabs-Lab-1/hashdump.png" alt="hashdump output"></p>
-<p>So using the Alissa Simpson’s hash (<strong>f4ff64c8baac57d22f22edc681055ba6</strong>) in upper case and entering it as the password for RAR, we get the flag.</p>
-<p>So finally we get the third flag.</p>
-<p><img src="/images/Memlabs-Lab-1/flag3.png" alt="flag - 3"></p>
-<p>That’s how you finish this <strong>MemLabs, Lab – 1</strong>.</p>
+<p><img src="/images/Memlabs-Lab-6/cmdscan.png" alt="cmdscan"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ volatility --plugins=/home/g4rud4/Downloads/Tools/volatility-plugins -f MemoryDump_Lab6.raw --profile=Win7SP1x64 envars</span><br></pre></td></tr></table></figure>
+
+<p>We observe a custom variable created named <strong>RAR password</strong>.</p>
+<p><img src="/images/Memlabs-Lab-6/envars.png" alt="envars"></p>
+<p>So it gives out the password as <strong>easypeasyvirus</strong>. Now we get the last part of the flag.</p>
+<p><img src="/images/Memlabs-Lab-6/flag2.png" alt="flag2"></p>
+<p>So now let us concatenate the 2 parts to finish this lab.</p>
+<p>FLAG: <strong>inctf{thi5_cH4LL3Ng3_!s_g0nn4_b3_?<em>aN_Am4zINg</em>!<em>i</em>gU3Ss???_}</strong></p>
+<p><strong>Note:</strong> Due to some markdown issue, ‘_’ is not being displayed properly, so check it out.</p>
+<p>That’s how you finish this <strong>MemLabs, Lab – 6</strong>.</p>
 <p>If you like my solution, please do share it. I’m availabe on Twitter: <a href="https://twitter.com/NihithNihi" target="_blank" rel="noopener">@NihithNihi</a></p>
 
       
@@ -177,19 +184,10 @@
   
   <nav class="article-nav">
     
-      <a href="/2020/04/11/HackTM-Quals-20%E2%80%93Find-my-Pass-Writeup/" class="article-nav-link">
-        <strong class="article-nav-caption">Previous Post</strong>
-        <div class="article-nav-title">
-          
-            HackTM Quals 20 – Find my Pass Writeup
-          
-        </div>
-      </a>
     
-    
-      <a href="/2019/10/03/InCTFi19-Fresh-From-the-Oven/" class="article-nav-link">
+      <a href="/2020/06/02/Memlabs-Lab-5-writeup/" class="article-nav-link">
         <strong class="article-nav-caption">Next Post</strong>
-        <div class="article-nav-title">Fresh From The Oven - InCTF Internationals 2019 Writeup</div>
+        <div class="article-nav-title">Memlabs Lab - 5 writeup</div>
       </a>
     
   </nav>
