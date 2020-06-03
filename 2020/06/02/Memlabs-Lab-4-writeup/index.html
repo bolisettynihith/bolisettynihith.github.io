@@ -114,19 +114,19 @@
 <p>There is nothing quite interesting in the <strong>pslist</strong> output except for the <strong>Sticky Note</strong> process. Hmm, perhaps there is something written in it.</p>
 <p>Just to keep it short, there was nothing important written in the clipboard. It was a small rabbit hole.</p>
 <p>Now let us proceed to the files present in the system.</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ volatility -f Mem_Evidence.raw --profile=Win7SP1x64 filescan | grep Desktop</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ volatility -f MemoryDump_Lab4.raw --profile=Win7SP1x64 filescan | grep Desktop</span><br></pre></td></tr></table></figure>
 
 <p><img src="/images/Memlabs-Lab-4/filescan1.png" alt="filescan"><br><img src="/images/Memlabs-Lab-4/filescan2.png" alt="filescan"></p>
 <p>There are interesting files present on the desktop. The files <code>Important.txt</code>, <code>galf.jpeg</code> &amp; <code>Screenshot1.png</code> are of special interest. Let us try to dump them :)</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ volatility -f Mem_Evidence.raw --profile=Win7SP1x64 dumpfiles -Q 0x000000003e8ad250 -D dump</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ volatility -f MemoryDump_Lab4.raw --profile=Win7SP1x64 dumpfiles -Q 0x000000003e8ad250 -D dump</span><br></pre></td></tr></table></figure>
 
 <p>Now we have dumped the file <strong>galf.jpeg</strong>. However, doing basic steg techniques on the file yield nothing. So it is useless.</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ volatility -f MemoryDump_Lab4.raw --profile=Win7SP1x64 dumpfiles -Q 0x000000003e8d19e0 -D dump</span><br></pre></td></tr></table></figure>
 
 <p>Now we have dumped the file <strong>Screenshot1.png</strong>. However on doing basic steg techniques on the file yield nothing. so it is useless.</p>
-<h2 id="Flag"><a href="#Flag" class="headerlink" title="Flag"></a>Flag</h2><p>One important thing in the challenge and also the main exploit is to get the data present in the file <strong>Important.txt</strong>. However, dumpfiles will not be able to dump the required file as it has been deleted. However, its contents are still present in memory. If you fundamentally understand the Master File Table(MFT), you would know that we can access the data as long as the data blocks are overwritten.</p>
+<h2 id="Flag"><a href="#Flag" class="headerlink" title="Flag"></a>Flag</h2><p>One important thing in this lab and also the main exploit is to get the data present in the file <strong>Important.txt</strong>. However, dumpfiles will not be able to dump the required file as it has been deleted. However, its contents are still present in memory. If you fundamentally understand the Master File Table(MFT), you would know that we can access the data as long as the data blocks are overwritten.</p>
 <p>For this, we take the help of the <strong>mftparser</strong> plugin.</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ volatility -f Mem_Evidence.raw --profile&#x3D;Win7SP1x64 mftparser &gt; mft.txt</span><br></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ volatility -f MemoryDump_Lab4.raw --profile&#x3D;Win7SP1x64 mftparser &gt; mft.txt</span><br></pre></td></tr></table></figure>
 
 <p>So let us search for the data blocks of the file <strong>Important.txt</strong></p>
 <p><img src="/images/Memlabs-Lab-4/mft.png" alt="mft"></p>

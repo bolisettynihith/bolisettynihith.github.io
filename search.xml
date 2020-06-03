@@ -61,33 +61,6 @@
       </tags>
   </entry>
   <entry>
-    <title>Hackcon CTF’19 – Too cold for steg Writeup</title>
-    <url>/2019/08/24/Hackcon-CTF%E2%80%9919-%E2%80%93-Too-cold-for-steg-Writeup/</url>
-    <content><![CDATA[<p><strong>tl;dr</strong></p>
-<ul>
-<li>Whitespace steganography</li>
-</ul>
-<a id="more"></a>
-
-<h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><p><img src="/images/Toocoldforsteg/description.png" alt="Description"></p>
-<h2 id="Initial-Analysis"><a href="#Initial-Analysis" class="headerlink" title="Initial Analysis"></a>Initial Analysis</h2><p>Got a text file and opening the text file in any text editor and selecting all the text we can find some whitespace present at the ending of the each each line.</p>
-<p>As the title is Too cold to steg we will get a tool known as stegsnow in our mind.</p>
-<p>But for using the stegsnow we need a password. After searching for the password in the file given we can get the password as <strong>d4rkc0de-IIITD</strong>.</p>
-<p><img src="/images/Toocoldforsteg/grep_password.png" alt="grep password"></p>
-<p>Then using the stegsnow we will get the flag.</p>
-<p><img src="/images/Toocoldforsteg/stegsnow.png" alt="stegsnow command"></p>
-<h2 id="Flag"><a href="#Flag" class="headerlink" title="Flag"></a>Flag</h2><p>Flag: <strong>d4rk{h@ving_fun_w1th_st3gsn0w?}c0de</strong></p>
-<p>If you like my solution, please do share it. I’m availabe on Twitter: <a href="https://twitter.com/NihithNihi" target="_blank" rel="noopener">@NihithNihi</a></p>
-]]></content>
-      <categories>
-        <category>Writeups</category>
-        <category>Steganography</category>
-      </categories>
-      <tags>
-        <tag>whitespace</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hackcon CTF’19 – GIMP IT Writeup</title>
     <url>/2019/08/24/Hackcon-CTF%E2%80%9919-%E2%80%93-GIMP-IT-Writeup/</url>
     <content><![CDATA[<p><strong>tl;dr</strong></p>
@@ -117,6 +90,33 @@
       <tags>
         <tag>Steganography</tag>
         <tag>Python</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hackcon CTF’19 – Too cold for steg Writeup</title>
+    <url>/2019/08/24/Hackcon-CTF%E2%80%9919-%E2%80%93-Too-cold-for-steg-Writeup/</url>
+    <content><![CDATA[<p><strong>tl;dr</strong></p>
+<ul>
+<li>Whitespace steganography</li>
+</ul>
+<a id="more"></a>
+
+<h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><p><img src="/images/Toocoldforsteg/description.png" alt="Description"></p>
+<h2 id="Initial-Analysis"><a href="#Initial-Analysis" class="headerlink" title="Initial Analysis"></a>Initial Analysis</h2><p>Got a text file and opening the text file in any text editor and selecting all the text we can find some whitespace present at the ending of the each each line.</p>
+<p>As the title is Too cold to steg we will get a tool known as stegsnow in our mind.</p>
+<p>But for using the stegsnow we need a password. After searching for the password in the file given we can get the password as <strong>d4rkc0de-IIITD</strong>.</p>
+<p><img src="/images/Toocoldforsteg/grep_password.png" alt="grep password"></p>
+<p>Then using the stegsnow we will get the flag.</p>
+<p><img src="/images/Toocoldforsteg/stegsnow.png" alt="stegsnow command"></p>
+<h2 id="Flag"><a href="#Flag" class="headerlink" title="Flag"></a>Flag</h2><p>Flag: <strong>d4rk{h@ving_fun_w1th_st3gsn0w?}c0de</strong></p>
+<p>If you like my solution, please do share it. I’m availabe on Twitter: <a href="https://twitter.com/NihithNihi" target="_blank" rel="noopener">@NihithNihi</a></p>
+]]></content>
+      <categories>
+        <category>Writeups</category>
+        <category>Steganography</category>
+      </categories>
+      <tags>
+        <tag>whitespace</tag>
       </tags>
   </entry>
   <entry>
@@ -213,33 +213,53 @@
       </tags>
   </entry>
   <entry>
-    <title>Memlabs Lab - 4 writeup</title>
-    <url>/2020/06/02/Memlabs-Lab-4-writeup/</url>
-    <content><![CDATA[<p>We are provided with a <strong>Windows 7</strong> memory dump. Let’s begin our initial analysis.</p>
-<h2 id="Initial-Analysis"><a href="#Initial-Analysis" class="headerlink" title="Initial Analysis"></a>Initial Analysis</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f MemoryDump_Lab4.raw --profile=Win7SP1x64 pslist</span><br></pre></td></tr></table></figure>
-<p><img src="/images/Memlabs-Lab-4/pslist1.png" alt="pslist"><br><img src="/images/Memlabs-Lab-4/pslist2.png" alt="pslist"></p>
-<p>There is nothing quite interesting in the <strong>pslist</strong> output except for the <strong>Sticky Note</strong> process. Hmm, perhaps there is something written in it.</p>
-<p>Just to keep it short, there was nothing important written in the clipboard. It was a small rabbit hole.</p>
-<p>Now let us proceed to the files present in the system.</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f Mem_Evidence.raw --profile=Win7SP1x64 filescan | grep Desktop</span><br></pre></td></tr></table></figure>
+    <title>Memlabs Lab - 1 writeup</title>
+    <url>/2020/06/01/Memlabs-Lab-1-writeup/</url>
+    <content><![CDATA[<p>MemLabs is an educational, introductory set of CTF-styled challenges which is aimed to encourage students, security researchers and also CTF players to get started with the field of Memory Forensics.</p>
+<a id="more"></a>
 
-<p><img src="/images/Memlabs-Lab-4/filescan1.png" alt="filescan"><br><img src="/images/Memlabs-Lab-4/filescan2.png" alt="filescan"></p>
-<p>There are interesting files present on the desktop. The files <code>Important.txt</code>, <code>galf.jpeg</code> &amp; <code>Screenshot1.png</code> are of special interest. Let us try to dump them :)</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f Mem_Evidence.raw --profile=Win7SP1x64 dumpfiles -Q 0x000000003e8ad250 -D dump</span><br></pre></td></tr></table></figure>
+<p>The labs given by <a href="https://twitter.com/_abhiramkumar/" target="_blank" rel="noopener">@_abhiramkumar</a> are really useful for the beginners to start with Memory Forensics.</p>
+<p>The memory files and Descriptions are available in his <a href="https://github.com/stuxnet999/MemLabs" target="_blank" rel="noopener">github repo</a>.<br>If you are having any troubles in the commands used, you can refer <a href="https://github.com/volatilityfoundation/volatility/wiki/Command-Reference" target="_blank" rel="noopener">volatility command referance</a>.</p>
+<h2 id="Lab-1-Writeup"><a href="#Lab-1-Writeup" class="headerlink" title="Lab - 1 Writeup"></a>Lab - 1 Writeup</h2><p>We are provided with the windows 7 memory dump. To know which OS’s memory dump we have, we can use imageinfo plugin to find the profile. Let’s begin with the initial level of analysis.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ Volatility -f MemoryDump_Lab1.raw imageinfo</span><br></pre></td></tr></table></figure>
 
-<p>Now we have dumped the file <strong>galf.jpeg</strong>. However, doing basic steg techniques on the file yield nothing. So it is useless.</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f MemoryDump_Lab4.raw --profile=Win7SP1x64 dumpfiles -Q 0x000000003e8d19e0 -D dump</span><br></pre></td></tr></table></figure>
+<p><img src="/images/Memlabs-Lab-1/imageinfo.png" alt="imageinfo output"></p>
+<p>As we got the profile, we can use it and get the processes running in at the time for memory capture.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f MemoryDump_Lab1.raw --profile=Win7SP1x64 pslist</span><br></pre></td></tr></table></figure>
 
-<p>Now we have dumped the file <strong>Screenshot1.png</strong>. However on doing basic steg techniques on the file yield nothing. so it is useless.</p>
-<h2 id="Flag"><a href="#Flag" class="headerlink" title="Flag"></a>Flag</h2><p>One important thing in the challenge and also the main exploit is to get the data present in the file <strong>Important.txt</strong>. However, dumpfiles will not be able to dump the required file as it has been deleted. However, its contents are still present in memory. If you fundamentally understand the Master File Table(MFT), you would know that we can access the data as long as the data blocks are overwritten.</p>
-<p>For this, we take the help of the <strong>mftparser</strong> plugin.</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ volatility -f Mem_Evidence.raw --profile&#x3D;Win7SP1x64 mftparser &gt; mft.txt</span><br></pre></td></tr></table></figure>
+<p><img src="/images/Memlabs-Lab-1/pslist_1.png" alt="pslist output"><br><img src="/images/Memlabs-Lab-1/pslist_2.png" alt="pslist output"></p>
+<p>As we see above cmd, mspaint and WinRAR are the active running processes.</p>
+<h3 id="Flag-1"><a href="#Flag-1" class="headerlink" title="Flag - 1"></a>Flag - 1</h3><p>So let us see what is there in cmd.exe.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f MemoryDump_Lab1.raw --profile=Win7SP1x64 consoles</span><br></pre></td></tr></table></figure>
+<p><img src="/images/Memlabs-Lab-1/consoles.png" alt="consoles output"><br>You can see a base64 string. After decoding base64, we got the first flag: <strong>flag{th1s_1s_th3_1st_st4g3!!}</strong></p>
+<h3 id="Flag-2"><a href="#Flag-2" class="headerlink" title="Flag - 2"></a>Flag - 2</h3><p>As mspaint is also an active running process, Let us check it out.<br>To find what is running in mspaint, first we need to take dump the mspaint.exe (PID 2424) as shown below.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f MemoryDump_Lab1.raw --profile=Win7SP1x64 memdump -p 2424 -D dump</span><br></pre></td></tr></table></figure>
 
-<p>So let us search for the data blocks of the file <strong>Important.txt</strong></p>
-<p><img src="/images/Memlabs-Lab-4/mft.png" alt="mft"></p>
-<p>Aha! Now we see the characters of the flag separated by irregular number of spaces.</p>
-<p>So, combining them we got the flag: <strong>inctf{1_is_n0t_EQu4l_7o_2_bUt_th1s_d0s3nt_m4ke_s3ns3}</strong>.</p>
-<p>That’s how you finish this <strong>MemLabs, Lab – 4</strong>.</p>
+<p><img src="/images/Memlabs-Lab-1/memdump_mspaint.png" alt="Memdump MSPaint"><br>Next, we need to change the extension of <strong>2424.dmp</strong> to <strong>2424.data</strong>. And we need to open 2424.data using <strong>GIMP(GNU Image Manipulation Program)</strong>.<br>After opening the image using GIMP, this is what we got,</p>
+<p><img src="/images/Memlabs-Lab-1/load_gimp.png" alt="load in gimp"></p>
+<p>After changing the values of width and height using up and down arrows, We will somehing similar to this.</p>
+<p><img src="/images/Memlabs-Lab-1/gimp_flag.png" alt="mogify height and width"></p>
+<p>After modifying the image to understandable side, we will get something similar to this,</p>
+<p><img src="/images/Memlabs-Lab-1/gimp_flag_1.png" alt="flag - 2"></p>
+<p>Here you get the second flag.<br>Flag: <strong>flag{G00d_BoY_good_girL}</strong></p>
+<h3 id="Flag-3"><a href="#Flag-3" class="headerlink" title="Flag - 3"></a>Flag - 3</h3><p>As WinRAR is also running that means some sort of archive has been opened. So let us check for an archive in the given memory dump.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f MemoryDump_Lab1.raw --profile=Win7SP1x64 filescan | grep Documents</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Memlabs-Lab-1/rar_filescan.png" alt="Documents filescan output"></p>
+<p>Here, we can see a file Important.rar in Documents Folder. So we will dump it and check it.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f MemoryDump_Lab1.raw --profile=Win7SP1x64 dumpfiles -Q 0x000000003fa3ebc0 -D dump</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Memlabs-Lab-1/rar_dumpfiles.png" alt="Dumpfiles Important.rar"></p>
+<p>However, the archive is password protected. Also, brute-forcing for the password is not at all intended. So let us use unrar command and check what we get.</p>
+<p><img src="/images/Memlabs-Lab-1/unrar.png" alt="unrar output"></p>
+<p>It’s written that, “<strong>Password is NTLM hash(in uppercase) of Alissa’s account passwd</strong>”.<br>We can get Alissa’s account NTLM hash from hashdump.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f MemoryDump_Lab1.raw --profile=Win7SP1x64 hashdump</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Memlabs-Lab-1/hashdump.png" alt="hashdump output"></p>
+<p>So using the Alissa Simpson’s hash (<strong>f4ff64c8baac57d22f22edc681055ba6</strong>) in upper case and entering it as the password for RAR, we get the flag.</p>
+<p>So finally we get the third flag.</p>
+<p><img src="/images/Memlabs-Lab-1/flag3.png" alt="flag - 3"></p>
+<p>That’s how you finish this <strong>MemLabs, Lab – 1</strong>.</p>
 <p>If you like my solution, please do share it. I’m availabe on Twitter: <a href="https://twitter.com/NihithNihi" target="_blank" rel="noopener">@NihithNihi</a></p>
 ]]></content>
       <categories>
@@ -338,6 +358,135 @@
       </tags>
   </entry>
   <entry>
+    <title>Memlabs Lab - 4 writeup</title>
+    <url>/2020/06/02/Memlabs-Lab-4-writeup/</url>
+    <content><![CDATA[<p>We are provided with a <strong>Windows 7</strong> memory dump. Let’s begin our initial analysis.</p>
+<h2 id="Initial-Analysis"><a href="#Initial-Analysis" class="headerlink" title="Initial Analysis"></a>Initial Analysis</h2><figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f MemoryDump_Lab4.raw --profile=Win7SP1x64 pslist</span><br></pre></td></tr></table></figure>
+<p><img src="/images/Memlabs-Lab-4/pslist1.png" alt="pslist"><br><img src="/images/Memlabs-Lab-4/pslist2.png" alt="pslist"></p>
+<p>There is nothing quite interesting in the <strong>pslist</strong> output except for the <strong>Sticky Note</strong> process. Hmm, perhaps there is something written in it.</p>
+<p>Just to keep it short, there was nothing important written in the clipboard. It was a small rabbit hole.</p>
+<p>Now let us proceed to the files present in the system.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f MemoryDump_Lab4.raw --profile=Win7SP1x64 filescan | grep Desktop</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Memlabs-Lab-4/filescan1.png" alt="filescan"><br><img src="/images/Memlabs-Lab-4/filescan2.png" alt="filescan"></p>
+<p>There are interesting files present on the desktop. The files <code>Important.txt</code>, <code>galf.jpeg</code> &amp; <code>Screenshot1.png</code> are of special interest. Let us try to dump them :)</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f MemoryDump_Lab4.raw --profile=Win7SP1x64 dumpfiles -Q 0x000000003e8ad250 -D dump</span><br></pre></td></tr></table></figure>
+
+<p>Now we have dumped the file <strong>galf.jpeg</strong>. However, doing basic steg techniques on the file yield nothing. So it is useless.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f MemoryDump_Lab4.raw --profile=Win7SP1x64 dumpfiles -Q 0x000000003e8d19e0 -D dump</span><br></pre></td></tr></table></figure>
+
+<p>Now we have dumped the file <strong>Screenshot1.png</strong>. However on doing basic steg techniques on the file yield nothing. so it is useless.</p>
+<h2 id="Flag"><a href="#Flag" class="headerlink" title="Flag"></a>Flag</h2><p>One important thing in this lab and also the main exploit is to get the data present in the file <strong>Important.txt</strong>. However, dumpfiles will not be able to dump the required file as it has been deleted. However, its contents are still present in memory. If you fundamentally understand the Master File Table(MFT), you would know that we can access the data as long as the data blocks are overwritten.</p>
+<p>For this, we take the help of the <strong>mftparser</strong> plugin.</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">$ volatility -f MemoryDump_Lab4.raw --profile&#x3D;Win7SP1x64 mftparser &gt; mft.txt</span><br></pre></td></tr></table></figure>
+
+<p>So let us search for the data blocks of the file <strong>Important.txt</strong></p>
+<p><img src="/images/Memlabs-Lab-4/mft.png" alt="mft"></p>
+<p>Aha! Now we see the characters of the flag separated by irregular number of spaces.</p>
+<p>So, combining them we got the flag: <strong>inctf{1_is_n0t_EQu4l_7o_2_bUt_th1s_d0s3nt_m4ke_s3ns3}</strong>.</p>
+<p>That’s how you finish this <strong>MemLabs, Lab – 4</strong>.</p>
+<p>If you like my solution, please do share it. I’m availabe on Twitter: <a href="https://twitter.com/NihithNihi" target="_blank" rel="noopener">@NihithNihi</a></p>
+]]></content>
+      <categories>
+        <category>Memlabs</category>
+      </categories>
+      <tags>
+        <tag>Volatility</tag>
+        <tag>Memory</tag>
+        <tag>Memlabs</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Securinets-CTF’20–Time-Matters</title>
+    <url>/2020/05/26/Securinets-CTF%E2%80%9920%E2%80%93Time-Matters/</url>
+    <content><![CDATA[<p><strong>tl;dr</strong></p>
+<ul>
+<li>chrome history analysis</li>
+<li>File recovery from memory dump</li>
+<li>Simple stego</li>
+</ul>
+<a id="more"></a>
+
+<h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><p><img src="/images/TimeMatters/description.png" alt="Description"></p>
+<h2 id="Initial-Analysis"><a href="#Initial-Analysis" class="headerlink" title="Initial Analysis"></a>Initial Analysis</h2><p>We are given with a Windows 7 memory dump. Let’s see what all processes are running in the macine.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f for1.raw --profile=Win7SP1x86_23418 pslist</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/TimeMatters/pslist.png" alt="PSList"></p>
+<p>We can see Explorer and chrome are in open, lets check what’s there in Chrome’s history. We know that for their is a plugin <strong>chromehistory</strong>, we will use that.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">volatility --plugins=/home/g4rud4/Downloads/Tools/volatility-plugins -f for1.raw --profile=Win7SP1x86_23418 chromehistory</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/TimeMatters/chromehistory.png" alt="chrome history"></p>
+<p>We didn’t find any suspicious links in chrome’s history. </p>
+<h2 id="Further-Analysis"><a href="#Further-Analysis" class="headerlink" title="Further Analysis"></a>Further Analysis</h2><p>So let’s check what all files are there in the system.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">volatility --plugins=/home/g4rud4/Downloads/Tools/volatility-plugins -f for1.raw --profile=Win7SP1x86_23418 filescan | grep Desktop</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/TimeMatters/filescan_desktop.png" alt="Filescan Desktop"></p>
+<p>We can steghide and a jpg image on the desktop, So let’s dumpfile the jpg file and use steghide on it.</p>
+<p><img src="/images/TimeMatters/dumpfiles.png" alt="dumpfiles"></p>
+<p>When I used steghide for extaction, it asked for the password, I followed the same way as everyone does, just leaving it <strong>blink</strong> and clicking <strong>Enter</strong>. But no use.</p>
+<p><img src="/images/TimeMatters/steghide_wop.png" alt="Steghide Without PSSWD"></p>
+<p>So I thought to use the users password and got the NTLM hash using hashdump, but when cracked hash didn’t gave the result.</p>
+<p><img src="/images/TimeMatters/hashdump.png" alt="hashdump"> <img src="/images/TimeMatters/crackstation.png" alt="crackstation"></p>
+<h2 id="Flag"><a href="#Flag" class="headerlink" title="Flag"></a>Flag</h2><p>So after opening the image, it’s Messi’s image which was took on 2019. So the on looking at the challenge titile and relating that to the password of steghide, we can use <strong>Messi2019</strong> as password and try what we can get.</p>
+<p><img src="/images/TimeMatters/DS0394.jpg" alt="Messi Image"><br><img src="/images/TimeMatters/steghide_2.png" alt="Using Messi2019 as Password"></p>
+<p>Hoorah!! We got the output. One opening the resulted image, we got the flag.</p>
+<p><img src="/images/TimeMatters/image.png" alt="Flag"></p>
+<p>There is an other way also, by using <strong>mimikatz</strong> for getting the user password. But when I used the password that we got in <strong>mimikatz</strong>, I didn’t got anything, so after modifing the password by relating to the challenge title and modifying it to <strong>Messi2020</strong>, we can get the flag.</p>
+<p><img src="/images/TimeMatters/mimikatz.png" alt="mimikatz"><br><img src="/images/TimeMatters/steghide_1.png" alt="using Messi2020 as password"></p>
+<p>If you liked my solution, please do share it. I’m available on Twitter: <a href="https://twitter.com/NihithNihi" target="_blank" rel="noopener">@NihithNihi</a></p>
+]]></content>
+      <categories>
+        <category>Writeups</category>
+        <category>Memory Forensics</category>
+      </categories>
+      <tags>
+        <tag>Volatility</tag>
+        <tag>Memory</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Securinets CTF’19 – Rare to win Writeup</title>
+    <url>/2019/08/17/Securinets-CTF%E2%80%9919-%E2%80%93-Rare-to-win-Challenge/</url>
+    <content><![CDATA[<p><strong>tl;dr</strong></p>
+<ul>
+<li>Chrome history analysis</li>
+<li>ACE file analysis</li>
+<li>Detecting the virus</li>
+</ul>
+<a id="more"></a>
+
+<h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><p><img src="/images/Raretowin/description.png" alt="Description"></p>
+<p>I could not solve this challenge at the time of the CTF. But it is a nice challenge.</p>
+<p>Given with an Windows 7 memory dump, lets see what all processes are running in the machine/system.</p>
+<h2 id="Initial-Analysis"><a href="#Initial-Analysis" class="headerlink" title="Initial Analysis"></a>Initial Analysis</h2><p>As the description of the says that the operator was browsing web the he might be using one of the browsers like Chrome, Firefox, or inbuilt Explorer. So lets go and see the pslist.</p>
+<p><img src="/images/Raretowin/pslist.png" alt="PSlist output"></p>
+<p>As we can see that chrome was running in system at the time when the dump was captured. So as the Chrome was running in the system we can use chrome history plugin and get the users history data.</p>
+<p><img src="/images/Raretowin/chromehistory.png" alt="Chrome History"></p>
+<h2 id="Further-Analysis"><a href="#Further-Analysis" class="headerlink" title="Further Analysis"></a>Further Analysis</h2><p>As we can see that, there is file called <strong>music.rar</strong> was downloaded from the chrome. So we will search for the file in the dump, using filescan plugin.</p>
+<p><img src="/images/Raretowin/filescan_music_rar.png" alt="filescan_music_rar"></p>
+<p>It resulted that there is no file relating to it. So I have downloaded the file from the <a href="https://www.mediafire.com/file/2t7bb2mflg2lwwj/music.rar/file" target="_blank" rel="noopener">link</a> he browsed.</p>
+<p>I tried opening the rar but it does not shown any files and it was in <strong>Read Only</strong> mode. So tried running <strong>file command</strong> on it and got to know that it is an <strong>ACE</strong> file.</p>
+<p><img src="/images/Raretowin/file_music.png" alt="file command"></p>
+<p>After a quick search in google, i came to know that there are some tools to open and extract the file from the ace file. So I renamed it and tried the unace command line tool which was provided by the Ubuntu software. But it doesn’t gave any results. So I checked for other alternatives and found <a href="http://webdiis.unizar.es/pub/unix/archive/linunace25.tgz" target="_blank" rel="noopener">this</a>.</p>
+<p>After using that tool, I can see that there is a firefox.exe and it is unable to override the build in firefox of the host system as I didn’t run with sudo permission.</p>
+<p><img src="/images/Raretowin/unace.png" alt="unace"></p>
+<p>And also if we use binwalk on the that ace file, we can see an <strong>ELF</strong> file present in it. And loading that in gdb and seeing the main function of the elf, there is only one operation going on that is the <strong>printf function</strong>. So we can say that the exe was the <strong>virus</strong> that the challenge author has asked.</p>
+<h2 id="Flag"><a href="#Flag" class="headerlink" title="Flag"></a>Flag</h2><p>But the flag is the <strong>path_to_the_virus</strong>. So as we can see that the exe file was extracting to <strong>C:/Users/Public/Data/firefox.exe</strong> therefore that will be the path that they have asked.</p>
+<p>But in windows the folders are divided using “\\” so the resulting path is <strong>C:\\Users\\Public\\Data\\firefox.exe</strong>.</p>
+<p>And the flag will be,</p>
+<p>Flag : <strong>securinets{84117b4eb400242a9db464e84220e672}</strong></p>
+<p>If you liked my solution, please do share it. I’m available on Twitter: <a href="https://twitter.com/NihithNihi" target="_blank" rel="noopener">@NihithNihi</a></p>
+]]></content>
+      <categories>
+        <category>Writeups</category>
+        <category>Memory Forensics</category>
+      </categories>
+      <tags>
+        <tag>Volatility</tag>
+        <tag>Memory</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Memlabs Lab - 6 writeup</title>
     <url>/2020/06/02/Memlabs-Lab-6-writeup/</url>
     <content><![CDATA[<p>We are provided with a <strong>Windows 7</strong> memory dump. Let us begin our initial level of analysis.</p>
@@ -401,96 +550,6 @@
         <tag>Volatility</tag>
         <tag>Memory</tag>
         <tag>Memlabs</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Securinets CTF’19 – Rare to win Writeup</title>
-    <url>/2019/08/17/Securinets-CTF%E2%80%9919-%E2%80%93-Rare-to-win-Challenge/</url>
-    <content><![CDATA[<p><strong>tl;dr</strong></p>
-<ul>
-<li>Chrome history analysis</li>
-<li>ACE file analysis</li>
-<li>Detecting the virus</li>
-</ul>
-<a id="more"></a>
-
-<h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><p><img src="/images/Raretowin/description.png" alt="Description"></p>
-<p>I could not solve this challenge at the time of the CTF. But it is a nice challenge.</p>
-<p>Given with an Windows 7 memory dump, lets see what all processes are running in the machine/system.</p>
-<h2 id="Initial-Analysis"><a href="#Initial-Analysis" class="headerlink" title="Initial Analysis"></a>Initial Analysis</h2><p>As the description of the says that the operator was browsing web the he might be using one of the browsers like Chrome, Firefox, or inbuilt Explorer. So lets go and see the pslist.</p>
-<p><img src="/images/Raretowin/pslist.png" alt="PSlist output"></p>
-<p>As we can see that chrome was running in system at the time when the dump was captured. So as the Chrome was running in the system we can use chrome history plugin and get the users history data.</p>
-<p><img src="/images/Raretowin/chromehistory.png" alt="Chrome History"></p>
-<h2 id="Further-Analysis"><a href="#Further-Analysis" class="headerlink" title="Further Analysis"></a>Further Analysis</h2><p>As we can see that, there is file called <strong>music.rar</strong> was downloaded from the chrome. So we will search for the file in the dump, using filescan plugin.</p>
-<p><img src="/images/Raretowin/filescan_music_rar.png" alt="filescan_music_rar"></p>
-<p>It resulted that there is no file relating to it. So I have downloaded the file from the <a href="https://www.mediafire.com/file/2t7bb2mflg2lwwj/music.rar/file" target="_blank" rel="noopener">link</a> he browsed.</p>
-<p>I tried opening the rar but it does not shown any files and it was in <strong>Read Only</strong> mode. So tried running <strong>file command</strong> on it and got to know that it is an <strong>ACE</strong> file.</p>
-<p><img src="/images/Raretowin/file_music.png" alt="file command"></p>
-<p>After a quick search in google, i came to know that there are some tools to open and extract the file from the ace file. So I renamed it and tried the unace command line tool which was provided by the Ubuntu software. But it doesn’t gave any results. So I checked for other alternatives and found <a href="http://webdiis.unizar.es/pub/unix/archive/linunace25.tgz" target="_blank" rel="noopener">this</a>.</p>
-<p>After using that tool, I can see that there is a firefox.exe and it is unable to override the build in firefox of the host system as I didn’t run with sudo permission.</p>
-<p><img src="/images/Raretowin/unace.png" alt="unace"></p>
-<p>And also if we use binwalk on the that ace file, we can see an <strong>ELF</strong> file present in it. And loading that in gdb and seeing the main function of the elf, there is only one operation going on that is the <strong>printf function</strong>. So we can say that the exe was the <strong>virus</strong> that the challenge author has asked.</p>
-<h2 id="Flag"><a href="#Flag" class="headerlink" title="Flag"></a>Flag</h2><p>But the flag is the <strong>path_to_the_virus</strong>. So as we can see that the exe file was extracting to <strong>C:/Users/Public/Data/firefox.exe</strong> therefore that will be the path that they have asked.</p>
-<p>But in windows the folders are divided using “\\” so the resulting path is <strong>C:\\Users\\Public\\Data\\firefox.exe</strong>.</p>
-<p>And the flag will be,</p>
-<p>Flag : <strong>securinets{84117b4eb400242a9db464e84220e672}</strong></p>
-<p>If you liked my solution, please do share it. I’m available on Twitter: <a href="https://twitter.com/NihithNihi" target="_blank" rel="noopener">@NihithNihi</a></p>
-]]></content>
-      <categories>
-        <category>Writeups</category>
-        <category>Memory Forensics</category>
-      </categories>
-      <tags>
-        <tag>Volatility</tag>
-        <tag>Memory</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Securinets-CTF’20–Time-Matters</title>
-    <url>/2020/05/26/Securinets-CTF%E2%80%9920%E2%80%93Time-Matters/</url>
-    <content><![CDATA[<p><strong>tl;dr</strong></p>
-<ul>
-<li>chrome history analysis</li>
-<li>File recovery from memory dump</li>
-<li>Simple stego</li>
-</ul>
-<a id="more"></a>
-
-<h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><p><img src="/images/TimeMatters/description.png" alt="Description"></p>
-<h2 id="Initial-Analysis"><a href="#Initial-Analysis" class="headerlink" title="Initial Analysis"></a>Initial Analysis</h2><p>We are given with a Windows 7 memory dump. Let’s see what all processes are running in the macine.</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f for1.raw --profile=Win7SP1x86_23418 pslist</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/TimeMatters/pslist.png" alt="PSList"></p>
-<p>We can see Explorer and chrome are in open, lets check what’s there in Chrome’s history. We know that for their is a plugin <strong>chromehistory</strong>, we will use that.</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">volatility --plugins=/home/g4rud4/Downloads/Tools/volatility-plugins -f for1.raw --profile=Win7SP1x86_23418 chromehistory</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/TimeMatters/chromehistory.png" alt="chrome history"></p>
-<p>We didn’t find any suspicious links in chrome’s history. </p>
-<h2 id="Further-Analysis"><a href="#Further-Analysis" class="headerlink" title="Further Analysis"></a>Further Analysis</h2><p>So let’s check what all files are there in the system.</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">volatility --plugins=/home/g4rud4/Downloads/Tools/volatility-plugins -f for1.raw --profile=Win7SP1x86_23418 filescan | grep Desktop</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/TimeMatters/filescan_desktop.png" alt="Filescan Desktop"></p>
-<p>We can steghide and a jpg image on the desktop, So let’s dumpfile the jpg file and use steghide on it.</p>
-<p><img src="/images/TimeMatters/dumpfiles.png" alt="dumpfiles"></p>
-<p>When I used steghide for extaction, it asked for the password, I followed the same way as everyone does, just leaving it <strong>blink</strong> and clicking <strong>Enter</strong>. But no use.</p>
-<p><img src="/images/TimeMatters/steghide_wop.png" alt="Steghide Without PSSWD"></p>
-<p>So I thought to use the users password and got the NTLM hash using hashdump, but when cracked hash didn’t gave the result.</p>
-<p><img src="/images/TimeMatters/hashdump.png" alt="hashdump"> <img src="/images/TimeMatters/crackstation.png" alt="crackstation"></p>
-<h2 id="Flag"><a href="#Flag" class="headerlink" title="Flag"></a>Flag</h2><p>So after opening the image, it’s Messi’s image which was took on 2019. So the on looking at the challenge titile and relating that to the password of steghide, we can use <strong>Messi2019</strong> as password and try what we can get.</p>
-<p><img src="/images/TimeMatters/DS0394.jpg" alt="Messi Image"><br><img src="/images/TimeMatters/steghide_2.png" alt="Using Messi2019 as Password"></p>
-<p>Hoorah!! We got the output. One opening the resulted image, we got the flag.</p>
-<p><img src="/images/TimeMatters/image.png" alt="Flag"></p>
-<p>There is an other way also, by using <strong>mimikatz</strong> for getting the user password. But when I used the password that we got in <strong>mimikatz</strong>, I didn’t got anything, so after modifing the password by relating to the challenge title and modifying it to <strong>Messi2020</strong>, we can get the flag.</p>
-<p><img src="/images/TimeMatters/mimikatz.png" alt="mimikatz"><br><img src="/images/TimeMatters/steghide_1.png" alt="using Messi2020 as password"></p>
-<p>If you liked my solution, please do share it. I’m available on Twitter: <a href="https://twitter.com/NihithNihi" target="_blank" rel="noopener">@NihithNihi</a></p>
-]]></content>
-      <categories>
-        <category>Writeups</category>
-        <category>Memory Forensics</category>
-      </categories>
-      <tags>
-        <tag>Volatility</tag>
-        <tag>Memory</tag>
       </tags>
   </entry>
   <entry>
@@ -568,65 +627,6 @@
       <tags>
         <tag>Python</tag>
         <tag>Wireshark</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Memlabs Lab - 1 writeup</title>
-    <url>/2020/06/01/Memlabs-Lab-1-writeup/</url>
-    <content><![CDATA[<p>MemLabs is an educational, introductory set of CTF-styled challenges which is aimed to encourage students, security researchers and also CTF players to get started with the field of Memory Forensics.</p>
-<a id="more"></a>
-
-<p>The labs given by <a href="https://twitter.com/_abhiramkumar/" target="_blank" rel="noopener">@_abhiramkumar</a> are really useful for the beginners to start with Memory Forensics.</p>
-<p>The memory files and Descriptions are available in his <a href="https://github.com/stuxnet999/MemLabs" target="_blank" rel="noopener">github repo</a>.<br>If you are having any troubles in the commands used, you can refer <a href="https://github.com/volatilityfoundation/volatility/wiki/Command-Reference" target="_blank" rel="noopener">volatility command referance</a>.</p>
-<h2 id="Lab-1-Writeup"><a href="#Lab-1-Writeup" class="headerlink" title="Lab - 1 Writeup"></a>Lab - 1 Writeup</h2><p>We are provided with the windows 7 memory dump. To know which OS’s memory dump we have, we can use imageinfo plugin to find the profile. Let’s begin with the initial level of analysis.</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ Volatility -f MemoryDump_Lab1.raw imageinfo</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/Memlabs-Lab-1/imageinfo.png" alt="imageinfo output"></p>
-<p>As we got the profile, we can use it and get the processes running in at the time for memory capture.</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f MemoryDump_Lab1.raw --profile=Win7SP1x64 pslist</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/Memlabs-Lab-1/pslist_1.png" alt="pslist output"><br><img src="/images/Memlabs-Lab-1/pslist_2.png" alt="pslist output"></p>
-<p>As we see above cmd, mspaint and WinRAR are the active running processes.</p>
-<h3 id="Flag-1"><a href="#Flag-1" class="headerlink" title="Flag - 1"></a>Flag - 1</h3><p>So let us see what is there in cmd.exe.</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f MemoryDump_Lab1.raw --profile=Win7SP1x64 consoles</span><br></pre></td></tr></table></figure>
-<p><img src="/images/Memlabs-Lab-1/consoles.png" alt="consoles output"><br>You can see a base64 string. After decoding base64, we got the first flag: <strong>flag{th1s_1s_th3_1st_st4g3!!}</strong></p>
-<h3 id="Flag-2"><a href="#Flag-2" class="headerlink" title="Flag - 2"></a>Flag - 2</h3><p>As mspaint is also an active running process, Let us check it out.<br>To find what is running in mspaint, first we need to take dump the mspaint.exe (PID 2424) as shown below.</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f MemoryDump_Lab1.raw --profile=Win7SP1x64 memdump -p 2424 -D dump</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/Memlabs-Lab-1/memdump_mspaint.png" alt="Memdump MSPaint"><br>Next, we need to change the extension of <strong>2424.dmp</strong> to <strong>2424.data</strong>. And we need to open 2424.data using <strong>GIMP(GNU Image Manipulation Program)</strong>.<br>After opening the image using GIMP, this is what we got,</p>
-<p><img src="/images/Memlabs-Lab-1/load_gimp.png" alt="load in gimp"></p>
-<p>After changing the values of width and height using up and down arrows, We will somehing similar to this.</p>
-<p><img src="/images/Memlabs-Lab-1/gimp_flag.png" alt="mogify height and width"></p>
-<p>After modifying the image to understandable side, we will get something similar to this,</p>
-<p><img src="/images/Memlabs-Lab-1/gimp_flag_1.png" alt="flag - 2"></p>
-<p>Here you get the second flag.<br>Flag: <strong>flag{G00d_BoY_good_girL}</strong></p>
-<h3 id="Flag-3"><a href="#Flag-3" class="headerlink" title="Flag - 3"></a>Flag - 3</h3><p>As WinRAR is also running that means some sort of archive has been opened. So let us check for an archive in the given memory dump.</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f MemoryDump_Lab1.raw --profile=Win7SP1x64 filescan | grep Documents</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/Memlabs-Lab-1/rar_filescan.png" alt="Documents filescan output"></p>
-<p>Here, we can see a file Important.rar in Documents Folder. So we will dump it and check it.</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f MemoryDump_Lab1.raw --profile=Win7SP1x64 dumpfiles -Q 0x000000003fa3ebc0 -D dump</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/Memlabs-Lab-1/rar_dumpfiles.png" alt="Dumpfiles Important.rar"></p>
-<p>However, the archive is password protected. Also, brute-forcing for the password is not at all intended. So let us use unrar command and check what we get.</p>
-<p><img src="/images/Memlabs-Lab-1/unrar.png" alt="unrar output"></p>
-<p>It’s written that, “<strong>Password is NTLM hash(in uppercase) of Alissa’s account passwd</strong>”.<br>We can get Alissa’s account NTLM hash from hashdump.</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f MemoryDump_Lab1.raw --profile=Win7SP1x64 hashdump</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/Memlabs-Lab-1/hashdump.png" alt="hashdump output"></p>
-<p>So using the Alissa Simpson’s hash (<strong>f4ff64c8baac57d22f22edc681055ba6</strong>) in upper case and entering it as the password for RAR, we get the flag.</p>
-<p>So finally we get the third flag.</p>
-<p><img src="/images/Memlabs-Lab-1/flag3.png" alt="flag - 3"></p>
-<p>That’s how you finish this <strong>MemLabs, Lab – 1</strong>.</p>
-<p>If you like my solution, please do share it. I’m availabe on Twitter: <a href="https://twitter.com/NihithNihi" target="_blank" rel="noopener">@NihithNihi</a></p>
-]]></content>
-      <categories>
-        <category>Memlabs</category>
-      </categories>
-      <tags>
-        <tag>Volatility</tag>
-        <tag>Memory</tag>
-        <tag>Memlabs</tag>
       </tags>
   </entry>
 </search>
