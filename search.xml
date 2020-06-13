@@ -1,66 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>HackTM Quals 20 – Find my Pass Writeup</title>
-    <url>/2020/04/11/HackTM-Quals-20%E2%80%93Find-my-Pass-Writeup/</url>
-    <content><![CDATA[<p><strong>tl;dr</strong></p>
-<ul>
-<li>Memory dump analysis using Volatility.</li>
-<li>Extracting Keepass Master Password from the memory.</li>
-<li>Extracting flag from ZIP archive attached in the Keepass database.</li>
-</ul>
-<a id="more"></a>
-
-<h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><p>I managed to forget my password for my KeePass Database but luckily I had it still open and managed to get a dump of the system’s memory. Can you please help me recover my password?</p>
-<p>Challenge file: <a href="https://mega.nz/#!IdUVwY6I!uJWGZ932xab44H4EJ-zVAqu6_UWNJcCVA4_PPXdqCyc" target="_blank" rel="noopener">Mega Drive</a> or <a href="https://drive.google.com/open?id=1hUlGqJZYgbWaEu7w0JnPMqgYdFr8qVJe" target="_blank" rel="noopener">Google Drive</a></p>
-<p>Password: <strong>eD99mLkU</strong></p>
-<p>Hint: I am not very good with computers, I use my one safe password where I want to keep everything safe from hackers.</p>
-<p>I solved this challenge after the CTF has ended.</p>
-<p>According to the description, In this challenge, we have to retrieve the Master Password of a Keepass database from the memory.</p>
-<h2 id="Initial-Anaysis"><a href="#Initial-Anaysis" class="headerlink" title="Initial Anaysis"></a>Initial Anaysis</h2><p>First, you need to find what OS his system was using. For that, I used imageinfo plugin.</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f HackTM.vmem imageinfo</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/Find-my-Pass/imageinfo.png" alt="Imageinfo Output"></p>
-<p>I choose <strong>Win7SP1x86</strong> profile.<br>Let’s check what all processes are running in the system. We can expect that keepass.exe will be present, as the description says that the database was kept open.</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f HackTM.vmem --profile=Win7SP1x86 pslist</span><br></pre></td></tr></table></figure>
-<p><img src="/images/Find-my-Pass/pslist_1.png" alt="pslist output"><br><img src="/images/Find-my-Pass/pslist_2.png" alt="pslist output"></p>
-<p>We can see that the keepass.exe process was running and going further.</p>
-<h2 id="Extracting-Keepass-database"><a href="#Extracting-Keepass-database" class="headerlink" title="Extracting Keepass database"></a>Extracting Keepass database</h2><p>We need to find the .kdbx file as all KeePass databases are stored with extension .kdbx. For that, we will use filescan plugin and grep for kdbx files.</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f HackTM.vmem --profile=Win7SP1x86 filescan | grep <span class="string">".kdbx"</span></span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/Find-my-Pass/kdbx_filescan.png" alt="Filescan Kdbx"></p>
-<p>We can see a database.kdbx was open and the further step is to dump that file to our host system. For that, we will use dumpfiles plugin.</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f HackTM.vmem --profile=Win7SP1x86 dumpfiles -Q 0x000000007df37c88 -D .</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/Find-my-Pass/kdbx_dumpfiles.png" alt="Dumpfiles kdbx"></p>
-<p>When I attempted to open the database, it asked for the master password. The description says that the user has forgotten his password which means we have to recover it.</p>
-<h2 id="Retriving-Master-Password"><a href="#Retriving-Master-Password" class="headerlink" title="Retriving Master Password"></a>Retriving Master Password</h2><p>But the hint says user used the same password everywhere ie: he must have copied the password and user it somewhere else. So let’s check what’s there in his clipboard. For that, we use the clipboard plugin.</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f HackTM.vmem --profile=Win7SP1x86 clipboard</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/Find-my-Pass/clipboard.png" alt="Clipboard"></p>
-<p>We can’t find anything in the clipboard. It seems to be suspicious. So let’s check the verbose data of the clipboard.</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f HackTM.vmem --profile=Win7SP1x86 clipboard -v</span><br></pre></td></tr></table></figure>
-
-<p><img src="/images/Find-my-Pass/clipboard-v.png" alt="clipboard -v"></p>
-<p>Hurrah! We found it.</p>
-<p>By removing the dots and using it (<strong>dmVZQmdzOlUrcEBlRj87dHQ3USVBIn</strong>) as the master password we got into the Keepass database.</p>
-<p>In the bottom, in attachments, we can see that there is <strong>nothinghere.7z</strong> file that was attached to the password entry.</p>
-<p>We can extract that from the <strong>File Attachments</strong> in the <strong>Advanced tab</strong> of <strong>Edit Entry</strong>.</p>
-<p>The 7z file asked for a password and on using the database master password we successfully extracted the text file. It contained the flag.</p>
-<p>Flag: <strong>HackTM{d14c02244b17f4f9dfc0f71ce7ab10e276a5880a05fca64d39a716bab92cda90}</strong></p>
-<p>The another way of solving this challenge is mentioned in <a href="https://blog.bi0s.in/2020/02/09/Forensics/HackTM-FindMyPass/" target="_blank" rel="noopener">blog.bi0s.in</a> by my mentor <a href="https://twitter.com/_abhiramkumar" target="_blank" rel="noopener">@_abhiramkumar</a>.</p>
-<p>If you like my solution, please do share it. I’m availabe on Twitter: <a href="https://twitter.com/NihithNihi" target="_blank" rel="noopener">@NihithNihi</a></p>
-]]></content>
-      <categories>
-        <category>Writeups</category>
-        <category>Memory Forensics</category>
-      </categories>
-      <tags>
-        <tag>Volatility</tag>
-        <tag>Memory</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hackcon CTF’19 – Too cold for steg Writeup</title>
     <url>/2019/08/24/Hackcon-CTF%E2%80%9919-%E2%80%93-Too-cold-for-steg-Writeup/</url>
     <content><![CDATA[<p><strong>tl;dr</strong></p>
@@ -162,6 +102,66 @@
       <tags>
         <tag>Steganography</tag>
         <tag>Wireshark</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>HackTM Quals 20 – Find my Pass Writeup</title>
+    <url>/2020/04/11/HackTM-Quals-20%E2%80%93Find-my-Pass-Writeup/</url>
+    <content><![CDATA[<p><strong>tl;dr</strong></p>
+<ul>
+<li>Memory dump analysis using Volatility.</li>
+<li>Extracting Keepass Master Password from the memory.</li>
+<li>Extracting flag from ZIP archive attached in the Keepass database.</li>
+</ul>
+<a id="more"></a>
+
+<h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><p>I managed to forget my password for my KeePass Database but luckily I had it still open and managed to get a dump of the system’s memory. Can you please help me recover my password?</p>
+<p>Challenge file: <a href="https://mega.nz/#!IdUVwY6I!uJWGZ932xab44H4EJ-zVAqu6_UWNJcCVA4_PPXdqCyc" target="_blank" rel="noopener">Mega Drive</a> or <a href="https://drive.google.com/open?id=1hUlGqJZYgbWaEu7w0JnPMqgYdFr8qVJe" target="_blank" rel="noopener">Google Drive</a></p>
+<p>Password: <strong>eD99mLkU</strong></p>
+<p>Hint: I am not very good with computers, I use my one safe password where I want to keep everything safe from hackers.</p>
+<p>I solved this challenge after the CTF has ended.</p>
+<p>According to the description, In this challenge, we have to retrieve the Master Password of a Keepass database from the memory.</p>
+<h2 id="Initial-Anaysis"><a href="#Initial-Anaysis" class="headerlink" title="Initial Anaysis"></a>Initial Anaysis</h2><p>First, you need to find what OS his system was using. For that, I used imageinfo plugin.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f HackTM.vmem imageinfo</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Find-my-Pass/imageinfo.png" alt="Imageinfo Output"></p>
+<p>I choose <strong>Win7SP1x86</strong> profile.<br>Let’s check what all processes are running in the system. We can expect that keepass.exe will be present, as the description says that the database was kept open.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f HackTM.vmem --profile=Win7SP1x86 pslist</span><br></pre></td></tr></table></figure>
+<p><img src="/images/Find-my-Pass/pslist_1.png" alt="pslist output"><br><img src="/images/Find-my-Pass/pslist_2.png" alt="pslist output"></p>
+<p>We can see that the keepass.exe process was running and going further.</p>
+<h2 id="Extracting-Keepass-database"><a href="#Extracting-Keepass-database" class="headerlink" title="Extracting Keepass database"></a>Extracting Keepass database</h2><p>We need to find the .kdbx file as all KeePass databases are stored with extension .kdbx. For that, we will use filescan plugin and grep for kdbx files.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f HackTM.vmem --profile=Win7SP1x86 filescan | grep <span class="string">".kdbx"</span></span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Find-my-Pass/kdbx_filescan.png" alt="Filescan Kdbx"></p>
+<p>We can see a database.kdbx was open and the further step is to dump that file to our host system. For that, we will use dumpfiles plugin.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f HackTM.vmem --profile=Win7SP1x86 dumpfiles -Q 0x000000007df37c88 -D .</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Find-my-Pass/kdbx_dumpfiles.png" alt="Dumpfiles kdbx"></p>
+<p>When I attempted to open the database, it asked for the master password. The description says that the user has forgotten his password which means we have to recover it.</p>
+<h2 id="Retriving-Master-Password"><a href="#Retriving-Master-Password" class="headerlink" title="Retriving Master Password"></a>Retriving Master Password</h2><p>But the hint says user used the same password everywhere ie: he must have copied the password and user it somewhere else. So let’s check what’s there in his clipboard. For that, we use the clipboard plugin.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f HackTM.vmem --profile=Win7SP1x86 clipboard</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Find-my-Pass/clipboard.png" alt="Clipboard"></p>
+<p>We can’t find anything in the clipboard. It seems to be suspicious. So let’s check the verbose data of the clipboard.</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">$ volatility -f HackTM.vmem --profile=Win7SP1x86 clipboard -v</span><br></pre></td></tr></table></figure>
+
+<p><img src="/images/Find-my-Pass/clipboard-v.png" alt="clipboard -v"></p>
+<p>Hurrah! We found it.</p>
+<p>By removing the dots and using it (<strong>dmVZQmdzOlUrcEBlRj87dHQ3USVBIn</strong>) as the master password we got into the Keepass database.</p>
+<p>In the bottom, in attachments, we can see that there is <strong>nothinghere.7z</strong> file that was attached to the password entry.</p>
+<p>We can extract that from the <strong>File Attachments</strong> in the <strong>Advanced tab</strong> of <strong>Edit Entry</strong>.</p>
+<p>The 7z file asked for a password and on using the database master password we successfully extracted the text file. It contained the flag.</p>
+<p>Flag: <strong>HackTM{d14c02244b17f4f9dfc0f71ce7ab10e276a5880a05fca64d39a716bab92cda90}</strong></p>
+<p>The another way of solving this challenge is mentioned in <a href="https://blog.bi0s.in/2020/02/09/Forensics/HackTM-FindMyPass/" target="_blank" rel="noopener">blog.bi0s.in</a> by my mentor <a href="https://twitter.com/_abhiramkumar" target="_blank" rel="noopener">@_abhiramkumar</a>.</p>
+<p>If you like my solution, please do share it. I’m availabe on Twitter: <a href="https://twitter.com/NihithNihi" target="_blank" rel="noopener">@NihithNihi</a></p>
+]]></content>
+      <categories>
+        <category>Writeups</category>
+        <category>Memory Forensics</category>
+      </categories>
+      <tags>
+        <tag>Volatility</tag>
+        <tag>Memory</tag>
       </tags>
   </entry>
   <entry>
@@ -397,6 +397,48 @@
       </tags>
   </entry>
   <entry>
+    <title>Securinets CTF’19 – Rare to win Writeup</title>
+    <url>/2019/08/17/Securinets-CTF%E2%80%9919-%E2%80%93-Rare-to-win-Challenge/</url>
+    <content><![CDATA[<p><strong>tl;dr</strong></p>
+<ul>
+<li>Chrome history analysis</li>
+<li>ACE file analysis</li>
+<li>Detecting the virus</li>
+</ul>
+<a id="more"></a>
+
+<h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><p><img src="/images/Raretowin/description.png" alt="Description"></p>
+<p>I could not solve this challenge at the time of the CTF. But it is a nice challenge.</p>
+<p>Given with an Windows 7 memory dump, lets see what all processes are running in the machine/system.</p>
+<h2 id="Initial-Analysis"><a href="#Initial-Analysis" class="headerlink" title="Initial Analysis"></a>Initial Analysis</h2><p>As the description of the says that the operator was browsing web the he might be using one of the browsers like Chrome, Firefox, or inbuilt Explorer. So lets go and see the pslist.</p>
+<p><img src="/images/Raretowin/pslist.png" alt="PSlist output"></p>
+<p>As we can see that chrome was running in system at the time when the dump was captured. So as the Chrome was running in the system we can use chrome history plugin and get the users history data.</p>
+<p><img src="/images/Raretowin/chromehistory.png" alt="Chrome History"></p>
+<h2 id="Further-Analysis"><a href="#Further-Analysis" class="headerlink" title="Further Analysis"></a>Further Analysis</h2><p>As we can see that, there is file called <strong>music.rar</strong> was downloaded from the chrome. So we will search for the file in the dump, using filescan plugin.</p>
+<p><img src="/images/Raretowin/filescan_music_rar.png" alt="filescan_music_rar"></p>
+<p>It resulted that there is no file relating to it. So I have downloaded the file from the <a href="https://www.mediafire.com/file/2t7bb2mflg2lwwj/music.rar/file" target="_blank" rel="noopener">link</a> he browsed.</p>
+<p>I tried opening the rar but it does not shown any files and it was in <strong>Read Only</strong> mode. So tried running <strong>file command</strong> on it and got to know that it is an <strong>ACE</strong> file.</p>
+<p><img src="/images/Raretowin/file_music.png" alt="file command"></p>
+<p>After a quick search in google, i came to know that there are some tools to open and extract the file from the ace file. So I renamed it and tried the unace command line tool which was provided by the Ubuntu software. But it doesn’t gave any results. So I checked for other alternatives and found <a href="http://webdiis.unizar.es/pub/unix/archive/linunace25.tgz" target="_blank" rel="noopener">this</a>.</p>
+<p>After using that tool, I can see that there is a firefox.exe and it is unable to override the build in firefox of the host system as I didn’t run with sudo permission.</p>
+<p><img src="/images/Raretowin/unace.png" alt="unace"></p>
+<p>And also if we use binwalk on the that ace file, we can see an <strong>ELF</strong> file present in it. And loading that in gdb and seeing the main function of the elf, there is only one operation going on that is the <strong>printf function</strong>. So we can say that the exe was the <strong>virus</strong> that the challenge author has asked.</p>
+<h2 id="Flag"><a href="#Flag" class="headerlink" title="Flag"></a>Flag</h2><p>But the flag is the <strong>path_to_the_virus</strong>. So as we can see that the exe file was extracting to <strong>C:/Users/Public/Data/firefox.exe</strong> therefore that will be the path that they have asked.</p>
+<p>But in windows the folders are divided using “\\” so the resulting path is <strong>C:\\Users\\Public\\Data\\firefox.exe</strong>.</p>
+<p>And the flag will be,</p>
+<p>Flag : <strong>securinets{84117b4eb400242a9db464e84220e672}</strong></p>
+<p>If you liked my solution, please do share it. I’m available on Twitter: <a href="https://twitter.com/NihithNihi" target="_blank" rel="noopener">@NihithNihi</a></p>
+]]></content>
+      <categories>
+        <category>Writeups</category>
+        <category>Memory Forensics</category>
+      </categories>
+      <tags>
+        <tag>Volatility</tag>
+        <tag>Memory</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>Memlabs Lab - 6 writeup</title>
     <url>/2020/06/02/Memlabs-Lab-6-writeup/</url>
     <content><![CDATA[<p>We are provided with a <strong>Windows 7</strong> memory dump. Let us begin our initial level of analysis.</p>
@@ -460,48 +502,6 @@
         <tag>Volatility</tag>
         <tag>Memory</tag>
         <tag>Memlabs</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Securinets CTF’19 – Rare to win Writeup</title>
-    <url>/2019/08/17/Securinets-CTF%E2%80%9919-%E2%80%93-Rare-to-win-Challenge/</url>
-    <content><![CDATA[<p><strong>tl;dr</strong></p>
-<ul>
-<li>Chrome history analysis</li>
-<li>ACE file analysis</li>
-<li>Detecting the virus</li>
-</ul>
-<a id="more"></a>
-
-<h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><p><img src="/images/Raretowin/description.png" alt="Description"></p>
-<p>I could not solve this challenge at the time of the CTF. But it is a nice challenge.</p>
-<p>Given with an Windows 7 memory dump, lets see what all processes are running in the machine/system.</p>
-<h2 id="Initial-Analysis"><a href="#Initial-Analysis" class="headerlink" title="Initial Analysis"></a>Initial Analysis</h2><p>As the description of the says that the operator was browsing web the he might be using one of the browsers like Chrome, Firefox, or inbuilt Explorer. So lets go and see the pslist.</p>
-<p><img src="/images/Raretowin/pslist.png" alt="PSlist output"></p>
-<p>As we can see that chrome was running in system at the time when the dump was captured. So as the Chrome was running in the system we can use chrome history plugin and get the users history data.</p>
-<p><img src="/images/Raretowin/chromehistory.png" alt="Chrome History"></p>
-<h2 id="Further-Analysis"><a href="#Further-Analysis" class="headerlink" title="Further Analysis"></a>Further Analysis</h2><p>As we can see that, there is file called <strong>music.rar</strong> was downloaded from the chrome. So we will search for the file in the dump, using filescan plugin.</p>
-<p><img src="/images/Raretowin/filescan_music_rar.png" alt="filescan_music_rar"></p>
-<p>It resulted that there is no file relating to it. So I have downloaded the file from the <a href="https://www.mediafire.com/file/2t7bb2mflg2lwwj/music.rar/file" target="_blank" rel="noopener">link</a> he browsed.</p>
-<p>I tried opening the rar but it does not shown any files and it was in <strong>Read Only</strong> mode. So tried running <strong>file command</strong> on it and got to know that it is an <strong>ACE</strong> file.</p>
-<p><img src="/images/Raretowin/file_music.png" alt="file command"></p>
-<p>After a quick search in google, i came to know that there are some tools to open and extract the file from the ace file. So I renamed it and tried the unace command line tool which was provided by the Ubuntu software. But it doesn’t gave any results. So I checked for other alternatives and found <a href="http://webdiis.unizar.es/pub/unix/archive/linunace25.tgz" target="_blank" rel="noopener">this</a>.</p>
-<p>After using that tool, I can see that there is a firefox.exe and it is unable to override the build in firefox of the host system as I didn’t run with sudo permission.</p>
-<p><img src="/images/Raretowin/unace.png" alt="unace"></p>
-<p>And also if we use binwalk on the that ace file, we can see an <strong>ELF</strong> file present in it. And loading that in gdb and seeing the main function of the elf, there is only one operation going on that is the <strong>printf function</strong>. So we can say that the exe was the <strong>virus</strong> that the challenge author has asked.</p>
-<h2 id="Flag"><a href="#Flag" class="headerlink" title="Flag"></a>Flag</h2><p>But the flag is the <strong>path_to_the_virus</strong>. So as we can see that the exe file was extracting to <strong>C:/Users/Public/Data/firefox.exe</strong> therefore that will be the path that they have asked.</p>
-<p>But in windows the folders are divided using “\\” so the resulting path is <strong>C:\\Users\\Public\\Data\\firefox.exe</strong>.</p>
-<p>And the flag will be,</p>
-<p>Flag : <strong>securinets{84117b4eb400242a9db464e84220e672}</strong></p>
-<p>If you liked my solution, please do share it. I’m available on Twitter: <a href="https://twitter.com/NihithNihi" target="_blank" rel="noopener">@NihithNihi</a></p>
-]]></content>
-      <categories>
-        <category>Writeups</category>
-        <category>Memory Forensics</category>
-      </categories>
-      <tags>
-        <tag>Volatility</tag>
-        <tag>Memory</tag>
       </tags>
   </entry>
   <entry>
