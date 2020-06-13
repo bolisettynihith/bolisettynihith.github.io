@@ -1,33 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>Hackcon CTF’19 – Too cold for steg Writeup</title>
-    <url>/2019/08/24/Hackcon-CTF%E2%80%9919-%E2%80%93-Too-cold-for-steg-Writeup/</url>
-    <content><![CDATA[<p><strong>tl;dr</strong></p>
-<ul>
-<li>Whitespace steganography</li>
-</ul>
-<a id="more"></a>
-
-<h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><p><img src="/images/Toocoldforsteg/description.png" alt="Description"></p>
-<h2 id="Initial-Analysis"><a href="#Initial-Analysis" class="headerlink" title="Initial Analysis"></a>Initial Analysis</h2><p>Got a text file and opening the text file in any text editor and selecting all the text we can find some whitespace present at the ending of the each each line.</p>
-<p>As the title is Too cold to steg we will get a tool known as stegsnow in our mind.</p>
-<p>But for using the stegsnow we need a password. After searching for the password in the file given we can get the password as <strong>d4rkc0de-IIITD</strong>.</p>
-<p><img src="/images/Toocoldforsteg/grep_password.png" alt="grep password"></p>
-<p>Then using the stegsnow we will get the flag.</p>
-<p><img src="/images/Toocoldforsteg/stegsnow.png" alt="stegsnow command"></p>
-<h2 id="Flag"><a href="#Flag" class="headerlink" title="Flag"></a>Flag</h2><p>Flag: <strong>d4rk{h@ving_fun_w1th_st3gsn0w?}c0de</strong></p>
-<p>If you like my solution, please do share it. I’m availabe on Twitter: <a href="https://twitter.com/NihithNihi" target="_blank" rel="noopener">@NihithNihi</a></p>
-]]></content>
-      <categories>
-        <category>Writeups</category>
-        <category>Steganography</category>
-      </categories>
-      <tags>
-        <tag>whitespace</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>Hackcon CTF’19 – GIMP IT Writeup</title>
     <url>/2019/08/24/Hackcon-CTF%E2%80%9919-%E2%80%93-GIMP-IT-Writeup/</url>
     <content><![CDATA[<p><strong>tl;dr</strong></p>
@@ -57,51 +30,6 @@
       <tags>
         <tag>Steganography</tag>
         <tag>Python</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Fresh From The Oven - InCTF Internationals 2019 Writeup</title>
-    <url>/2019/10/03/InCTFi19-Fresh-From-the-Oven/</url>
-    <content><![CDATA[<p><strong>tl;dr</strong></p>
-<ul>
-<li>Decoding the strings found in TCP stream 0.</li>
-<li>Analysing and extracting data sent via different ports of TCP.</li>
-<li>Using character-wise caesar from the extracted data.</li>
-<li>Zip cracking</li>
-</ul>
-<a id="more"></a>
-
-<h2 id="Challenge-Description"><a href="#Challenge-Description" class="headerlink" title="Challenge Description"></a>Challenge Description</h2><p><img src="/images/FreshFromtheOven/description.png" alt="Description"></p>
-<p>You can download the challenge file from <a href="https://mega.nz/#!d6wEFICJ!u9XykRdIoJtloYDZQxFqXt1KvWR5aK3Ucisd2-a-qms" target="_blank" rel="noopener"><strong>Mega</strong></a> or <a href="https://drive.google.com/file/d/1ZBLNYqFOA0dOx8e1GnNoO3qn2V0Elpcm/view?usp=sharing" target="_blank" rel="noopener"><strong>G-Drive</strong></a></p>
-<p>This is a challenge which I made for InCTFi’19 along with my teammate(<a href="https://twitter.com/__Sh4d0w__" target="_blank" rel="noopener">@Sh4d0w</a>).</p>
-<h2 id="Initial-Analysis"><a href="#Initial-Analysis" class="headerlink" title="Initial Analysis"></a>Initial Analysis</h2><p>We are provided with a <strong>pcap</strong> file. Let’s start our initial analysis.</p>
-<p>We can see so many TCP packets in the capture file and the description says that it was a chat between two friends. So let’s follow the TCP stream and see if anything is interesting in it.</p>
-<p><img src="/images/FreshFromtheOven/tcp-stream-0.png" alt="TCP Stream"></p>
-<p>We do see a chat between 2 people. Also, we can find some encoded strings. The secret code: <strong>Remember remember the FIFTH of november :)</strong> does hint out something. We can assume the encoded strings are <strong>ROT5</strong>. Decoding them, we get;</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Rohith: This is a sample in that encoded way.</span><br><span class="line"></span><br><span class="line">Shyam: Oh, It&#39;s good and it took a lot of time to understand for me.</span><br><span class="line"></span><br><span class="line">Rohith: Sending you some interesting files, try to find the secret behind them and keep it confidential</span><br><span class="line"></span><br><span class="line">Shyam: Okay, sure:)</span><br></pre></td></tr></table></figure>
-
-<h2 id="Further-Analysis"><a href="#Further-Analysis" class="headerlink" title="Further Analysis"></a>Further Analysis</h2><p>As the chat between them says that some files have transferred. And we can see that from <strong>TCP Stream 2</strong>, extra data with <strong>800 bytes</strong> is transferred in two different destination ports(<strong>444</strong> &amp; <strong>81</strong>). We can assume that the two files have been transferred.</p>
-<p>Extracting the data sent to the above-mentioned ports and applying <strong>Caesar cipher</strong> on the two files, we get the file structure of a <strong>PDF file</strong> and a <strong>ZIP file</strong>.</p>
-<p><img src="/images/FreshFromtheOven/file_pdf.png" alt="File PDF"></p>
-<p><img src="/images/FreshFromtheOven/file_zip.png" alt="File zip"></p>
-<p>After opening the PDF and we find extra spaces in the last page of that file. It says “<strong>NOTHING HERE :( DON’T WASTE YOUR TIME</strong>“.</p>
-<p>So it’s just a <strong>rabbit hole</strong>.</p>
-<p>After a brief observation, we see that the ZIP is password protected. So, we use <strong>fcrackzip</strong> in dictionary mode to crack the password,</p>
-<p><img src="/images/FreshFromtheOven/zip_cracking.png" alt="zip cracking"></p>
-<p>The password is <strong>johnjandroveclarkmichaelkent</strong>.</p>
-<p>Extracting the file from the zip gave a <strong>PNG</strong> image.</p>
-<p><img src="/images/FreshFromtheOven/flag.png" alt="flag"></p>
-<h2 id="Flag"><a href="#Flag" class="headerlink" title="Flag"></a>Flag</h2><p>Simple LSB steg can be used to get the flag. We used the popular tool <strong>zsteg</strong> for this.</p>
-<p>FLAG: <strong>inctf{3ach_4nd_3v3ry_s3cre7_inf0rm4t10n_w1ll_b3_kn0wn_by_wir3shark!!!!!_:)}</strong></p>
-<p>If you like my solution, please do share it. I’m availabe on Twitter: <a href="https://twitter.com/NihithNihi" target="_blank" rel="noopener">@NihithNihi</a></p>
-]]></content>
-      <categories>
-        <category>Writeups</category>
-        <category>Network</category>
-      </categories>
-      <tags>
-        <tag>Steganography</tag>
-        <tag>Wireshark</tag>
       </tags>
   </entry>
   <entry>
@@ -162,6 +90,78 @@
       <tags>
         <tag>Volatility</tag>
         <tag>Memory</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Hackcon CTF’19 – Too cold for steg Writeup</title>
+    <url>/2019/08/24/Hackcon-CTF%E2%80%9919-%E2%80%93-Too-cold-for-steg-Writeup/</url>
+    <content><![CDATA[<p><strong>tl;dr</strong></p>
+<ul>
+<li>Whitespace steganography</li>
+</ul>
+<a id="more"></a>
+
+<h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><p><img src="/images/Toocoldforsteg/description.png" alt="Description"></p>
+<h2 id="Initial-Analysis"><a href="#Initial-Analysis" class="headerlink" title="Initial Analysis"></a>Initial Analysis</h2><p>Got a text file and opening the text file in any text editor and selecting all the text we can find some whitespace present at the ending of the each each line.</p>
+<p>As the title is Too cold to steg we will get a tool known as stegsnow in our mind.</p>
+<p>But for using the stegsnow we need a password. After searching for the password in the file given we can get the password as <strong>d4rkc0de-IIITD</strong>.</p>
+<p><img src="/images/Toocoldforsteg/grep_password.png" alt="grep password"></p>
+<p>Then using the stegsnow we will get the flag.</p>
+<p><img src="/images/Toocoldforsteg/stegsnow.png" alt="stegsnow command"></p>
+<h2 id="Flag"><a href="#Flag" class="headerlink" title="Flag"></a>Flag</h2><p>Flag: <strong>d4rk{h@ving_fun_w1th_st3gsn0w?}c0de</strong></p>
+<p>If you like my solution, please do share it. I’m availabe on Twitter: <a href="https://twitter.com/NihithNihi" target="_blank" rel="noopener">@NihithNihi</a></p>
+]]></content>
+      <categories>
+        <category>Writeups</category>
+        <category>Steganography</category>
+      </categories>
+      <tags>
+        <tag>whitespace</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Fresh From The Oven - InCTF Internationals 2019 Writeup</title>
+    <url>/2019/10/03/InCTFi19-Fresh-From-the-Oven/</url>
+    <content><![CDATA[<p><strong>tl;dr</strong></p>
+<ul>
+<li>Decoding the strings found in TCP stream 0.</li>
+<li>Analysing and extracting data sent via different ports of TCP.</li>
+<li>Using character-wise caesar from the extracted data.</li>
+<li>Zip cracking</li>
+</ul>
+<a id="more"></a>
+
+<h2 id="Challenge-Description"><a href="#Challenge-Description" class="headerlink" title="Challenge Description"></a>Challenge Description</h2><p><img src="/images/FreshFromtheOven/description.png" alt="Description"></p>
+<p>You can download the challenge file from <a href="https://mega.nz/#!d6wEFICJ!u9XykRdIoJtloYDZQxFqXt1KvWR5aK3Ucisd2-a-qms" target="_blank" rel="noopener"><strong>Mega</strong></a> or <a href="https://drive.google.com/file/d/1ZBLNYqFOA0dOx8e1GnNoO3qn2V0Elpcm/view?usp=sharing" target="_blank" rel="noopener"><strong>G-Drive</strong></a></p>
+<p>This is a challenge which I made for InCTFi’19 along with my teammate(<a href="https://twitter.com/__Sh4d0w__" target="_blank" rel="noopener">@Sh4d0w</a>).</p>
+<h2 id="Initial-Analysis"><a href="#Initial-Analysis" class="headerlink" title="Initial Analysis"></a>Initial Analysis</h2><p>We are provided with a <strong>pcap</strong> file. Let’s start our initial analysis.</p>
+<p>We can see so many TCP packets in the capture file and the description says that it was a chat between two friends. So let’s follow the TCP stream and see if anything is interesting in it.</p>
+<p><img src="/images/FreshFromtheOven/tcp-stream-0.png" alt="TCP Stream"></p>
+<p>We do see a chat between 2 people. Also, we can find some encoded strings. The secret code: <strong>Remember remember the FIFTH of november :)</strong> does hint out something. We can assume the encoded strings are <strong>ROT5</strong>. Decoding them, we get;</p>
+<figure class="highlight plain"><table><tr><td class="code"><pre><span class="line">Rohith: This is a sample in that encoded way.</span><br><span class="line"></span><br><span class="line">Shyam: Oh, It&#39;s good and it took a lot of time to understand for me.</span><br><span class="line"></span><br><span class="line">Rohith: Sending you some interesting files, try to find the secret behind them and keep it confidential</span><br><span class="line"></span><br><span class="line">Shyam: Okay, sure:)</span><br></pre></td></tr></table></figure>
+
+<h2 id="Further-Analysis"><a href="#Further-Analysis" class="headerlink" title="Further Analysis"></a>Further Analysis</h2><p>As the chat between them says that some files have transferred. And we can see that from <strong>TCP Stream 2</strong>, extra data with <strong>800 bytes</strong> is transferred in two different destination ports(<strong>444</strong> &amp; <strong>81</strong>). We can assume that the two files have been transferred.</p>
+<p>Extracting the data sent to the above-mentioned ports and applying <strong>Caesar cipher</strong> on the two files, we get the file structure of a <strong>PDF file</strong> and a <strong>ZIP file</strong>.</p>
+<p><img src="/images/FreshFromtheOven/file_pdf.png" alt="File PDF"></p>
+<p><img src="/images/FreshFromtheOven/file_zip.png" alt="File zip"></p>
+<p>After opening the PDF and we find extra spaces in the last page of that file. It says “<strong>NOTHING HERE :( DON’T WASTE YOUR TIME</strong>“.</p>
+<p>So it’s just a <strong>rabbit hole</strong>.</p>
+<p>After a brief observation, we see that the ZIP is password protected. So, we use <strong>fcrackzip</strong> in dictionary mode to crack the password,</p>
+<p><img src="/images/FreshFromtheOven/zip_cracking.png" alt="zip cracking"></p>
+<p>The password is <strong>johnjandroveclarkmichaelkent</strong>.</p>
+<p>Extracting the file from the zip gave a <strong>PNG</strong> image.</p>
+<p><img src="/images/FreshFromtheOven/flag.png" alt="flag"></p>
+<h2 id="Flag"><a href="#Flag" class="headerlink" title="Flag"></a>Flag</h2><p>Simple LSB steg can be used to get the flag. We used the popular tool <strong>zsteg</strong> for this.</p>
+<p>FLAG: <strong>inctf{3ach_4nd_3v3ry_s3cre7_inf0rm4t10n_w1ll_b3_kn0wn_by_wir3shark!!!!!_:)}</strong></p>
+<p>If you like my solution, please do share it. I’m availabe on Twitter: <a href="https://twitter.com/NihithNihi" target="_blank" rel="noopener">@NihithNihi</a></p>
+]]></content>
+      <categories>
+        <category>Writeups</category>
+        <category>Network</category>
+      </categories>
+      <tags>
+        <tag>Steganography</tag>
+        <tag>Wireshark</tag>
       </tags>
   </entry>
   <entry>
