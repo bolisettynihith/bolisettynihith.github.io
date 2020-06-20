@@ -252,7 +252,7 @@ ga('send', 'pageview');
       </li>
     </ul>
     <ul class="nav">
-      <li class="nav-item" class="w3-xxlarge">
+      <li class="nav-item">
         <div id="social" class="icon-bar">
           <a href="https://www.facebook.com/people/Nihith-Nihi/100009552907530" target="_blank" rel="noopener" class="facebook"><i class="fa fa-facebook"></i></a>
           <a href="https://twitter.com/NihithNihi" target="_blank" rel="noopener" class="twitter"><i class="fa fa-twitter"></i></a>
@@ -264,6 +264,7 @@ ga('send', 'pageview');
     </ul>
   </div>
 </footer>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
       <div class="float_btns">
         <div class="totop" id="totop">
   <i class="ri-arrow-up-line"></i>
@@ -277,7 +278,6 @@ ga('send', 'pageview');
     </main>
     <aside class="sidebar on">
       <button class="navbar-toggle"></button>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <nav class="navbar">
   
   <div class="logo">
@@ -494,7 +494,40 @@ ga('send', 'pageview');
 
 <!-- MathJax -->
 
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+      tex2jax: {
+          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+          processEscapes: true,
+          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+      }
+  });
+
+  MathJax.Hub.Queue(function() {
+      var all = MathJax.Hub.getAllJax(), i;
+      for(i=0; i < all.length; i += 1) {
+          all[i].SourceElement().parentNode.className += ' has-jax';
+      }
+  });
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.6/unpacked/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+<script>
+  var ayerConfig = {
+    mathjax: true
+  }
+</script>
+
 <!-- Katex -->
+
+
+    
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css">
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script>
+        
+    
+
 
 <!-- busuanzi  -->
 
@@ -537,7 +570,7 @@ ga('send', 'pageview');
         let $span = $($btn.find('span'));
         $span[0].innerText = 'COPIED';
         
-        wait(function () { // 等待两秒钟后恢复
+        wait(function () { // Wait two seconds and resume
           $icon.removeClass('ri-checkbox-circle-line');
           $icon.addClass('ri-file-copy-2-line');
           $span[0].innerText = 'COPY';
@@ -553,7 +586,7 @@ ga('send', 'pageview');
         let $span = $($btn.find('span'));
         $span[0].innerText = 'COPY FAILED';
         
-        wait(function () { // 等待两秒钟后恢复
+        wait(function () { // Wait two seconds and resume
           $icon.removeClass('ri-time-line');
           $icon.addClass('ri-file-copy-2-line');
           $span[0].innerText = 'COPY';
