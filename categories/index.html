@@ -66,8 +66,110 @@ ga('send', 'pageview');
     </div>
   
 </section>
-      <footer class="footer">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+<footer class="footer">
   <div class="outer">
+    <ul class="nav">
+      <li class="nav-item">
+        <div id="social" class="icon-bar">
+          <a href="https://www.facebook.com/people/Nihith-Nihi/100009552907530" target="_blank" rel="noopener" class="facebookBtn smGlobalBtn"></a>
+          <a href="https://twitter.com/NihithNihi" target="_blank" rel="noopener" class="twitterBtn smGlobalBtn"></a>
+          <a href="https://www.linkedin.com/in/bolisettynihith/" target="_blank" rel="noopener" class="linkedinBtn smGlobalBtn"></a>
+          <a href="https://github.com/bolisettynihith/" target="_blank" rel="noopener" class="githubBtn smGlobalBtn"></a>
+          <a href="mailto:bolisettynihith@gmail.com" class="envelopeBtn smGlobalBtn"></a>
+        </div>
+      </li>
+    </ul>
+    <style>
+      #social {
+        margin: 10px 5px;
+        text-align: center;
+      }
+      .smGlobalBtn { /* global button class */
+        display: inline-block;
+        position: relative;
+        cursor: pointer;
+        width: 50px;
+        height: 50px;
+        border:2px solid #ddd; /* add border to the buttons */
+        box-shadow: 0 3px 3px #999;
+        padding: 0px;
+        text-decoration: none;
+        text-align: center;
+        color: #fff;
+        font-size: 25px;
+        font-weight: normal;
+        line-height: 2em;
+        border-radius: 27px;
+        -moz-border-radius:27px;
+        -webkit-border-radius:27px;
+    }
+    /* envelope button class*/
+    .envelopeBtn{
+      background: #B23121;
+    }
+    .envelopeBtn:before{
+      font-family: "FontAwesome";
+      content: "\f0e0"; /* add envelope icon */
+    }
+    .envelopeBtn:hover{
+      color: #B23121;
+      background: #fff;
+      border-color: #B23121;
+    }
+    /* facebook button class*/
+    .facebookBtn{
+      background: #4060A5;
+    }
+    .facebookBtn:before{ /* use :before to add the relevant icons */
+      font-family: "FontAwesome";
+      content: "\f09a"; /* add facebook icon */
+    }
+    .facebookBtn:hover{
+      color: #4060A5;
+      background: #fff;
+      border-color: #4060A5; /* change the border color on mouse hover */
+    }
+    /* twitter button class*/
+    .twitterBtn{
+      background: #00ABE3;
+    }
+    .twitterBtn:before{
+      font-family: "FontAwesome";
+      content: "\f099"; /* add twitter icon */     
+    }
+    .twitterBtn:hover{
+      color: #00ABE3;
+      background: #fff;
+      border-color: #00ABE3;
+    }
+    /* linkedin button class*/
+    .linkedinBtn{
+      background: #0094BC;
+    }
+    .linkedinBtn:before{
+      font-family: "FontAwesome";
+      content: "\f0e1"; /* add linkedin icon */
+    }
+    .linkedinBtn:hover{
+      color: #0094BC;
+      background: #fff;
+      border-color: #0094BC;
+    }
+    /* github button class*/
+    .githubBtn{
+      background: #211F1F;
+    }
+    .githubBtn:before{ /* use :before to add the relevant icons */
+      font-family: "FontAwesome";
+      content: "\f09b"; /* add facebook icon */
+    }
+    .githubBtn:hover{
+      color: #211F1F;
+      background: #fff;
+      border-color: #211F1F; /* change the border color on mouse hover */
+    }
+    </style>
     <ul>
       <li>
         Copyrights &copy;
@@ -77,12 +179,6 @@ ga('send', 'pageview');
     </ul>
     <!-- <ul>
       <li>
-        
-        
-        
-        Powered by <a href="https://hexo.io" target="_blank">Hexo</a>
-        <span class="division">|</span>
-        Theme - <a href="https://github.com/Shen-Yu/hexo-theme-ayer" target="_blank">Ayer</a>
         
       </li>
     </ul> -->
@@ -100,20 +196,8 @@ ga('send', 'pageview');
         
       </li>
     </ul>
-    <ul class="nav">
-      <li class="nav-item">
-        <div id="social" class="icon-bar">
-          <a href="https://www.facebook.com/people/Nihith-Nihi/100009552907530" target="_blank" rel="noopener" class="facebook"><i class="fa fa-facebook"></i></a>
-          <a href="https://twitter.com/NihithNihi" target="_blank" rel="noopener" class="twitter"><i class="fa fa-twitter"></i></a>
-          <a href="https://www.linkedin.com/in/bolisettynihith/" target="_blank" rel="noopener" class="linkedin"><i class="fa fa-linkedin"></i></a>
-          <a href="https://github.com/bolisettynihith/" target="_blank" rel="noopener" class="github"><i class="fa fa-github"></i></a>
-          <a href="mailto:bolisettynihith@gmail.com" class="envolope"><i class="fa fa-envelope"></i></a>
-        </div>
-      </li>
-    </ul>
   </div>
 </footer>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
       <div class="float_btns">
         <div class="totop" id="totop">
   <i class="ri-arrow-up-line"></i>
@@ -126,7 +210,7 @@ ga('send', 'pageview');
       </div>
     </main>
     <aside class="sidebar on">
-      <button class="navbar-toggle"></button>
+      <!-- <button class="navbar-toggle"></button> -->
 <nav class="navbar">
   
   <div class="logo">
@@ -204,8 +288,6 @@ ga('send', 'pageview');
 
 
 <script src="/js/lazyload.min.js"></script>
-
-<!-- Subtitle -->
 
 <!-- Tocbot -->
 
