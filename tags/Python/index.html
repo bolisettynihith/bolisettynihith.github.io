@@ -1,614 +1,605 @@
-<!DOCTYPE html>
-
-
+<!DOCTYPE HTML>
 <html lang="en">
 
 
 <head>
-  <meta charset="utf-8" />
+    <meta charset="utf-8">
+    <meta name="keywords" content="Tag: Python, Nihith&#39;s blog">
+    <meta name="description" content="CTF player with Team bi0s. Love to do Memory Forensics. UG student at Amrita Vishwa Vidyapeetham.">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>Tag: Python | Nihith&#39;s blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="Nihith's blog" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.svg" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Nihith&#39;s blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
     
-  <meta name="description" content="CTF player with Team bi0s. Memory Forensics. UG student at Amrita Vishwa Vidyapeetham." />
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>Home</span>
+    </a>
+    
+  </li>
   
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
-  <title>
-    Tag: Python |  Nihith&#39;s blog
-  </title>
-  <meta name="generator" content="hexo-theme-ayer">
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>Tags</span>
+    </a>
+    
+  </li>
   
-  <link rel="shortcut icon" href="/logo.jpg" />
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>Categories</span>
+    </a>
+    
+  </li>
   
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>Archives</span>
+    </a>
+    
+  </li>
   
-<link rel="stylesheet" href="/dist/main.css">
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>About</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="Search" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
 
-  
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/css/remixicon.min.css">
 
-  
-<link rel="stylesheet" href="/css/custom.css">
+<div id="mobile-nav" class="side-nav sidenav">
 
-  
-  
-<script src="https://cdn.jsdelivr.net/npm/pace-js@1.0.2/pace.min.js"></script>
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.svg" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Nihith&#39;s blog</div>
+        <div class="logo-desc">
+            
+            CTF player with Team bi0s. Love to do Memory Forensics. UG student at Amrita Vishwa Vidyapeetham.
+            
+        </div>
+    </div>
 
-  
-  
+    
 
-<script type="text/javascript">
-(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-})(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			Home
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			Tags
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			Categories
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			Archives
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			About
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
 
-ga('create', 'UA-169178746-1', 'auto');
-ga('send', 'pageview');
 
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    <div class="bg-cover pd-header about-cover">
+    <div class="container">
+    <div class="row">
+    <div class="col s10 offset-s1 m8 offset-m2 l8 offset-l2">
+        <div class="brand">
+            <div class="title center-align">
+                
+                CTF player &amp; Digital Forensics Analyst
+                
+            </div>
+
+            <div class="description center-align">
+                
+                <span id="subtitle"></span>
+                <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.11"></script>
+                <script>
+                    var typed = new Typed("#subtitle", {
+                        strings: ['Digging data from Memory.',''],
+                        startDelay: 300,
+                        typeSpeed: 100,
+                        loop: true,
+                        backSpeed: 50,
+                        showCursor: true
+                    });
+                </script>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $('.bg-cover').css('background-image', 'url(/medias/banner/0.jpg)');
 </script>
 
 
-
-  
-
-<link rel="alternate" href="/atom.xml" title="Nihith's blog" type="application/atom+xml">
-</head>
-
-</html>
-
-<body>
-  <div id="app">
-    
-      
-    <main class="content on">
-      <section class="outer">
-  <article class="articles">
-    
-    
-    <h1 class="page-type-title">#&nbspPython</h1>
-    
-    
-  
-  
-  
-  
-  
-  
-  <div class="archives-wrap">
-    <div class="archive-year-wrap">
-      <a href="/archives/2019" class="archive-year">2019</a>
     </div>
-    <div class="archives">
-      
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/08/24/Hackcon-CTF%E2%80%9919-%E2%80%93-GIMP-IT-Writeup/" class="archive-article-date">
-  <time datetime="2019-08-24T12:43:39.000Z" itemprop="datePublished">08/24</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2019/08/24/Hackcon-CTF%E2%80%9919-%E2%80%93-GIMP-IT-Writeup/"
-    >Hackcon CTF’19 – GIMP IT Writeup</a> 
-</h2>
- 
+</div>
 
-    </header>
-    
-    
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Steganography/" rel="tag">Steganography</a></li></ul>
+<main class="content">
 
     
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/08/11/Swamp-CTF%E2%80%9918-%E2%80%93-Orcish-challenge/" class="archive-article-date">
-  <time datetime="2019-08-11T06:25:03.000Z" itemprop="datePublished">08/11</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2019/08/11/Swamp-CTF%E2%80%9918-%E2%80%93-Orcish-challenge/"
-    >Swamp CTF’18 – Orcish Writeup</a> 
-</h2>
- 
 
-    </header>
-    
-    
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Network/" rel="tag">Network</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Wireshark/" rel="tag">Wireshark</a></li></ul>
-
-    
-  </div>
-</article>
-      
-  
-  
-      <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      <a href="/2019/04/09/Swamp-CTF%E2%80%9919-The-Cyber-War-Continues/" class="archive-article-date">
-  <time datetime="2019-04-09T07:15:17.000Z" itemprop="datePublished">04/09</time>
-</a>
-       
-<h2 itemprop="name">
-  <a class="archive-article-title" href="/2019/04/09/Swamp-CTF%E2%80%9919-The-Cyber-War-Continues/"
-    >Swamp CTF’19 - The Cyber War Continues Writeup</a> 
-</h2>
- 
-
-    </header>
-    
-    
-      
-  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Python/" rel="tag">Python</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Wireshark/" rel="tag">Wireshark</a></li></ul>
-
-    
-  </div>
-</article>
-      
-      
-    </div>
-  </div>
-  
-  
-
-  
-</section>
-      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
-<footer class="footer">
-  <div class="outer">
-    <ul class="nav">
-      <li class="nav-item">
-        <div id="social" class="icon-bar">
-          <a href="https://www.facebook.com/people/Nihith-Nihi/100009552907530" target="_blank" rel="noopener" class="facebookBtn smGlobalBtn"></a>
-          <a href="https://twitter.com/NihithNihi" target="_blank" rel="noopener" class="twitterBtn smGlobalBtn"></a>
-          <a href="https://www.linkedin.com/in/bolisettynihith/" target="_blank" rel="noopener" class="linkedinBtn smGlobalBtn"></a>
-          <a href="https://github.com/bolisettynihith/" target="_blank" rel="noopener" class="githubBtn smGlobalBtn"></a>
-          <a href="mailto:bolisettynihith@gmail.com" class="envelopeBtn smGlobalBtn"></a>
+<div id="tags" class="container chip-container">
+    <div class="card">
+        <div class="card-content">
+            <div class="tag-title center-align">
+                <i class="fas fa-tags"></i>&nbsp;&nbsp;Post Tags
+            </div>
+            <div class="tag-chips">
+                
+                
+                <a href="/tags/Volatility/" title="Volatility: 9">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            data-tagname="Volatility" style="background-color: #F9EBEA;">Volatility
+                        <span class="tag-length">9</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/tags/Memory/" title="Memory: 9">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            data-tagname="Memory" style="background-color: #F5EEF8;">Memory
+                        <span class="tag-length">9</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/tags/Wireshark/" title="Wireshark: 3">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            data-tagname="Wireshark" style="background-color: #D5F5E3;">Wireshark
+                        <span class="tag-length">3</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/tags/Steganography/" title="Steganography: 2">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            data-tagname="Steganography" style="background-color: #E8F8F5;">Steganography
+                        <span class="tag-length">2</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/tags/whitespace/" title="whitespace: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            data-tagname="whitespace" style="background-color: #FEF9E7;">whitespace
+                        <span class="tag-length">1</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/tags/Python/" title="Python: 3">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-active "
+                            data-tagname="Python" style="background-color: #F8F9F9;">Python
+                        <span class="tag-length">3</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/tags/Memlabs/" title="Memlabs: 6">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            data-tagname="Memlabs" style="background-color: #82E0AA;">Memlabs
+                        <span class="tag-length">6</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/tags/Network/" title="Network: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            data-tagname="Network" style="background-color: #D7BDE2;">Network
+                        <span class="tag-length">1</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/tags/Amcache/" title="Amcache: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            data-tagname="Amcache" style="background-color: #A3E4D7;">Amcache
+                        <span class="tag-length">1</span>
+                    </span>
+                </a>
+                
+                
+                <a href="/tags/Registry-Analysis/" title="Registry Analysis: 1">
+                    <span class="chip center-align waves-effect waves-light
+                             chip-default "
+                            data-tagname="Registry Analysis" style="background-color: #85C1E9;">Registry Analysis
+                        <span class="tag-length">1</span>
+                    </span>
+                </a>
+                
+            </div>
         </div>
-      </li>
-    </ul>
-    <style>
-      #social {
-        margin: 10px 5px;
-        text-align: center;
-      }
-      .smGlobalBtn { /* global button class */
-        display: inline-block;
-        position: relative;
-        cursor: pointer;
-        width: 50px;
-        height: 50px;
-        border:2px solid #ddd; /* add border to the buttons */
-        box-shadow: 0 3px 3px #999;
-        padding: 0px;
-        text-decoration: none;
-        text-align: center;
-        color: #fff;
-        font-size: 25px;
-        font-weight: normal;
-        line-height: 2em;
-        border-radius: 27px;
-        -moz-border-radius:27px;
-        -webkit-border-radius:27px;
-    }
-    /* envelope button class*/
-    .envelopeBtn{
-      background: #B23121;
-    }
-    .envelopeBtn:before{
-      font-family: "FontAwesome";
-      content: "\f0e0"; /* add envelope icon */
-    }
-    .envelopeBtn:hover{
-      color: #B23121;
-      background: #fff;
-      border-color: #B23121;
-    }
-    /* facebook button class*/
-    .facebookBtn{
-      background: #4060A5;
-    }
-    .facebookBtn:before{ /* use :before to add the relevant icons */
-      font-family: "FontAwesome";
-      content: "\f09a"; /* add facebook icon */
-    }
-    .facebookBtn:hover{
-      color: #4060A5;
-      background: #fff;
-      border-color: #4060A5; /* change the border color on mouse hover */
-    }
-    /* twitter button class*/
-    .twitterBtn{
-      background: #00ABE3;
-    }
-    .twitterBtn:before{
-      font-family: "FontAwesome";
-      content: "\f099"; /* add twitter icon */     
-    }
-    .twitterBtn:hover{
-      color: #00ABE3;
-      background: #fff;
-      border-color: #00ABE3;
-    }
-    /* linkedin button class*/
-    .linkedinBtn{
-      background: #0094BC;
-    }
-    .linkedinBtn:before{
-      font-family: "FontAwesome";
-      content: "\f0e1"; /* add linkedin icon */
-    }
-    .linkedinBtn:hover{
-      color: #0094BC;
-      background: #fff;
-      border-color: #0094BC;
-    }
-    /* github button class*/
-    .githubBtn{
-      background: #211F1F;
-    }
-    .githubBtn:before{ /* use :before to add the relevant icons */
-      font-family: "FontAwesome";
-      content: "\f09b"; /* add facebook icon */
-    }
-    .githubBtn:hover{
-      color: #211F1F;
-      background: #fff;
-      border-color: #211F1F; /* change the border color on mouse hover */
-    }
-    </style>
-    <ul>
-      <li>
-        Copyrights &copy;
-        2020
-        <i class="ri-heart-fill heart_icon"></i> Nihith
-      </li>
-    </ul>
-    <!-- <ul>
-      <li>
-        
-      </li>
-    </ul> -->
-    <ul>
-      <li>
-        
-      </li>
-    </ul>
-    <ul>
-      
-    </ul>
-    <ul>
-      <li>
-        <!-- cnzz统计 -->
-        
-      </li>
-    </ul>
-  </div>
-</footer>
-      <div class="float_btns">
-        <div class="totop" id="totop">
-  <i class="ri-arrow-up-line"></i>
-</div>
-
-<div class="todark" id="todark">
-  <i class="ri-moon-line"></i>
-</div>
-
-      </div>
-    </main>
-    <aside class="sidebar on">
-      <!-- <button class="navbar-toggle"></button> -->
-<nav class="navbar">
-  
-  <div class="logo">
-    <a href="/"><img src="/logo.jpg" alt="Nihith&#39;s blog"></a>
-  </div>
-  
-  <ul class="nav nav-main">
-    
-    <li class="nav-item">
-      <a class="nav-item-link" href="/">Home</a>
-    </li>
-    
-    <li class="nav-item">
-      <a class="nav-item-link" href="/archives">Archives</a>
-    </li>
-    
-    <li class="nav-item">
-      <a class="nav-item-link" href="/about">About</a>
-    </li>
-    
-  </ul>
-</nav>
-<nav class="navbar navbar-bottom">
-  <ul class="nav">
-    <li class="nav-item">
-      
-      <a class="nav-item-link nav-item-search"  title="Search">
-        <i class="ri-search-line"></i>
-      </a>
-      
-      
-      <a class="nav-item-link" target="_blank" href="/atom.xml" title="RSS Feed">
-        <i class="ri-rss-line"></i>
-      </a>
-      
-    </li>
-  </ul>
-</nav>
-<div class="search-form-wrap">
-  <div class="local-search local-search-plugin">
-  <input type="search" id="local-search-input" class="local-search-input" placeholder="Search...">
-  <div id="local-search-result" class="local-search-result"></div>
-</div>
-</div>
-    </aside>
-    <script>
-      if (window.matchMedia("(max-width: 768px)").matches) {
-        document.querySelector('.content').classList.remove('on');
-        document.querySelector('.sidebar').classList.remove('on');
-      }
-    </script>
-    <div id="mask"></div>
-
-<!-- #reward -->
-<div id="reward">
-  <span class="close"><i class="ri-close-line"></i></span>
-  <p class="reward-p"><i class="ri-cup-line"></i>请我喝杯咖啡吧~</p>
-  <div class="reward-box">
-    
-    <div class="reward-item">
-      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/alipay.jpg">
-      <span class="reward-type">支付宝</span>
     </div>
-    
-    
-    <div class="reward-item">
-      <img class="reward-img" src="https://cdn.jsdelivr.net/gh/Shen-Yu/cdn/img/wechat.jpg">
-      <span class="reward-type">微信</span>
-    </div>
-    
-  </div>
 </div>
+
     
-<script src="/js/jquery-2.0.3.min.js"></script>
 
-
-<script src="/js/lazyload.min.js"></script>
-
-<!-- Tocbot -->
-
-<script src="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.js"></script>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-modal@0.9.2/jquery.modal.min.css">
-<script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.7.0/dist/js/jquery.justifiedGallery.min.js"></script>
-
-<script src="/dist/main.js"></script>
-
-<!-- ImageViewer -->
-
-<!-- Root element of PhotoSwipe. Must have class pswp. -->
-<div class="pswp" tabindex="-1" role="dialog" aria-hidden="true">
-
-    <!-- Background of PhotoSwipe. 
-         It's a separate element as animating opacity is faster than rgba(). -->
-    <div class="pswp__bg"></div>
-
-    <!-- Slides wrapper with overflow:hidden. -->
-    <div class="pswp__scroll-wrap">
-
-        <!-- Container that holds slides. 
-            PhotoSwipe keeps only 3 of them in the DOM to save memory.
-            Don't modify these 3 pswp__item elements, data is added later on. -->
-        <div class="pswp__container">
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-            <div class="pswp__item"></div>
-        </div>
-
-        <!-- Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed. -->
-        <div class="pswp__ui pswp__ui--hidden">
-
-            <div class="pswp__top-bar">
-
-                <!--  Controls are self-explanatory. Order can be changed. -->
-
-                <div class="pswp__counter"></div>
-
-                <button class="pswp__button pswp__button--close" title="Close (Esc)"></button>
-
-                <button class="pswp__button pswp__button--share" style="display:none" title="Share"></button>
-
-                <button class="pswp__button pswp__button--fs" title="Toggle fullscreen"></button>
-
-                <button class="pswp__button pswp__button--zoom" title="Zoom in/out"></button>
-
-                <!-- Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR -->
-                <!-- element will get class pswp__preloader--active when preloader is running -->
-                <div class="pswp__preloader">
-                    <div class="pswp__preloader__icn">
-                        <div class="pswp__preloader__cut">
-                            <div class="pswp__preloader__donut"></div>
+    <article id="articles" class="container articles">
+        <div class="row tags-posts">
+            
+            
+            <div class="article tag-post col s12 m6 l4" data-tags="Steganography, Python" data-aos="fade-up">
+                <div class="card">
+                    <a href="/2019/08/24/Hackcon-CTF%E2%80%9919-%E2%80%93-GIMP-IT-Writeup/">
+                        <div class="card-image tag-image">
+                            
+                            <img src="/images/Toocoldforsteg/logo.png" class="responsive-img" alt="Hackcon CTF’19 – GIMP IT Writeup">
+                            
+                            <span class="card-title">Hackcon CTF’19 – GIMP IT Writeup</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-08-24
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/Writeups/" class="post-category">
+                                Writeups
+                                </a>
+                                
+                                <a href="/categories/Writeups/Steganography/" class="post-category">
+                                Steganography
+                                </a>
+                                
+                                
+                            </span>
                         </div>
                     </div>
                 </div>
             </div>
-
-            <div class="pswp__share-modal pswp__share-modal--hidden pswp__single-tap">
-                <div class="pswp__share-tooltip"></div>
+            
+            
+            <div class="article tag-post col s12 m6 l4" data-tags="Wireshark, Python, Network" data-aos="fade-up">
+                <div class="card">
+                    <a href="/2019/08/11/Swamp-CTF%E2%80%9918-%E2%80%93-Orcish-challenge/">
+                        <div class="card-image tag-image">
+                            
+                            <img src="/images/orcish/logo.jpg" class="responsive-img" alt="Swamp CTF’18 – Orcish Writeup">
+                            
+                            <span class="card-title">Swamp CTF’18 – Orcish Writeup</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-08-11
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/Writeups/" class="post-category">
+                                Writeups
+                                </a>
+                                
+                                <a href="/categories/Writeups/Network/" class="post-category">
+                                Network
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+                </div>
             </div>
-
-            <button class="pswp__button pswp__button--arrow--left" title="Previous (arrow left)">
-            </button>
-
-            <button class="pswp__button pswp__button--arrow--right" title="Next (arrow right)">
-            </button>
-
-            <div class="pswp__caption">
-                <div class="pswp__caption__center"></div>
+            
+            
+            <div class="article tag-post col s12 m6 l4" data-tags="Wireshark, Python" data-aos="fade-up">
+                <div class="card">
+                    <a href="/2019/04/09/Swamp-CTF%E2%80%9919-The-Cyber-War-Continues/">
+                        <div class="card-image tag-image">
+                            
+                            <img src="/images/cyberwar/logo.jpg" class="responsive-img" alt="Swamp CTF’19 - The Cyber War Continues Writeup">
+                            
+                            <span class="card-title">Swamp CTF’19 - The Cyber War Continues Writeup</span>
+                        </div>
+                    </a>
+                    <div class="card-content article-content">
+                        <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-04-09
+                            </span>
+                            <span class="publish-author">
+                                
+                                <i class="fas fa-bookmark fa-fw icon-category"></i>
+                                
+                                <a href="/categories/Writeups/" class="post-category">
+                                Writeups
+                                </a>
+                                
+                                <a href="/categories/Writeups/Network/" class="post-category">
+                                Network
+                                </a>
+                                
+                                
+                            </span>
+                        </div>
+                    </div>
+                </div>
             </div>
-
+            
         </div>
+    </article>
+</main>
 
-    </div>
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2019</span>
+            <a href="/about" target="_blank">Nihith</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link ">
+    <a href="https://github.com/bolisettynihith" class="tooltipped" target="_blank" data-tooltip="GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:bolisettynihith@gmail.com" class="tooltipped" target="_blank" data-tooltip="Email me" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+    <a href="https://www.facebook.com/profile.php?id=100009552907530" class="tooltipped" target="_blank" data-tooltip="Follow me on Facebook: https://www.facebook.com/profile.php?id=100009552907530" data-position="top" data-delay="50">
+        <i class="fab fa-facebook-f"></i>
+    </a>
+
+
+
+    <a href="https://twitter.com/NihithNihi" class="tooltipped" target="_blank" data-tooltip="Follow me on Twitter: https://twitter.com/NihithNihi" data-position="top" data-delay="50">
+        <i class="fab fa-twitter"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="Connect me on Linkedin: https://www.linkedin.com/in/bolisettynihith/" data-position="top" data-delay="50">
+        <i class="fab fa-linkedin"></i>
+    </a>
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS feed" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
 
 </div>
+    </div>
+</footer>
 
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.css">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/default-skin/default-skin.min.css">
-<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/photoswipe@4.1.3/dist/photoswipe-ui-default.min.js"></script>
+<div class="progress-bar"></div>
 
-<script>
-    function viewer_init() {
-        let pswpElement = document.querySelectorAll('.pswp')[0];
-        let $imgArr = document.querySelectorAll(('.article-entry img:not(.reward-img)'))
 
-        $imgArr.forEach(($em, i) => {
-            $em.onclick = () => {
-                // slider展开状态
-                // todo: 这样不好，后面改成状态
-                if (document.querySelector('.left-col.show')) return
-                let items = []
-                $imgArr.forEach(($em2, i2) => {
-                    let img = $em2.getAttribute('data-idx', i2)
-                    let src = $em2.getAttribute('data-target') || $em2.getAttribute('src')
-                    let title = $em2.getAttribute('alt')
-                    // 获得原图尺寸
-                    const image = new Image()
-                    image.src = src
-                    items.push({
-                        src: src,
-                        w: image.width || $em2.width,
-                        h: image.height || $em2.height,
-                        title: title
-                    })
-                })
-                var gallery = new PhotoSwipe(pswpElement, PhotoSwipeUI_Default, items, {
-                    index: parseInt(i)
-                });
-                gallery.init()
-            }
-        })
-    }
-    viewer_init()
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;Search</span>
+            <input type="search" id="searchInput" name="s" placeholder="Please enter a search keyword"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/search.xml", 'searchInput', 'searchResult');
+});
 </script>
 
-<!-- MathJax -->
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
 
-<script type="text/x-mathjax-config">
-  MathJax.Hub.Config({
-      tex2jax: {
-          inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
-          processEscapes: true,
-          skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
-      }
-  });
 
-  MathJax.Hub.Queue(function() {
-      var all = MathJax.Hub.getAllJax(), i;
-      for(i=0; i < all.length; i += 1) {
-          all[i].SourceElement().parentNode.className += ' has-jax';
-      }
-  });
-</script>
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
 
-<script src="https://cdn.jsdelivr.net/npm/mathjax@2.7.6/unpacked/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
 <script>
-  var ayerConfig = {
-    mathjax: true
-  }
-</script>
-
-<!-- Katex -->
-
-
-    
-        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.css">
-        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/katex.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/katex@0.11.1/dist/contrib/auto-render.min.js"></script>
-        
-    
-
-
-<!-- busuanzi  -->
-
-<!-- ClickLove -->
-
-<!-- ClickBoom1 -->
-
-<!-- ClickBoom2 -->
-
-<!-- CodeCopy -->
-
-
-<link rel="stylesheet" href="/css/clipboard.css">
-
-<script src="https://cdn.jsdelivr.net/npm/clipboard@2/dist/clipboard.min.js"></script>
-<script>
-  function wait(callback, seconds) {
-    var timelag = null;
-    timelag = window.setTimeout(callback, seconds);
-  }
-  !function (e, t, a) {
-    var initCopyCode = function(){
-      var copyHtml = '';
-      copyHtml += '<button class="btn-copy" data-clipboard-snippet="">';
-      copyHtml += '<i class="ri-file-copy-2-line"></i><span>COPY</span>';
-      copyHtml += '</button>';
-      $(".highlight .code pre").before(copyHtml);
-      $(".article pre code").before(copyHtml);
-      var clipboard = new ClipboardJS('.btn-copy', {
-        target: function(trigger) {
-          return trigger.nextElementSibling;
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
         }
-      });
-      clipboard.on('success', function(e) {
-        let $btn = $(e.trigger);
-        $btn.addClass('copied');
-        let $icon = $($btn.find('i'));
-        $icon.removeClass('ri-file-copy-2-line');
-        $icon.addClass('ri-checkbox-circle-line');
-        let $span = $($btn.find('span'));
-        $span[0].innerText = 'COPIED';
-        
-        wait(function () { // Wait two seconds and resume
-          $icon.removeClass('ri-checkbox-circle-line');
-          $icon.addClass('ri-file-copy-2-line');
-          $span[0].innerText = 'COPY';
-        }, 2000);
-      });
-      clipboard.on('error', function(e) {
-        e.clearSelection();
-        let $btn = $(e.trigger);
-        $btn.addClass('copy-failed');
-        let $icon = $($btn.find('i'));
-        $icon.removeClass('ri-file-copy-2-line');
-        $icon.addClass('ri-time-line');
-        let $span = $($btn.find('span'));
-        $span[0].innerText = 'COPY FAILED';
-        
-        wait(function () { // Wait two seconds and resume
-          $icon.removeClass('ri-time-line');
-          $icon.addClass('ri-file-copy-2-line');
-          $span[0].innerText = 'COPY';
-        }, 2000);
-      });
-    }
-    initCopyCode();
-  }(window, document);
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
 </script>
 
-
-<!-- CanvasBackground -->
-
+    
+    
 
     
-  </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
 </body>
 
 </html>
