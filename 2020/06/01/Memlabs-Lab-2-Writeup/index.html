@@ -419,7 +419,7 @@
 <h2 id="Flag-3"><a href="#Flag-3" class="headerlink" title="Flag 3"></a>Flag 3</h2><p>As chrome is running, let’s see the history of chrome.</p>
 <pre class=" language-bash"><code class="language-bash">$ volatility --plugin<span class="token operator">=</span>/home/g4rud4/Downloads/Tools/volatility-plugins -f MemoryDump_Lab2.raw --profile<span class="token operator">=</span>Win7SP1x64 chromehistory</code></pre>
 <p><img src="/images/Memlabs-Lab-2/chromehistory.png" alt="chrome history"></p>
-<p>As we can see that there is a <a href="">mega link</a>. After opening the mega link, we got zip file.<br>However, the archive is password protected. Also, brute-forcing for the password is not at all intended. So let us use <code>unzip</code> and check what we get.</p>
+<p>As we can see that there is a <a href="https://mega.nz/folder/TrgSQQTS#H0ZrUzF0B-ZKNM3y9E76lg" target="_blank" rel="noopener">mega link</a>. After opening the mega link, we got zip file.<br>However, the archive is password protected. Also, brute-forcing for the password is not at all intended. So let us use <code>unzip</code> and check what we get.</p>
 <p><img src="/images/Memlabs-Lab-2/unzip.png" alt="unzip output"></p>
 <p>We can see a comment, “<strong>Password is SHA1(stage-3-FLAG) from Lab-1. Password is in lowercase</strong>“.<br>As we have solved Stage 3 of Lab - 1. After using it, we got the the 3rd flag.</p>
 <p><img src="/images/Memlabs-Lab-2/Important.png" alt="Flag 3"></p>
