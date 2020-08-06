@@ -1,0 +1,989 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Lookout Foxy - InCTF Internationals 2020, Nihith&#39;s blog">
+    <meta name="description" content="CTF player with Team bi0s. Love to do Memory Forensics. UG student at Amrita Vishwa Vidyapeetham.">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-169178746-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('config', 'UA-169178746-1');
+</script>
+
+
+    <title>Lookout Foxy - InCTF Internationals 2020 | Nihith&#39;s blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="Nihith's blog" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.svg" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Nihith&#39;s blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>Home</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>Tags</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>Categories</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>Archives</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>About</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="Search" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.svg" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Nihith&#39;s blog</div>
+        <div class="logo-desc">
+            
+            CTF player with Team bi0s. Love to do Memory Forensics. UG student at Amrita Vishwa Vidyapeetham.
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			Home
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			Tags
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			Categories
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			Archives
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			About
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/images/FreshFromtheOven/logo.png')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">Lookout Foxy - InCTF Internationals 2020</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Autospy/">
+                                <span class="chip bg-color">Autospy</span>
+                            </a>
+                        
+                            <a href="/tags/InCTFi/">
+                                <span class="chip bg-color">InCTFi</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Forensics/" class="post-category">
+                                Forensics
+                            </a>
+                        
+                            <a href="/categories/Forensics/Disk/" class="post-category">
+                                Disk
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
+                    2020-08-03
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
+                    1.2k
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>Read Times:&nbsp;&nbsp;
+                    7 Min
+                </div>
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p><strong>tl;dr</strong></p>
+<ul>
+<li>Decrypt the encrypted GPG file found in Outlook Express with the private key stored on the device.</li>
+<li>Decrypt the firefox saved passwords and log in to the website that the terrorist used.</li>
+</ul>
+<a id="more"></a>
+
+<p><strong>Challenge points</strong>: 627<br><strong>No. of solves</strong>: 30<br><strong>Challenge Author</strong>: <a href="https://twitter.com/NihithNihi" target="_blank" rel="noopener">g4rud4</a></p>
+<h2 id="Challenge-Description"><a href="#Challenge-Description" class="headerlink" title="Challenge Description"></a>Challenge Description</h2><p><img src="/images/LookoutFoxy/description.png" alt="Description"></p>
+<p>You can download the challenge file from <a href="https://mega.nz/folder/MgtBHIhL#ChC7QdsEESP6_O-aALDSvw" target="_blank" rel="noopener"><strong>Mega</strong></a> or <a href="https://drive.google.com/drive/folders/1EICM8RCZB4jHm63M6Y2Dua2Ir8zOaj5B?usp=sharing" target="_blank" rel="noopener"><strong>Google Drive</strong></a></p>
+<h2 id="Initial-Analysis"><a href="#Initial-Analysis" class="headerlink" title="Initial Analysis"></a>Initial Analysis</h2><p>We are provided with an E01 file(Expert  Witness format image). There are a lot of ways in analyzing these files, I choose to use Autopsy for analyzing this. Let’s go ahead and load our E01 file in Autopsy. You can visit Autopsy’s<sup id="fnref:1"><a href="#fn:1" rel="footnote">1</a></sup> documentation if you don’t know how to add a data source to autopsy.</p>
+<p>From the description, we have a clue that the terrorist is using a <strong>genuine chat client</strong>, lets see what all applications are installed in the device.</p>
+<p>As we know, all the applications present on the device can be found in <code>Program Files</code>. Some of the applications we need to check are <code>GPG</code>, <code>Mozilla Firefox</code>, <code>NetMeeting</code>, <code>Outlook Express</code>. Let us dig more into it and check if they have identified and configured.</p>
+<p><img src="/images/LookoutFoxy/applications.png" alt="applications"></p>
+<p>So by checking application data, we can say that <code>Outlook Express</code> and <code>Mozilla Firefox</code> are configured. Let us dig more into them.</p>
+<h2 id="First-part-solution"><a href="#First-part-solution" class="headerlink" title="First part solution"></a>First part solution</h2><p>As the Outlook Express is configured on the device, it leaves us useful forensics artifacts on the device.</p>
+<p><img src="/images/LookoutFoxy/application_data.png" alt="application data"></p>
+<p>Some of them are the mails received and sent. Whenever we receive a mail or delete a mail or sent a mail it will be stored in a <strong>.dbx files</strong>. Ex: for Inbox Emails - <code>inbox.dbx</code>, Sent Emails - <code>outbox.dbx</code> etc.</p>
+<p>These files are stored at <code>C:\Documents and Settings\Crimson\Local Settings\Application Data\Identities\{random characters}\Microsoft\Outlook Express\</code></p>
+<p>In our case, these are stored at <code>C:\Documents and Settings\Crimson\Local Settings\Application Data\Identities\{72F33BC6-0035-4FE0-AED1-5870C5CA389E}\Microsoft\Outlook Express\</code></p>
+<p><img src="/images/LookoutFoxy/outlook_files.png" alt="Outlook Express files"></p>
+<p>You can see .dbx files being listed there on right. We know that we can’t view the messages stored in <strong>DBX</strong> files. So I have converted the DBX file into a PDF file using this <a href="https://www.coolutils.com/online/DBX-to-PDF" target="_blank" rel="noopener"><strong>link</strong></a>. There are other ways too, as this gives us something similar to the GUI, I used this. And one of the best thing is to do <code>strings</code> on the DBX files.</p>
+<p>Converting the <code>Inbox.dbx</code> to PDF, One will be able to see that there is a mail from <code>David Banjamin davin.banjamin@gmail.com</code> with a subject <code>Secret File</code>. And a file named <code>secret.gpg</code> has been attached.</p>
+<p><img src="/images/LookoutFoxy/inbox.png" alt="Outlook_Inbox"></p>
+<p>We can get this file by a simple keyword search in Autopsy or check below.</p>
+<p>So these attached files are stored in this location, unless the user saved it into a specified location <code>C:\Users\{username}\AppData\Local\Microsoft\Windows\Temporary Internet Files\Content.IE5\{random characters}</code>.</p>
+<p>We have 4 directories listed there, so rather than traversing through all directories, I used Autopsy’s <code>Web Downloads</code> Result. There we can see that there is a <code>secret.gpg.Zone.identifier</code> file. These <strong>Zone identifier</strong> files are generated automatically by applications/programs when files are downloaded to a Windows computer. So by checking the <code>Source file path</code> we can get the random characters. So going into that directory(<code>U0PDHEH3</code>), we can get the <code>secret.gpg</code> file easily.</p>
+<p><img src="/images/LookoutFoxy/web_downloads.png" alt="Web Downloads Autopsy"></p>
+<p><img src="/images/LookoutFoxy/temintfil.png" alt="Temporory internet files - secret.gpg"></p>
+<p>We know that the gpg files can only be decrypted by the Owner’s private key. As we have seen a directory named <code>GPG</code> while traversing through the program files. Going into this directory we can find the <code>secret.key</code>.</p>
+<p>Importing the private key and decrypting the encrypted GPG file, we can get the first half of the flag.</p>
+<p><img src="/images/LookoutFoxy/gpg_import.png" alt="GPG Import"></p>
+<pre class=" language-bash"><code class="language-bash">$ gpg --decrypt secret.gpg</code></pre>
+<p>Snipping the output,</p>
+<p><img src="/images/LookoutFoxy/firsthalfflag.png" alt="First half flag"></p>
+<p>First half: <strong>inctf{!<strong>h0p3_y0u_L1k3d_s0lv1ng_7h3_F1rs7_p4r7</strong></strong></p>
+<h2 id="Second-part-solution"><a href="#Second-part-solution" class="headerlink" title="Second part solution"></a>Second part solution</h2><p>As we see that there are a lot of web searches listed out in <code>Web History</code> results in Autopsy and going through them we can see a suspicious link <strong><a href="http://35.209.205.103/" target="_blank" rel="noopener">http://35.209.205.103/</a></strong> in the history. So going to that link there is a login page. And there is a note saying <strong>Don’t brutefore the Password</strong>. So the password must be saved somewhere.</p>
+<p><img src="/images/LookoutFoxy/login.png" alt="login"></p>
+<p>As the terrorist is using firefox. And an active firefox installation will have a profile(in our case - <strong>5ztdm4br.default</strong>) which consists of a lot of forensics artifacts and that can be found generally at <code>C:\Documents and Settings\{Username}\Application Data\Mozilla\Firefox\{random characters}.default\</code>. In our case, these are found at <code>C:\Documents and Settings\Crimson\Application Data\Mozilla\Firefox\5ztdm4br.default\</code></p>
+<p>By Checking the <code>Web Form Autofill</code> results in Autopsy or by looking at the <strong>formhistory.sqlite</strong> database present in the firefox profile, we were able to see that the username as <strong>Danial_Banjamin</strong> and we need to find out the password.</p>
+<p>As the username and password are stored in formhistory, that means passwords are stored in firefox saved passwords. We need to decrypt the saved passwords to get the original password.</p>
+<p>Here comes the interesting part of decrypting Firefox saved passwords. There are a lot of ways</p>
+<ol>
+<li>By dumping the whole profile and passing the dumped folder location to firepwd<sup id="fnref:2"><a href="#fn:2" rel="footnote">2</a></sup> and a lot more.</li>
+<li>By dumping only the required files from the profile.</li>
+</ol>
+<p>I am choosing the second way and here are those files:</p>
+<ol>
+<li><p><strong>logins.json</strong> - Place where all login information such as encrypted username and password are stored.</p>
+</li>
+<li><p><strong>cert8.db</strong> and <strong>key3.db</strong>/<strong>key4.db</strong> - These are encrypted SQLite database files, and the entries <code>encryptedUsername</code> and <code>encryptedPassword</code> found in logins.json are encrypted with the keys found in both databases.</p>
+</li>
+<li><p><strong>Permissions.sqlite</strong> - It contains permissions for installing add-ons, cookies, etc.</p>
+</li>
+</ol>
+<p>After dumping all these files from the firefox profile mentioned above, I used <code>pwdecrypt</code> to decrypt the password. It’s a Debian package and can be installed by with apt.</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">sudo</span> apt <span class="token function">install</span> libnss3-tools</code></pre>
+<p>Then, I used a JSON parser(<code>jq</code>) to parse the JSON file and redirected the output to pwdecrypt.</p>
+<p>Here is the json parsed output of logins.json.</p>
+<pre class=" language-bash"><code class="language-bash">$ jq <span class="token keyword">.</span> <span class="token operator">&lt;</span> logins.json
+
+<span class="token punctuation">{</span>
+  <span class="token string">"nextId"</span><span class="token keyword">:</span> 3,
+  <span class="token string">"logins"</span><span class="token keyword">:</span> <span class="token punctuation">[</span>
+    <span class="token punctuation">{</span>
+      <span class="token string">"id"</span><span class="token keyword">:</span> 2,
+      <span class="token string">"hostname"</span><span class="token keyword">:</span> <span class="token string">"http://35.209.205.103"</span>,
+      <span class="token string">"httpRealm"</span><span class="token keyword">:</span> null,
+      <span class="token string">"formSubmitURL"</span><span class="token keyword">:</span> <span class="token string">"http://35.209.205.103"</span>,
+      <span class="token string">"usernameField"</span><span class="token keyword">:</span> <span class="token string">"username"</span>,
+      <span class="token string">"passwordField"</span><span class="token keyword">:</span> <span class="token string">"password"</span>,
+      <span class="token string">"encryptedUsername"</span><span class="token keyword">:</span> <span class="token string">"MDoEEPgAAAAAAAAAAAAAAAAAAAEwFAYIKoZIhvcNAwcECOczOqq7/ZDYBBC7w84JwpxUfkx1Nw52VKlx"</span>,
+      <span class="token string">"encryptedPassword"</span><span class="token keyword">:</span> <span class="token string">"MFoEEPgAAAAAAAAAAAAAAAAAAAEwFAYIKoZIhvcNAwcECCwD7aXJGN+hBDAmr4dSU/2vXn+H+TZDl+oTlLGPMbX4usiAkneTan114d6kB2GGUa2b6771U5YIU40="</span>,
+      <span class="token string">"guid"</span><span class="token keyword">:</span> <span class="token string">"{3ff55df0-bbb8-4192-98df-a1f428964c31}"</span>,
+      <span class="token string">"encType"</span><span class="token keyword">:</span> 1,
+      <span class="token string">"timeCreated"</span><span class="token keyword">:</span> 1595695030340,
+      <span class="token string">"timeLastUsed"</span><span class="token keyword">:</span> 1595858974764,
+      <span class="token string">"timePasswordChanged"</span><span class="token keyword">:</span> 1595695030340,
+      <span class="token string">"timesUsed"</span><span class="token keyword">:</span> 2
+    <span class="token punctuation">}</span>
+  <span class="token punctuation">]</span>,
+  <span class="token string">"disabledHosts"</span><span class="token keyword">:</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>,
+  <span class="token string">"version"</span><span class="token keyword">:</span> 2
+<span class="token punctuation">}</span></code></pre>
+<p>As we are having so many entries, and we only need the username, password and URL. So added those entries to json parser and redirected it to <strong>pwdecrypt</strong>.</p>
+<pre class=" language-bash"><code class="language-bash">$ jq -r -S <span class="token string">'.logins[] | .hostname, .encryptedUsername, .encryptedPassword'</span> logins.json <span class="token operator">|</span> pwdecrypt -d <span class="token keyword">.</span>
+
+http://35.209.205.103
+Decrypted: <span class="token string">"Danial_Banjamin"</span>
+Decrypted: <span class="token string">"2!6BQ&amp;e626g#YNWxsQWV9^knO8#85*E%6Zaxr@At42"</span></code></pre>
+<p>As the master password was not set by the terrorist we were able to get the decrypted password. So logging in using those credentials gives the second part of the flag.</p>
+<p><img src="/images/LookoutFoxy/second_part.png" alt="second part"></p>
+<p>Second Part of the flag: <strong>4nd_3njoy3d_7he_53c0nd_p4rt_0f_7h3_ch4ll3ng3}</strong></p>
+<h2 id="Flag"><a href="#Flag" class="headerlink" title="Flag"></a>Flag</h2><p>By concatinating two parts, here is the final flag:<br><strong>inctf{!_h0p3_y0u_L1k3d_s0lv1ng_7h3_F1rs7_p4r7_4nd_3njoy3d_7he_53c0nd_p4rt_0f_7h3_ch4ll3ng3}</strong></p>
+<p>If you have any queries, Feel free to ping me. I am available on Twitter <a href="https://twitter.com/NihithNihi" target="_blank" rel="noopener">@NihithNihi</a></p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><p>Here are some of the resources I came up while making the challenge. Hope it will be useful.</p>
+<ul>
+<li><a href="https://blog.tajuma.com/?p=35" target="_blank" rel="noopener">https://blog.tajuma.com/?p=35</a></li>
+<li><a href="http://raidersec.blogspot.com/2013/06/how-browsers-store-your-passwords-and.html" target="_blank" rel="noopener">http://raidersec.blogspot.com/2013/06/how-browsers-store-your-passwords-and.html</a></li>
+<li><a href="http://media.blackhat.com/bh-us-11/Bursztein/BH_US_11_Bursztein_Owade_Slides.pdf" target="_blank" rel="noopener">http://media.blackhat.com/bh-us-11/Bursztein/BH_US_11_Bursztein_Owade_Slides.pdf</a></li>
+</ul>
+<div id="footnotes"><hr><div id="footnotelist"><ol style="list-style:none; padding-left: 0;"><li id="fn:1"><span style="display: inline-block; vertical-align: top; padding-right: 10px;">1.</span><span style="display: inline-block; vertical-align: top;">https://sleuthkit.org/autopsy/docs/user-docs/4.3/ds_page.html</span><a href="#fnref:1" rev="footnote"> ↩</a></li><li id="fn:2"><span style="display: inline-block; vertical-align: top; padding-right: 10px;">2.</span><span style="display: inline-block; vertical-align: top;">https://github.com/lclevy/firepwd</span><a href="#fnref:2" rev="footnote"> ↩</a></li></ol></div></div>
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        Author:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">g4rud4</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        Link:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://bolisettynihith.github.io/2020/08/03/InCTFi20-LookoutFoxy/">https://bolisettynihith.github.io/2020/08/03/InCTFi20-LookoutFoxy/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        Reprint policy:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    All articles in this blog are used except for special statements
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    reprint polocy. If reproduced, please indicate source
+                    <a href="/about" target="_blank">g4rud4</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>Copied successfully, please follow the reprint policy of this article</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">more</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/Autospy/">
+                                    <span class="chip bg-color">Autospy</span>
+                                </a>
+                            
+                                <a href="/tags/InCTFi/">
+                                    <span class="chip bg-color">InCTFi</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="far fa-dot-circle"></i>&nbsp;Current
+            </div>
+            <div class="card">
+                <a href="/2020/08/03/InCTFi20-LookoutFoxy/">
+                    <div class="card-image">
+                        
+                        <img src="/images/FreshFromtheOven/logo.png" class="responsive-img" alt="Lookout Foxy - InCTF Internationals 2020">
+                        
+                        <span class="card-title">Lookout Foxy - InCTF Internationals 2020</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            Full solution for Lookout Foxy challenge from InCTF Internationals 2020
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-08-03
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Forensics/" class="post-category">
+                                    Forensics
+                                </a>
+                            
+                            <a href="/categories/Forensics/Disk/" class="post-category">
+                                    Disk
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Autospy/">
+                        <span class="chip bg-color">Autospy</span>
+                    </a>
+                    
+                    <a href="/tags/InCTFi/">
+                        <span class="chip bg-color">InCTFi</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                Next&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2020/06/07/Defenit20-USB2/">
+                    <div class="card-image">
+                        
+                        <img src="https://ctftime.org/media/team/defenit_1.png" class="responsive-img" alt="USB 2 - 2020 Defenit CTF">
+                        
+                        <span class="card-title">USB 2 - 2020 Defenit CTF</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            Full solution for USB 2 challenge from Defenit CTF 2020.
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-06-07
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Windows-Registry-Analysis/" class="post-category">
+                                    Windows Registry Analysis
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Amcache/">
+                        <span class="chip bg-color">Amcache</span>
+                    </a>
+                    
+                    <a href="/tags/Registry-Analysis/">
+                        <span class="chip bg-color">Registry Analysis</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;TOC</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h1, h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h1, h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2019</span>
+            <a href="/about" target="_blank">Nihith</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link ">
+    <a href="https://github.com/bolisettynihith" class="tooltipped" target="_blank" data-tooltip="GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:bolisettynihith@gmail.com" class="tooltipped" target="_blank" data-tooltip="Email me" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+    <a href="https://www.facebook.com/profile.php?id=100009552907530" class="tooltipped" target="_blank" data-tooltip="Follow me on Facebook: https://www.facebook.com/profile.php?id=100009552907530" data-position="top" data-delay="50">
+        <i class="fab fa-facebook-f"></i>
+    </a>
+
+
+
+    <a href="https://twitter.com/NihithNihi" class="tooltipped" target="_blank" data-tooltip="Follow me on Twitter: https://twitter.com/NihithNihi" data-position="top" data-delay="50">
+        <i class="fab fa-twitter"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="Connect me on Linkedin: https://www.linkedin.com/in/bolisettynihith/" data-position="top" data-delay="50">
+        <i class="fab fa-linkedin"></i>
+    </a>
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS feed" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;Search</span>
+            <input type="search" id="searchInput" name="s" placeholder="Please enter a search keyword"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/search.xml", 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
