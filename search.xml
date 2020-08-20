@@ -819,6 +819,7 @@ q<span class="token operator">=</span><span class="token string">''</span>
 </ul>
 ]]></content>
       <categories>
+        <category>Writeups</category>
         <category>Windows Registry Analysis</category>
       </categories>
       <tags>
@@ -938,6 +939,44 @@ Decrypted: <span class="token string">"2!6BQ&amp;e626g#YNWxsQWV9^knO8#85*E%6Zaxr
       <tags>
         <tag>Autospy</tag>
         <tag>InCTFi</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>DB64 - Poseidon CTF</title>
+    <url>/2020/08/19/DB64-Poseidon-CTF/</url>
+    <content><![CDATA[<p>I have solved this challenge after the CTF. </p>
+<h2 id="Initial-Analysis"><a href="#Initial-Analysis" class="headerlink" title="Initial Analysis"></a>Initial Analysis</h2><p>We are given with a windows 7 memory dump, lets start out initial analysis and check what all processes are running.</p>
+<pre class=" language-bash"><code class="language-bash">$ volatility --plugins<span class="token operator">=</span><span class="token punctuation">..</span>/<span class="token punctuation">..</span>/Tools/volatility-plugins -f Based.raw --profile<span class="token operator">=</span>Win7SP1x64 pslist</code></pre>
+<p><img src="pslist.png" alt="Process list"></p>
+<p>We can see that <code>Google Chrome</code> and <code>Command Prompt</code> are active running process. So let us dig more into them and check whats there in them.</p>
+<h2 id="Further-Analysis"><a href="#Further-Analysis" class="headerlink" title="Further Analysis"></a>Further Analysis</h2><p>As we know each and every command we entered in command prompt are stored in conhost.exe and we can retrive those commands from volatility’s <code>consoles</code> plugin.</p>
+<pre class=" language-bash"><code class="language-bash">$ volatility --plugins<span class="token operator">=</span><span class="token punctuation">..</span>/<span class="token punctuation">..</span>/Tools/volatility-plugins -f Based.raw --profile<span class="token operator">=</span>Win7SP1x64 consoles</code></pre>
+<p><img src="/images/consoles.png" alt="consoles"></p>
+<p>We can see “<code>I cant paste the binary in recyle bin</code>“ which gives us an information that we have to proceed to <code>pastebin</code> for the next step. But we need a random 8 letter character.</p>
+<p>On going through some plugins, used <code>mimikatz</code> to get the user password. And found something similar to that random 8 letter character for pastebin.</p>
+<pre class=" language-bash"><code class="language-bash">$ volatility --plugins<span class="token operator">=</span><span class="token punctuation">..</span>/<span class="token punctuation">..</span>/Tools/volatility-plugins -f Based.raw --profile<span class="token operator">=</span>Win7SP1x64 mimikatz</code></pre>
+<p><img src="mimikatz.png" alt="mimikatz"></p>
+<p>So on proceeding to this pastebin link(<a href="https://pastebin.com/dVi29Tv8" target="_blank" rel="noopener">https://pastebin.com/dVi29Tv8</a>) and we can see a lot of strings of length 37. So it much be some kind of wordlist or something.</p>
+<p>Let us check whats there in chrome history.</p>
+<pre class=" language-bash"><code class="language-bash">$ volatility --plugins<span class="token operator">=</span><span class="token punctuation">..</span>/<span class="token punctuation">..</span>/Tools/volatility-plugins -f Based.raw --profile<span class="token operator">=</span>Win7SP1x64 chromehistory</code></pre>
+<p><img src="chromehistory.png" alt="chrome history"></p>
+<p>We can see that there is drive link(<a href="https://drive.google.com/file/d/1jYpvi9Va8be022G1SL4xUpEmZoknveTd/view" target="_blank" rel="noopener">https://drive.google.com/file/d/1jYpvi9Va8be022G1SL4xUpEmZoknveTd/view</a>) is present and after opening it we found an <code>keepass</code> database.</p>
+<p>For opening these keepass database we need a <code>Master Password</code> or <code>Key file</code>. But we can’t find one in the given memory, so as we know we can crack Keepass passwords with John the ripper and get the password if we have the correct wordlist.</p>
+<p>Using the strings found in the pastebin as a wordlist we got the password.</p>
+<p><img src="john_keepass.png" alt="John load hash"></p>
+<p><img src="john_crack.png" alt="John Crack"></p>
+<p>As I have already loaded the hash and its showed its already cracked. And we can see the cracked hashes also and we got the password as this <code>guz6AP41eXNZN6alCTZQsytzYsDSWrUV45lp</code> and after opening the keepass with that password we can see so many passwords already there in the database. From the username we can see that <code>Pastebin/KEY</code>. And the passwords are also something similar to 8 letter random characters needed for pastebin.</p>
+<p><img src="keypass.png" alt="Keypass"></p>
+<p>After going through them and we can see a long base64 string in all the pastebins and decoding those base64 strings and there are a lot of fake flag and in that one them is flag.</p>
+<h2 id="Flag"><a href="#Flag" class="headerlink" title="Flag"></a>Flag</h2><p><img src="flag.png" alt="flag"></p>
+]]></content>
+      <categories>
+        <category>Writeups</category>
+        <category>Memory Forensics</category>
+      </categories>
+      <tags>
+        <tag>Volatility</tag>
+        <tag>Keepass</tag>
       </tags>
   </entry>
 </search>

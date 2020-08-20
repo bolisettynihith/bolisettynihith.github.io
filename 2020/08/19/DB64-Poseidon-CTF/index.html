@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Fresh From The Oven - InCTF Internationals 2019 Writeup, Nihith&#39;s blog">
+    <meta name="keywords" content="DB64 - Poseidon CTF, Nihith&#39;s blog">
     <meta name="description" content="CTF player with Team bi0s. Love to do Memory Forensics. UG student at Amrita Vishwa Vidyapeetham.">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -27,7 +27,7 @@
 </script>
 
 
-    <title>Fresh From The Oven - InCTF Internationals 2019 Writeup | Nihith&#39;s blog</title>
+    <title>DB64 - Poseidon CTF | Nihith&#39;s blog</title>
     <link rel="icon" type="image/svg+xml" href="/medias/logo.svg">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -213,12 +213,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/images/FreshFromtheOven/logo.png')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('https://ctftime.org/media/cache/fe/48/fe4846476b5a58468961ae161fc24573.png')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Fresh From The Oven - InCTF Internationals 2019 Writeup</h1>
+                    <h1 class="description center-align post-title">DB64 - Poseidon CTF</h1>
                 </div>
             </div>
         </div>
@@ -335,12 +335,12 @@
                     
                     <div class="article-tag">
                         
-                            <a href="/tags/Wireshark/">
-                                <span class="chip bg-color">Wireshark</span>
+                            <a href="/tags/Volatility/">
+                                <span class="chip bg-color">Volatility</span>
                             </a>
                         
-                            <a href="/tags/Steganography/">
-                                <span class="chip bg-color">Steganography</span>
+                            <a href="/tags/Keepass/">
+                                <span class="chip bg-color">Keepass</span>
                             </a>
                         
                     </div>
@@ -355,8 +355,8 @@
                                 Writeups
                             </a>
                         
-                            <a href="/categories/Writeups/Network/" class="post-category">
-                                Network
+                            <a href="/categories/Writeups/Memory-Forensics/" class="post-category">
+                                Memory Forensics
                             </a>
                         
                     </div>
@@ -368,7 +368,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
-                    2019-10-03
+                    2020-08-19
                 </div>
                 
 
@@ -377,7 +377,7 @@
                 
                 <div class="info-break-policy">
                     <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
-                    378
+                    424
                 </div>
                 
 
@@ -394,42 +394,31 @@
         <hr class="clearfix">
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p><strong>tl;dr</strong></p>
-<ul>
-<li>Decoding the strings found in TCP stream 0.</li>
-<li>Analysing and extracting data sent via different ports of TCP.</li>
-<li>Using character-wise caesar from the extracted data.</li>
-<li>Zip cracking</li>
-</ul>
-<a id="more"></a>
-
-<h2 id="Challenge-Description"><a href="#Challenge-Description" class="headerlink" title="Challenge Description"></a>Challenge Description</h2><p><img src="/images/FreshFromtheOven/description.png" alt="Description"></p>
-<p>You can download the challenge file from <a href="https://mega.nz/#!d6wEFICJ!u9XykRdIoJtloYDZQxFqXt1KvWR5aK3Ucisd2-a-qms" target="_blank" rel="noopener"><strong>Mega</strong></a> or <a href="https://drive.google.com/file/d/1ZBLNYqFOA0dOx8e1GnNoO3qn2V0Elpcm/view?usp=sharing" target="_blank" rel="noopener"><strong>G-Drive</strong></a></p>
-<p>This is a challenge which I made for InCTFi’19 along with my teammate(<a href="https://twitter.com/__Sh4d0w__" target="_blank" rel="noopener">@Sh4d0w</a>).</p>
-<h2 id="Initial-Analysis"><a href="#Initial-Analysis" class="headerlink" title="Initial Analysis"></a>Initial Analysis</h2><p>We are provided with a <strong>pcap</strong> file. Let’s start our initial analysis.</p>
-<p>We can see so many TCP packets in the capture file and the description says that it was a chat between two friends. So let’s follow the TCP stream and see if anything is interesting in it.</p>
-<p><img src="/images/FreshFromtheOven/tcp-stream-0.png" alt="TCP Stream"></p>
-<p>We do see a chat between 2 people. Also, we can find some encoded strings. The secret code: <strong>Remember remember the FIFTH of november :)</strong> does hint out something. We can assume the encoded strings are <strong>ROT5</strong>. Decoding them, we get;</p>
-<pre><code>Rohith: This is a sample in that encoded way.
-
-Shyam: Oh, It&#39;s good and it took a lot of time to understand for me.
-
-Rohith: Sending you some interesting files, try to find the secret behind them and keep it confidential
-
-Shyam: Okay, sure:)</code></pre><h2 id="Further-Analysis"><a href="#Further-Analysis" class="headerlink" title="Further Analysis"></a>Further Analysis</h2><p>As the chat between them says that some files have transferred. And we can see that from <strong>TCP Stream 2</strong>, extra data with <strong>800 bytes</strong> is transferred in two different destination ports(<strong>444</strong> &amp; <strong>81</strong>). We can assume that the two files have been transferred.</p>
-<p>Extracting the data sent to the above-mentioned ports and applying <strong>Caesar cipher</strong> on the two files, we get the file structure of a <strong>PDF file</strong> and a <strong>ZIP file</strong>.</p>
-<p><img src="/images/FreshFromtheOven/file_pdf.png" alt="File PDF"></p>
-<p><img src="/images/FreshFromtheOven/file_zip.png" alt="File zip"></p>
-<p>After opening the PDF and we find extra spaces in the last page of that file. It says “<strong>NOTHING HERE :( DON’T WASTE YOUR TIME</strong>“.</p>
-<p>So it’s just a <strong>rabbit hole</strong>.</p>
-<p>After a brief observation, we see that the ZIP is password protected. So, we use <strong>fcrackzip</strong> in dictionary mode to crack the password,</p>
-<p><img src="/images/FreshFromtheOven/zip_cracking.png" alt="zip cracking"></p>
-<p>The password is <strong>johnjandroveclarkmichaelkent</strong>.</p>
-<p>Extracting the file from the zip gave a <strong>PNG</strong> image.</p>
-<p><img src="/images/FreshFromtheOven/flag.png" alt="flag"></p>
-<h2 id="Flag"><a href="#Flag" class="headerlink" title="Flag"></a>Flag</h2><p>Simple LSB steg can be used to get the flag. We used the popular tool <strong>zsteg</strong> for this.</p>
-<p>FLAG: <strong>inctf{3ach_4nd_3v3ry_s3cre7_inf0rm4t10n_w1ll_b3_kn0wn_by_wir3shark!!!!!_:)}</strong></p>
-<p>If you like my solution, please do share it. I’m availabe on Twitter: <a href="https://twitter.com/NihithNihi" target="_blank" rel="noopener">@NihithNihi</a></p>
+                <p>I have solved this challenge after the CTF. </p>
+<h2 id="Initial-Analysis"><a href="#Initial-Analysis" class="headerlink" title="Initial Analysis"></a>Initial Analysis</h2><p>We are given with a windows 7 memory dump, lets start out initial analysis and check what all processes are running.</p>
+<pre class=" language-bash"><code class="language-bash">$ volatility --plugins<span class="token operator">=</span><span class="token punctuation">..</span>/<span class="token punctuation">..</span>/Tools/volatility-plugins -f Based.raw --profile<span class="token operator">=</span>Win7SP1x64 pslist</code></pre>
+<p><img src="pslist.png" alt="Process list"></p>
+<p>We can see that <code>Google Chrome</code> and <code>Command Prompt</code> are active running process. So let us dig more into them and check whats there in them.</p>
+<h2 id="Further-Analysis"><a href="#Further-Analysis" class="headerlink" title="Further Analysis"></a>Further Analysis</h2><p>As we know each and every command we entered in command prompt are stored in conhost.exe and we can retrive those commands from volatility’s <code>consoles</code> plugin.</p>
+<pre class=" language-bash"><code class="language-bash">$ volatility --plugins<span class="token operator">=</span><span class="token punctuation">..</span>/<span class="token punctuation">..</span>/Tools/volatility-plugins -f Based.raw --profile<span class="token operator">=</span>Win7SP1x64 consoles</code></pre>
+<p><img src="/images/consoles.png" alt="consoles"></p>
+<p>We can see “<code>I cant paste the binary in recyle bin</code>“ which gives us an information that we have to proceed to <code>pastebin</code> for the next step. But we need a random 8 letter character.</p>
+<p>On going through some plugins, used <code>mimikatz</code> to get the user password. And found something similar to that random 8 letter character for pastebin.</p>
+<pre class=" language-bash"><code class="language-bash">$ volatility --plugins<span class="token operator">=</span><span class="token punctuation">..</span>/<span class="token punctuation">..</span>/Tools/volatility-plugins -f Based.raw --profile<span class="token operator">=</span>Win7SP1x64 mimikatz</code></pre>
+<p><img src="mimikatz.png" alt="mimikatz"></p>
+<p>So on proceeding to this pastebin link(<a href="https://pastebin.com/dVi29Tv8" target="_blank" rel="noopener">https://pastebin.com/dVi29Tv8</a>) and we can see a lot of strings of length 37. So it much be some kind of wordlist or something.</p>
+<p>Let us check whats there in chrome history.</p>
+<pre class=" language-bash"><code class="language-bash">$ volatility --plugins<span class="token operator">=</span><span class="token punctuation">..</span>/<span class="token punctuation">..</span>/Tools/volatility-plugins -f Based.raw --profile<span class="token operator">=</span>Win7SP1x64 chromehistory</code></pre>
+<p><img src="chromehistory.png" alt="chrome history"></p>
+<p>We can see that there is drive link(<a href="https://drive.google.com/file/d/1jYpvi9Va8be022G1SL4xUpEmZoknveTd/view" target="_blank" rel="noopener">https://drive.google.com/file/d/1jYpvi9Va8be022G1SL4xUpEmZoknveTd/view</a>) is present and after opening it we found an <code>keepass</code> database.</p>
+<p>For opening these keepass database we need a <code>Master Password</code> or <code>Key file</code>. But we can’t find one in the given memory, so as we know we can crack Keepass passwords with John the ripper and get the password if we have the correct wordlist.</p>
+<p>Using the strings found in the pastebin as a wordlist we got the password.</p>
+<p><img src="john_keepass.png" alt="John load hash"></p>
+<p><img src="john_crack.png" alt="John Crack"></p>
+<p>As I have already loaded the hash and its showed its already cracked. And we can see the cracked hashes also and we got the password as this <code>guz6AP41eXNZN6alCTZQsytzYsDSWrUV45lp</code> and after opening the keepass with that password we can see so many passwords already there in the database. From the username we can see that <code>Pastebin/KEY</code>. And the passwords are also something similar to 8 letter random characters needed for pastebin.</p>
+<p><img src="keypass.png" alt="Keypass"></p>
+<p>After going through them and we can see a long base64 string in all the pastebins and decoding those base64 strings and there are a lot of fake flag and in that one them is flag.</p>
+<h2 id="Flag"><a href="#Flag" class="headerlink" title="Flag"></a>Flag</h2><p><img src="flag.png" alt="flag"></p>
 
             </div>
             <hr/>
@@ -445,7 +434,7 @@ Shyam: Okay, sure:)</code></pre><h2 id="Further-Analysis"><a href="#Further-Anal
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="/about" rel="external nofollow noreferrer">Nihith</a>
+                    <a href="/about" rel="external nofollow noreferrer">g4rud4</a>
                 </span>
             </div>
             <div class="reprint__type">
@@ -455,7 +444,7 @@ Shyam: Okay, sure:)</code></pre><h2 id="Further-Analysis"><a href="#Further-Anal
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://bolisettynihith.github.io/2019/10/03/InCTFi19-Fresh-From-the-Oven/">https://bolisettynihith.github.io/2019/10/03/InCTFi19-Fresh-From-the-Oven/</a>
+                    <a href="https://bolisettynihith.github.io/2020/08/19/DB64-Poseidon-CTF/">https://bolisettynihith.github.io/2020/08/19/DB64-Poseidon-CTF/</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -468,7 +457,7 @@ Shyam: Okay, sure:)</code></pre><h2 id="Further-Analysis"><a href="#Further-Anal
                     All articles in this blog are used except for special statements
                     <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
                     reprint polocy. If reproduced, please indicate source
-                    <a href="/about" target="_blank">Nihith</a>
+                    <a href="/about" target="_blank">g4rud4</a>
                     !
                 </span>
             </div>
@@ -493,12 +482,12 @@ Shyam: Okay, sure:)</code></pre><h2 id="Further-Analysis"><a href="#Further-Anal
                     
                         <div class="article-tag">
                             
-                                <a href="/tags/Wireshark/">
-                                    <span class="chip bg-color">Wireshark</span>
+                                <a href="/tags/Volatility/">
+                                    <span class="chip bg-color">Volatility</span>
                                 </a>
                             
-                                <a href="/tags/Steganography/">
-                                    <span class="chip bg-color">Steganography</span>
+                                <a href="/tags/Keepass/">
+                                    <span class="chip bg-color">Keepass</span>
                                 </a>
                             
                         </div>
@@ -540,28 +529,29 @@ Shyam: Okay, sure:)</code></pre><h2 id="Further-Analysis"><a href="#Further-Anal
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
+                <i class="far fa-dot-circle"></i>&nbsp;Current
+            </div>
             <div class="card">
-                <a href="/2020/04/11/HackTM-Quals-20%E2%80%93Find-my-Pass-Writeup/">
+                <a href="/2020/08/19/DB64-Poseidon-CTF/">
                     <div class="card-image">
                         
-                        <img src="/images/Find-my-Pass/logo.png" class="responsive-img" alt="HackTM Quals 20 – Find my Pass Writeup">
+                        <img src="https://ctftime.org/media/cache/fe/48/fe4846476b5a58468961ae161fc24573.png" class="responsive-img" alt="DB64 - Poseidon CTF">
                         
-                        <span class="card-title">HackTM Quals 20 – Find my Pass Writeup</span>
+                        <span class="card-title">DB64 - Poseidon CTF</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Full solution for Find my Pass challenge from HackTM Quals 20.
+                            Full solution for DB64 Challenge from Poseidon CTF
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2020-04-11
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-08-19
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -578,6 +568,7 @@ Shyam: Okay, sure:)</code></pre><h2 id="Further-Analysis"><a href="#Further-Anal
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -585,8 +576,8 @@ Shyam: Okay, sure:)</code></pre><h2 id="Further-Analysis"><a href="#Further-Anal
                         <span class="chip bg-color">Volatility</span>
                     </a>
                     
-                    <a href="/tags/Memory/">
-                        <span class="chip bg-color">Memory</span>
+                    <a href="/tags/Keepass/">
+                        <span class="chip bg-color">Keepass</span>
                     </a>
                     
                 </div>
@@ -600,34 +591,34 @@ Shyam: Okay, sure:)</code></pre><h2 id="Further-Analysis"><a href="#Further-Anal
                 Next&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
-                <a href="/2019/08/24/Hackcon-CTF%E2%80%9919-%E2%80%93-GIMP-IT-Writeup/">
+                <a href="/2020/08/03/InCTFi20-LookoutFoxy/">
                     <div class="card-image">
                         
-                        <img src="/images/Toocoldforsteg/logo.png" class="responsive-img" alt="Hackcon CTF’19 – GIMP IT Writeup">
+                        <img src="/images/FreshFromtheOven/logo.png" class="responsive-img" alt="Lookout Foxy - InCTF Internationals 2020">
                         
-                        <span class="card-title">Hackcon CTF’19 – GIMP IT Writeup</span>
+                        <span class="card-title">Lookout Foxy - InCTF Internationals 2020</span>
                     </div>
                 </a>
                 <div class="card-content article-content">
                     <div class="summary block-with-text">
                         
-                            Full solution for GIMP IT challenge from Hackcon CTF’19.
+                            Full solution for Lookout Foxy challenge from InCTF Internationals 2020
                         
                     </div>
                     <div class="publish-info">
                             <span class="publish-date">
-                                <i class="far fa-clock fa-fw icon-date"></i>2019-08-24
+                                <i class="far fa-clock fa-fw icon-date"></i>2020-08-03
                             </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
                             
-                            <a href="/categories/Writeups/" class="post-category">
-                                    Writeups
+                            <a href="/categories/Forensics/" class="post-category">
+                                    Forensics
                                 </a>
                             
-                            <a href="/categories/Writeups/Steganography/" class="post-category">
-                                    Steganography
+                            <a href="/categories/Forensics/Disk/" class="post-category">
+                                    Disk
                                 </a>
                             
                             
@@ -637,12 +628,12 @@ Shyam: Okay, sure:)</code></pre><h2 id="Further-Analysis"><a href="#Further-Anal
                 
                 <div class="card-action article-tags">
                     
-                    <a href="/tags/Steganography/">
-                        <span class="chip bg-color">Steganography</span>
+                    <a href="/tags/Autospy/">
+                        <span class="chip bg-color">Autospy</span>
                     </a>
                     
-                    <a href="/tags/Python/">
-                        <span class="chip bg-color">Python</span>
+                    <a href="/tags/InCTFi/">
+                        <span class="chip bg-color">InCTFi</span>
                     </a>
                     
                 </div>
