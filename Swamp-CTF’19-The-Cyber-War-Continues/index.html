@@ -1,0 +1,993 @@
+<!DOCTYPE HTML>
+<html lang="en">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="Swamp CTF’19 - The Cyber War Continues Writeup, Nihith&#39;s blog">
+    <meta name="description" content="CTF player with Team bi0s. Love to do Memory Forensics. UG student at Amrita Vishwa Vidyapeetham.">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+<script async src="https://www.googletagmanager.com/gtag/js?id=UA-169178746-1"></script>
+<script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() {
+        dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+    gtag('config', 'UA-169178746-1');
+</script>
+
+
+    <title>Swamp CTF’19 - The Cyber War Continues Writeup | Nihith&#39;s blog</title>
+    <link rel="icon" type="image/svg+xml" href="/medias/logo.svg">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 4.2.1"><link rel="alternate" href="/atom.xml" title="Nihith's blog" type="application/atom+xml">
+<link rel="stylesheet" href="/css/prism-tomorrow.css" type="text/css"></head>
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.svg" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">Nihith&#39;s blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>Home</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>Tags</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>About</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="Search" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.svg" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">Nihith&#39;s blog</div>
+        <div class="logo-desc">
+            
+            CTF player with Team bi0s. Love to do Memory Forensics. UG student at Amrita Vishwa Vidyapeetham.
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			Home
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			Tags
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			About
+		</a>
+          
+        </li>
+        
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/images/cyberwar/logo.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">Swamp CTF’19 - The Cyber War Continues Writeup</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        margin: 35px 0 15px 0;
+        padding-left: 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        height: calc(100vh - 250px);
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/Python/">
+                                <span class="chip bg-color">Python</span>
+                            </a>
+                        
+                            <a href="/tags/Wireshark/">
+                                <span class="chip bg-color">Wireshark</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/Writeups/" class="post-category">
+                                Writeups
+                            </a>
+                        
+                            <a href="/categories/Writeups/Network/" class="post-category">
+                                Network
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>Publish Date:&nbsp;&nbsp;
+                    2019-04-09
+                </div>
+                
+
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-file-word fa-fw"></i>Word Count:&nbsp;&nbsp;
+                    852
+                </div>
+                
+
+                
+                <div class="info-break-policy">
+                    <i class="far fa-clock fa-fw"></i>Read Times:&nbsp;&nbsp;
+                    5 Min
+                </div>
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p><strong>tl;dr</strong></p>
+<ul>
+<li>USB leftover Capture data extraction.</li>
+</ul>
+<a id="more"></a>
+
+<h2 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h2><blockquote>
+<p>As you and your convoy circle the barren lands on your light cycles you notice something strange in the distance. Upon further investigation you find what seems to be the remnants of a battle.</p>
+<p>Bodies, robotic and organic alike, are strewn all over the place. You begin scavenging for supplies and weapons, suddenly a man near death thrusts his hand and grabs your arm. “Please” he croaks, “find my friends”.</p>
+<p>He hands you a USB as he takes his last breath. You plug the drive into your mechanical arm and the contents start flooding your HUD. It contains this message and an encrypted file.</p>
+</blockquote>
+<p>Click <a href="https://drive.google.com/drive/u/0/folders/1dTzkvMUmiqKmtkBgyFevXob9WOXsCZQA">here</a>, to download challenge file.</p>
+<h2 id="Initial-Analysis"><a href="#Initial-Analysis" class="headerlink" title="Initial Analysis"></a>Initial Analysis</h2><p>In this challenge we got a 7z file which was password protected and a text file. I don’t know why they have given that text file, as of now my aim was to crack the password for the ‘7z file’.</p>
+<p><img src="/images/cyberwar/7z.png" alt="Protected 7z"></p>
+<p>So, I used an <a href="https://www.lostmypass.com/file-types/7z/">online tool</a> to crack the 7z password. And it gave me the password as “toor”, using this as the password for the archive and extracting it, got a pcap.</p>
+<p><img src="/images/cyberwar/pcap.png" alt="Display pcap"></p>
+<p>On analysing that pcap file, all the packets present in that pcap file are related to USB Protocol and on observing the left over capture data got to know that it was based on the keyboard Strokes.</p>
+<h2 id="Futher-Analysis"><a href="#Futher-Analysis" class="headerlink" title="Futher Analysis"></a>Futher Analysis</h2><p>So, on googling found a <a href="https://bitvijays.github.io/LFC-Forensics.html">script</a> for USB Keyboard Strokes and i have rewritten that code such that it will automate all the process we do manually and will give the flag out. The code follows,</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> os
+usb_codes <span class="token operator">=</span> <span class="token punctuation">{</span>
+   <span class="token number">0x04</span><span class="token punctuation">:</span><span class="token string">"aA"</span><span class="token punctuation">,</span> <span class="token number">0x05</span><span class="token punctuation">:</span><span class="token string">"bB"</span><span class="token punctuation">,</span> <span class="token number">0x06</span><span class="token punctuation">:</span><span class="token string">"cC"</span><span class="token punctuation">,</span> <span class="token number">0x07</span><span class="token punctuation">:</span><span class="token string">"dD"</span><span class="token punctuation">,</span> <span class="token number">0x08</span><span class="token punctuation">:</span><span class="token string">"eE"</span><span class="token punctuation">,</span> <span class="token number">0x09</span><span class="token punctuation">:</span><span class="token string">"fF"</span><span class="token punctuation">,</span>
+   <span class="token number">0x0A</span><span class="token punctuation">:</span><span class="token string">"gG"</span><span class="token punctuation">,</span> <span class="token number">0x0B</span><span class="token punctuation">:</span><span class="token string">"hH"</span><span class="token punctuation">,</span> <span class="token number">0x0C</span><span class="token punctuation">:</span><span class="token string">"iI"</span><span class="token punctuation">,</span> <span class="token number">0x0D</span><span class="token punctuation">:</span><span class="token string">"jJ"</span><span class="token punctuation">,</span> <span class="token number">0x0E</span><span class="token punctuation">:</span><span class="token string">"kK"</span><span class="token punctuation">,</span> <span class="token number">0x0F</span><span class="token punctuation">:</span><span class="token string">"lL"</span><span class="token punctuation">,</span>
+   <span class="token number">0x10</span><span class="token punctuation">:</span><span class="token string">"mM"</span><span class="token punctuation">,</span> <span class="token number">0x11</span><span class="token punctuation">:</span><span class="token string">"nN"</span><span class="token punctuation">,</span> <span class="token number">0x12</span><span class="token punctuation">:</span><span class="token string">"oO"</span><span class="token punctuation">,</span> <span class="token number">0x13</span><span class="token punctuation">:</span><span class="token string">"pP"</span><span class="token punctuation">,</span> <span class="token number">0x14</span><span class="token punctuation">:</span><span class="token string">"qQ"</span><span class="token punctuation">,</span> <span class="token number">0x15</span><span class="token punctuation">:</span><span class="token string">"rR"</span><span class="token punctuation">,</span>
+   <span class="token number">0x16</span><span class="token punctuation">:</span><span class="token string">"sS"</span><span class="token punctuation">,</span> <span class="token number">0x17</span><span class="token punctuation">:</span><span class="token string">"tT"</span><span class="token punctuation">,</span> <span class="token number">0x18</span><span class="token punctuation">:</span><span class="token string">"uU"</span><span class="token punctuation">,</span> <span class="token number">0x19</span><span class="token punctuation">:</span><span class="token string">"vV"</span><span class="token punctuation">,</span> <span class="token number">0x1A</span><span class="token punctuation">:</span><span class="token string">"wW"</span><span class="token punctuation">,</span> <span class="token number">0x1B</span><span class="token punctuation">:</span><span class="token string">"xX"</span><span class="token punctuation">,</span>
+   <span class="token number">0x1C</span><span class="token punctuation">:</span><span class="token string">"yY"</span><span class="token punctuation">,</span> <span class="token number">0x1D</span><span class="token punctuation">:</span><span class="token string">"zZ"</span><span class="token punctuation">,</span> <span class="token number">0x1E</span><span class="token punctuation">:</span><span class="token string">"1!"</span><span class="token punctuation">,</span> <span class="token number">0x1F</span><span class="token punctuation">:</span><span class="token string">"2@"</span><span class="token punctuation">,</span> <span class="token number">0x20</span><span class="token punctuation">:</span><span class="token string">"3#"</span><span class="token punctuation">,</span> <span class="token number">0x21</span><span class="token punctuation">:</span><span class="token string">"4$"</span><span class="token punctuation">,</span>
+   <span class="token number">0x22</span><span class="token punctuation">:</span><span class="token string">"5%"</span><span class="token punctuation">,</span> <span class="token number">0x23</span><span class="token punctuation">:</span><span class="token string">"6^"</span><span class="token punctuation">,</span> <span class="token number">0x24</span><span class="token punctuation">:</span><span class="token string">"7&amp;"</span><span class="token punctuation">,</span> <span class="token number">0x25</span><span class="token punctuation">:</span><span class="token string">"8*"</span><span class="token punctuation">,</span> <span class="token number">0x26</span><span class="token punctuation">:</span><span class="token string">"9("</span><span class="token punctuation">,</span> <span class="token number">0x27</span><span class="token punctuation">:</span><span class="token string">"0)"</span><span class="token punctuation">,</span>
+   <span class="token number">0x2C</span><span class="token punctuation">:</span><span class="token string">"  "</span><span class="token punctuation">,</span> <span class="token number">0x2D</span><span class="token punctuation">:</span><span class="token string">"-_"</span><span class="token punctuation">,</span> <span class="token number">0x2E</span><span class="token punctuation">:</span><span class="token string">"=+"</span><span class="token punctuation">,</span> <span class="token number">0x2F</span><span class="token punctuation">:</span><span class="token string">"[{"</span><span class="token punctuation">,</span> <span class="token number">0x30</span><span class="token punctuation">:</span><span class="token string">"]}"</span><span class="token punctuation">,</span>  <span class="token number">0x32</span><span class="token punctuation">:</span><span class="token string">"#~"</span><span class="token punctuation">,</span>
+   <span class="token number">0x33</span><span class="token punctuation">:</span><span class="token string">";:"</span><span class="token punctuation">,</span> <span class="token number">0x34</span><span class="token punctuation">:</span><span class="token string">"'\""</span><span class="token punctuation">,</span>  <span class="token number">0x36</span><span class="token punctuation">:</span><span class="token string">",&lt;"</span><span class="token punctuation">,</span>  <span class="token number">0x37</span><span class="token punctuation">:</span><span class="token string">".>"</span><span class="token punctuation">,</span> <span class="token number">0x4f</span><span class="token punctuation">:</span><span class="token string">">"</span><span class="token punctuation">,</span> <span class="token number">0x50</span><span class="token punctuation">:</span><span class="token string">"&lt;"</span>
+   <span class="token punctuation">}</span>
+l <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">""</span><span class="token punctuation">,</span><span class="token string">""</span><span class="token punctuation">,</span><span class="token string">""</span><span class="token punctuation">,</span><span class="token string">""</span><span class="token punctuation">,</span><span class="token string">""</span><span class="token punctuation">]</span>
+
+pos <span class="token operator">=</span> <span class="token number">0</span>
+
+os<span class="token punctuation">.</span>system<span class="token punctuation">(</span><span class="token string">'tshark -r location.pcap -T fields -e usb.capdata > d.txt'</span><span class="token punctuation">)</span>
+
+f<span class="token operator">=</span>open<span class="token punctuation">(</span><span class="token string">"d.txt"</span><span class="token punctuation">,</span><span class="token string">"r"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>readlines<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+a<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span>
+
+<span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span>len<span class="token punctuation">(</span>f<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+  d<span class="token operator">=</span>str<span class="token punctuation">(</span>f<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
+  d<span class="token operator">=</span>d<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">:</span><span class="token number">23</span><span class="token punctuation">]</span>
+  <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token punctuation">(</span>d<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">:</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token operator">==</span><span class="token string">"00"</span> <span class="token operator">or</span> d<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">:</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token operator">==</span><span class="token string">"02"</span><span class="token punctuation">)</span> <span class="token operator">and</span> d<span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">:</span><span class="token number">8</span><span class="token punctuation">]</span> <span class="token operator">!=</span> <span class="token string">"00"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    a<span class="token punctuation">.</span>append<span class="token punctuation">(</span>d<span class="token punctuation">)</span>
+
+a<span class="token operator">=</span><span class="token string">'\n'</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span>a<span class="token punctuation">)</span>
+
+b<span class="token operator">=</span>open<span class="token punctuation">(</span><span class="token string">'k1'</span><span class="token punctuation">,</span><span class="token string">'w'</span><span class="token punctuation">)</span>
+b<span class="token punctuation">.</span>write<span class="token punctuation">(</span>a<span class="token punctuation">)</span>
+b<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token keyword">for</span> x <span class="token keyword">in</span> open<span class="token punctuation">(</span><span class="token string">"k1"</span><span class="token punctuation">,</span><span class="token string">"r"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>readlines<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+   c <span class="token operator">=</span> int<span class="token punctuation">(</span>x<span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">:</span><span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token number">16</span><span class="token punctuation">)</span> 
+   <span class="token keyword">if</span> c <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
+       <span class="token keyword">continue</span>
+   <span class="token comment" spellcheck="true"># newline or down arrow - move down</span>
+   <span class="token keyword">if</span> c <span class="token operator">==</span> <span class="token number">0x51</span> <span class="token operator">or</span> c <span class="token operator">==</span> <span class="token number">0x28</span><span class="token punctuation">:</span>
+       pos <span class="token operator">+=</span> <span class="token number">1</span>
+       <span class="token keyword">continue</span>
+   <span class="token comment" spellcheck="true"># up arrow - move up</span>
+   <span class="token keyword">if</span> c <span class="token operator">==</span> <span class="token number">0x52</span><span class="token punctuation">:</span>
+       pos <span class="token operator">-=</span> <span class="token number">1</span>
+       <span class="token keyword">continue</span>
+   <span class="token comment" spellcheck="true"># select the character based on the Shift key</span>
+   <span class="token keyword">if</span> int<span class="token punctuation">(</span>x<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">:</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token number">16</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">2</span><span class="token punctuation">:</span>
+       l<span class="token punctuation">[</span>pos<span class="token punctuation">]</span> <span class="token operator">+=</span> usb_codes<span class="token punctuation">[</span>c<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>
+   <span class="token keyword">else</span><span class="token punctuation">:</span>
+       l<span class="token punctuation">[</span>pos<span class="token punctuation">]</span> <span class="token operator">+=</span> usb_codes<span class="token punctuation">[</span>c<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+
+<span class="token keyword">print</span> l<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span></code></pre>
+<p>After running the above code for USB keyboard hid keys, got an output as some random string,</p>
+<p><img src="/images/cyberwar/random_string.png" alt="Random String"></p>
+<p>The random string is : <strong>synt{jne_arire_punatrf}</strong></p>
+<p>I understood that random string was a <strong>Caesar Cipher</strong>. So I re-modified the above code such a way that we get the deciphered flag as we can see that the difference between <strong>s</strong> and <strong>f</strong> is <strong>13</strong>, so I remodified like that. Modified code is,</p>
+<pre class=" language-python"><code class="language-python"><span class="token keyword">import</span> os
+usb_codes <span class="token operator">=</span> <span class="token punctuation">{</span>
+   <span class="token number">0x04</span><span class="token punctuation">:</span><span class="token string">"aA"</span><span class="token punctuation">,</span> <span class="token number">0x05</span><span class="token punctuation">:</span><span class="token string">"bB"</span><span class="token punctuation">,</span> <span class="token number">0x06</span><span class="token punctuation">:</span><span class="token string">"cC"</span><span class="token punctuation">,</span> <span class="token number">0x07</span><span class="token punctuation">:</span><span class="token string">"dD"</span><span class="token punctuation">,</span> <span class="token number">0x08</span><span class="token punctuation">:</span><span class="token string">"eE"</span><span class="token punctuation">,</span> <span class="token number">0x09</span><span class="token punctuation">:</span><span class="token string">"fF"</span><span class="token punctuation">,</span>
+   <span class="token number">0x0A</span><span class="token punctuation">:</span><span class="token string">"gG"</span><span class="token punctuation">,</span> <span class="token number">0x0B</span><span class="token punctuation">:</span><span class="token string">"hH"</span><span class="token punctuation">,</span> <span class="token number">0x0C</span><span class="token punctuation">:</span><span class="token string">"iI"</span><span class="token punctuation">,</span> <span class="token number">0x0D</span><span class="token punctuation">:</span><span class="token string">"jJ"</span><span class="token punctuation">,</span> <span class="token number">0x0E</span><span class="token punctuation">:</span><span class="token string">"kK"</span><span class="token punctuation">,</span> <span class="token number">0x0F</span><span class="token punctuation">:</span><span class="token string">"lL"</span><span class="token punctuation">,</span>
+   <span class="token number">0x10</span><span class="token punctuation">:</span><span class="token string">"mM"</span><span class="token punctuation">,</span> <span class="token number">0x11</span><span class="token punctuation">:</span><span class="token string">"nN"</span><span class="token punctuation">,</span> <span class="token number">0x12</span><span class="token punctuation">:</span><span class="token string">"oO"</span><span class="token punctuation">,</span> <span class="token number">0x13</span><span class="token punctuation">:</span><span class="token string">"pP"</span><span class="token punctuation">,</span> <span class="token number">0x14</span><span class="token punctuation">:</span><span class="token string">"qQ"</span><span class="token punctuation">,</span> <span class="token number">0x15</span><span class="token punctuation">:</span><span class="token string">"rR"</span><span class="token punctuation">,</span>
+   <span class="token number">0x16</span><span class="token punctuation">:</span><span class="token string">"sS"</span><span class="token punctuation">,</span> <span class="token number">0x17</span><span class="token punctuation">:</span><span class="token string">"tT"</span><span class="token punctuation">,</span> <span class="token number">0x18</span><span class="token punctuation">:</span><span class="token string">"uU"</span><span class="token punctuation">,</span> <span class="token number">0x19</span><span class="token punctuation">:</span><span class="token string">"vV"</span><span class="token punctuation">,</span> <span class="token number">0x1A</span><span class="token punctuation">:</span><span class="token string">"wW"</span><span class="token punctuation">,</span> <span class="token number">0x1B</span><span class="token punctuation">:</span><span class="token string">"xX"</span><span class="token punctuation">,</span>
+   <span class="token number">0x1C</span><span class="token punctuation">:</span><span class="token string">"yY"</span><span class="token punctuation">,</span> <span class="token number">0x1D</span><span class="token punctuation">:</span><span class="token string">"zZ"</span><span class="token punctuation">,</span> <span class="token number">0x1E</span><span class="token punctuation">:</span><span class="token string">"1!"</span><span class="token punctuation">,</span> <span class="token number">0x1F</span><span class="token punctuation">:</span><span class="token string">"2@"</span><span class="token punctuation">,</span> <span class="token number">0x20</span><span class="token punctuation">:</span><span class="token string">"3#"</span><span class="token punctuation">,</span> <span class="token number">0x21</span><span class="token punctuation">:</span><span class="token string">"4$"</span><span class="token punctuation">,</span>
+   <span class="token number">0x22</span><span class="token punctuation">:</span><span class="token string">"5%"</span><span class="token punctuation">,</span> <span class="token number">0x23</span><span class="token punctuation">:</span><span class="token string">"6^"</span><span class="token punctuation">,</span> <span class="token number">0x24</span><span class="token punctuation">:</span><span class="token string">"7&amp;"</span><span class="token punctuation">,</span> <span class="token number">0x25</span><span class="token punctuation">:</span><span class="token string">"8*"</span><span class="token punctuation">,</span> <span class="token number">0x26</span><span class="token punctuation">:</span><span class="token string">"9("</span><span class="token punctuation">,</span> <span class="token number">0x27</span><span class="token punctuation">:</span><span class="token string">"0)"</span><span class="token punctuation">,</span>
+   <span class="token number">0x2C</span><span class="token punctuation">:</span><span class="token string">"  "</span><span class="token punctuation">,</span> <span class="token number">0x2D</span><span class="token punctuation">:</span><span class="token string">"-_"</span><span class="token punctuation">,</span> <span class="token number">0x2E</span><span class="token punctuation">:</span><span class="token string">"=+"</span><span class="token punctuation">,</span> <span class="token number">0x2F</span><span class="token punctuation">:</span><span class="token string">"[{"</span><span class="token punctuation">,</span> <span class="token number">0x30</span><span class="token punctuation">:</span><span class="token string">"]}"</span><span class="token punctuation">,</span>  <span class="token number">0x32</span><span class="token punctuation">:</span><span class="token string">"#~"</span><span class="token punctuation">,</span>
+   <span class="token number">0x33</span><span class="token punctuation">:</span><span class="token string">";:"</span><span class="token punctuation">,</span> <span class="token number">0x34</span><span class="token punctuation">:</span><span class="token string">"'\""</span><span class="token punctuation">,</span>  <span class="token number">0x36</span><span class="token punctuation">:</span><span class="token string">",&lt;"</span><span class="token punctuation">,</span>  <span class="token number">0x37</span><span class="token punctuation">:</span><span class="token string">".>"</span><span class="token punctuation">,</span> <span class="token number">0x4f</span><span class="token punctuation">:</span><span class="token string">">"</span><span class="token punctuation">,</span> <span class="token number">0x50</span><span class="token punctuation">:</span><span class="token string">"&lt;"</span>
+   <span class="token punctuation">}</span>
+l <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token string">""</span><span class="token punctuation">,</span><span class="token string">""</span><span class="token punctuation">,</span><span class="token string">""</span><span class="token punctuation">,</span><span class="token string">""</span><span class="token punctuation">,</span><span class="token string">""</span><span class="token punctuation">]</span>
+
+pos <span class="token operator">=</span> <span class="token number">0</span>
+
+os<span class="token punctuation">.</span>system<span class="token punctuation">(</span><span class="token string">'tshark -r location.pcap -T fields -e usb.capdata > d.txt'</span><span class="token punctuation">)</span>
+
+f<span class="token operator">=</span>open<span class="token punctuation">(</span><span class="token string">"d.txt"</span><span class="token punctuation">,</span><span class="token string">"r"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>readlines<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+a<span class="token operator">=</span><span class="token punctuation">[</span><span class="token punctuation">]</span>
+
+<span class="token keyword">for</span> i <span class="token keyword">in</span> range<span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span>len<span class="token punctuation">(</span>f<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+  d<span class="token operator">=</span>str<span class="token punctuation">(</span>f<span class="token punctuation">[</span>i<span class="token punctuation">]</span><span class="token punctuation">)</span>
+  d<span class="token operator">=</span>d<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">:</span><span class="token number">23</span><span class="token punctuation">]</span>
+  <span class="token keyword">if</span><span class="token punctuation">(</span><span class="token punctuation">(</span>d<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">:</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token operator">==</span><span class="token string">"00"</span> <span class="token operator">or</span> d<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">:</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token operator">==</span><span class="token string">"02"</span><span class="token punctuation">)</span> <span class="token operator">and</span> d<span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">:</span><span class="token number">8</span><span class="token punctuation">]</span> <span class="token operator">!=</span> <span class="token string">"00"</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+    a<span class="token punctuation">.</span>append<span class="token punctuation">(</span>d<span class="token punctuation">)</span>
+
+a<span class="token operator">=</span><span class="token string">'\n'</span><span class="token punctuation">.</span>join<span class="token punctuation">(</span>a<span class="token punctuation">)</span>
+
+b<span class="token operator">=</span>open<span class="token punctuation">(</span><span class="token string">'k1'</span><span class="token punctuation">,</span><span class="token string">'w'</span><span class="token punctuation">)</span>
+b<span class="token punctuation">.</span>write<span class="token punctuation">(</span>a<span class="token punctuation">)</span>
+b<span class="token punctuation">.</span>close<span class="token punctuation">(</span><span class="token punctuation">)</span>
+
+<span class="token keyword">for</span> x <span class="token keyword">in</span> open<span class="token punctuation">(</span><span class="token string">"k1"</span><span class="token punctuation">,</span><span class="token string">"r"</span><span class="token punctuation">)</span><span class="token punctuation">.</span>readlines<span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">:</span>
+   c <span class="token operator">=</span> int<span class="token punctuation">(</span>x<span class="token punctuation">[</span><span class="token number">6</span><span class="token punctuation">:</span><span class="token number">8</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token number">16</span><span class="token punctuation">)</span>
+
+   <span class="token keyword">if</span> c <span class="token operator">==</span> <span class="token number">0</span><span class="token punctuation">:</span>
+       <span class="token keyword">continue</span>
+   <span class="token comment" spellcheck="true"># newline or down arrow - move down</span>
+   <span class="token keyword">if</span> c <span class="token operator">==</span> <span class="token number">0x51</span> <span class="token operator">or</span> c <span class="token operator">==</span> <span class="token number">0x28</span><span class="token punctuation">:</span>
+       pos <span class="token operator">+=</span> <span class="token number">1</span>
+       <span class="token keyword">continue</span>
+   <span class="token comment" spellcheck="true"># up arrow - move up</span>
+   <span class="token keyword">if</span> c <span class="token operator">==</span> <span class="token number">0x52</span><span class="token punctuation">:</span>
+       pos <span class="token operator">-=</span> <span class="token number">1</span>
+       <span class="token keyword">continue</span>
+   <span class="token comment" spellcheck="true"># select the character based on the Shift key</span>
+   <span class="token keyword">if</span> int<span class="token punctuation">(</span>x<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">:</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">,</span><span class="token number">16</span><span class="token punctuation">)</span> <span class="token operator">==</span> <span class="token number">2</span><span class="token punctuation">:</span>
+       l<span class="token punctuation">[</span>pos<span class="token punctuation">]</span> <span class="token operator">+=</span> usb_codes<span class="token punctuation">[</span>c<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>
+   <span class="token keyword">else</span><span class="token punctuation">:</span>
+       l<span class="token punctuation">[</span>pos<span class="token punctuation">]</span> <span class="token operator">+=</span> usb_codes<span class="token punctuation">[</span>c<span class="token punctuation">]</span><span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+
+<span class="token keyword">print</span> l<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span>
+
+new_str <span class="token operator">=</span> <span class="token string">''</span>
+temp <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token punctuation">]</span>
+<span class="token keyword">for</span> letter <span class="token keyword">in</span> l<span class="token punctuation">[</span><span class="token number">0</span><span class="token punctuation">]</span><span class="token punctuation">:</span>
+    <span class="token keyword">if</span> ord<span class="token punctuation">(</span>letter<span class="token punctuation">)</span> <span class="token operator">>=</span> <span class="token number">97</span> <span class="token operator">and</span> ord<span class="token punctuation">(</span>letter<span class="token punctuation">)</span> <span class="token operator">&lt;=</span> <span class="token number">122</span><span class="token punctuation">:</span>
+        temp<span class="token punctuation">.</span>append<span class="token punctuation">(</span>chr<span class="token punctuation">(</span><span class="token number">97</span> <span class="token operator">+</span> <span class="token punctuation">(</span>ord<span class="token punctuation">(</span>letter<span class="token punctuation">)</span> <span class="token operator">-</span> <span class="token number">97</span> <span class="token operator">+</span> <span class="token number">13</span><span class="token punctuation">)</span> <span class="token operator">%</span> <span class="token number">26</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+
+    <span class="token keyword">else</span><span class="token punctuation">:</span>
+        temp<span class="token punctuation">.</span>append<span class="token punctuation">(</span>letter<span class="token punctuation">)</span>
+new_str <span class="token operator">=</span> new_str<span class="token punctuation">.</span>join<span class="token punctuation">(</span>temp<span class="token punctuation">)</span>
+
+<span class="token keyword">print</span> new_str</code></pre>
+<h2 id="Flag"><a href="#Flag" class="headerlink" title="Flag"></a>Flag</h2><p><img src="/images/cyberwar/flag.png" alt="flag"></p>
+<p>Flag: <strong>flag{war_never_changes}</strong></p>
+<p>If you liked my solution, please do share it. I’m available on Twitter: <a href="https://twitter.com/NihithNihi">@NihithNihi</a></p>
+
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        Author:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">Nihith</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        Link:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="https://bolisettynihith.github.io/Swamp-CTF%E2%80%9919-The-Cyber-War-Continues/">https://bolisettynihith.github.io/Swamp-CTF%E2%80%9919-The-Cyber-War-Continues/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        Reprint policy:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    All articles in this blog are used except for special statements
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    reprint polocy. If reproduced, please indicate source
+                    <a href="/about" target="_blank">Nihith</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>Copied successfully, please follow the reprint policy of this article</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">more</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/Python/">
+                                    <span class="chip bg-color">Python</span>
+                                </a>
+                            
+                                <a href="/tags/Wireshark/">
+                                    <span class="chip bg-color">Wireshark</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;Previous</div>
+            <div class="card">
+                <a href="/Swamp-CTF%E2%80%9918-%E2%80%93-Orcish-challenge/">
+                    <div class="card-image">
+                        
+                        <img src="/images/orcish/logo.jpg" class="responsive-img" alt="Swamp CTF’18 – Orcish Writeup">
+                        
+                        <span class="card-title">Swamp CTF’18 – Orcish Writeup</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            Full solution for Orcish challenge from Swamp CTF’18.
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-08-11
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Writeups/" class="post-category">
+                                    Writeups
+                                </a>
+                            
+                            <a href="/categories/Writeups/Network/" class="post-category">
+                                    Network
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Python/">
+                        <span class="chip bg-color">Python</span>
+                    </a>
+                    
+                    <a href="/tags/Wireshark/">
+                        <span class="chip bg-color">Wireshark</span>
+                    </a>
+                    
+                    <a href="/tags/Network/">
+                        <span class="chip bg-color">Network</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                Current&nbsp;<i class="far fa-dot-circle"></i>
+            </div>
+            <div class="card">
+                <a href="/Swamp-CTF%E2%80%9919-The-Cyber-War-Continues/">
+                    <div class="card-image">
+                        
+                        <img src="/images/cyberwar/logo.jpg" class="responsive-img" alt="Swamp CTF’19 - The Cyber War Continues Writeup">
+                        
+                        <span class="card-title">Swamp CTF’19 - The Cyber War Continues Writeup</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            Full solution for The Cyber War Continues challenge from Swamp CTF’19.
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-04-09
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-bookmark fa-fw icon-category"></i>
+                            
+                            <a href="/categories/Writeups/" class="post-category">
+                                    Writeups
+                                </a>
+                            
+                            <a href="/categories/Writeups/Network/" class="post-category">
+                                    Network
+                                </a>
+                            
+                            
+                        </span>
+                    </div>
+                </div>
+
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/Python/">
+                        <span class="chip bg-color">Python</span>
+                    </a>
+                    
+                    <a href="/tags/Wireshark/">
+                        <span class="chip bg-color">Wireshark</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+<!-- 代码块折行 -->
+
+<style type="text/css">
+code[class*="language-"], pre[class*="language-"] { white-space: pre !important; }
+</style>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;TOC</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            <span id="year">2019</span>
+            <a href="/about" target="_blank">Nihith</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link ">
+    <a href="https://github.com/bolisettynihith" class="tooltipped" target="_blank" data-tooltip="GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:bolisettynihith@gmail.com" class="tooltipped" target="_blank" data-tooltip="Email me" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+    <a href="https://www.facebook.com/profile.php?id=100009552907530" class="tooltipped" target="_blank" data-tooltip="Follow me on Facebook: https://www.facebook.com/profile.php?id=100009552907530" data-position="top" data-delay="50">
+        <i class="fab fa-facebook-f"></i>
+    </a>
+
+
+
+    <a href="https://twitter.com/NihithNihi" class="tooltipped" target="_blank" data-tooltip="Follow me on Twitter: https://twitter.com/NihithNihi" data-position="top" data-delay="50">
+        <i class="fab fa-twitter"></i>
+    </a>
+
+
+
+
+
+
+
+
+
+
+    <a href="https://www.linkedin.com/in/bolisettynihith/" class="tooltipped" target="_blank" data-tooltip="Connect me on Linkedin: https://www.linkedin.com/in/bolisettynihith/" data-position="top" data-delay="50">
+        <i class="fab fa-linkedin"></i>
+    </a>
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS feed" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;Search</span>
+            <input type="search" id="searchInput" name="s" placeholder="Please enter a search keyword"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script src="/js/search.js"></script>
+<script type="text/javascript">
+$(function () {
+    searchFunc("/search.xml", 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
