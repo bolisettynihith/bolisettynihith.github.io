@@ -769,6 +769,7 @@ new_str <span class="token operator">=</span> new_str<span class="token punctuat
         <tag>Magnet Weekly CTF</tag>
         <tag>Android Forensics</tag>
         <tag>ALEAP</tag>
+        <tag>Picture-In-Picture</tag>
       </tags>
   </entry>
   <entry>
@@ -1054,6 +1055,155 @@ q<span class="token operator">=</span><span class="token string">''</span>
         <tag>Volatility</tag>
         <tag>Memlabs</tag>
         <tag>Memory</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Warren&#39;s Memory - Week 9 - Magnet Weekly CTF</title>
+    <url>/Magnet-Weekly-CTF/Week-9-Magnet-Weekly-CTF/</url>
+    <content><![CDATA[<p>This week’s Memory Forensics challenge is divided into 7 really interesting parts. You can download the memory image <a href="https://drive.google.com/drive/folders/1iCxOKhfoHvxoBRNXJlm2VBiAVgDD_p5d?usp=sharing">here</a>.</p>
+<p>If you are new to Memory Forensics, you can check out <a href="https://github.com/stuxnet999/Memlabs">Memlabs</a> created by <a href="https://www.twitter.com/_abhiramkumar">Abhiram Kumar</a>. Here are my <a href="https://bolisettynihith.github.io/categories/Memlabs/">writeups</a> for the same.</p>
+<h2 id="Initial-Analysis"><a href="#Initial-Analysis" class="headerlink" title="Initial Analysis"></a>Initial Analysis</h2><p>We are provided with a Windows memory dump. I’ll we be using <strong>Volatility</strong> to analyze and some command-line tools for extracting the relevant answers.</p>
+<h3 id="Finding-Profile"><a href="#Finding-Profile" class="headerlink" title="Finding Profile"></a>Finding Profile</h3><p>We shall use the plugin <strong>imageinfo</strong> to find the profile for the memory dump.</p>
+<pre class=" language-bash"><code class="language-bash">$ volatility -f memdump.mem imageinfo</code></pre>
+<p><img src="profile.png" alt="Profile for the memory image"></p>
+<p>So let us use the profile as <strong>Win7SP1x64</strong></p>
+<h2 id="Answering-Part-1"><a href="#Answering-Part-1" class="headerlink" title="Answering Part - 1"></a>Answering Part - 1</h2><h3 id="Descripton"><a href="#Descripton" class="headerlink" title="Descripton"></a>Descripton</h3><blockquote>
+<p>The user had a conversation with themselves about changing their password. What was the password they were contemplating changing too. Provide the answer as a text string.</p>
+</blockquote>
+<p>As the description talks about a conversation, it might be saved as plain text on the memory dump. So let us use the <code>strings</code> command and <code>grep</code> for the string <code>password</code> over the memory dump.</p>
+<pre class=" language-bash"><code class="language-bash">$ strings memdump.mem <span class="token operator">|</span> <span class="token function">grep</span> -i password
+<span class="token punctuation">[</span>snip<span class="token punctuation">]</span>
+Hmmm mmaybe I should change my password to:
+wow_this_is_an_uncrackable_password
+<span class="token punctuation">[</span>snip<span class="token punctuation">]</span></code></pre>
+<p>Here is the interesting thing, we got the password.</p>
+<h3 id="Flag"><a href="#Flag" class="headerlink" title="Flag"></a>Flag</h3><p><code>wow_this_is_an_uncrackable_password</code></p>
+<h2 id="Answering-Part-2"><a href="#Answering-Part-2" class="headerlink" title="Answering Part - 2"></a>Answering Part - 2</h2><h3 id="Description"><a href="#Description" class="headerlink" title="Description"></a>Description</h3><blockquote>
+<p>What is the md5 hash of the file which you recovered the password from?</p>
+</blockquote>
+<p>So now comes the real part, what is md5sum of the file that they had a conversation with themselves. Where is this file located on the memory image? To find that out, we need to know which application, the user is using for opening this file.</p>
+<p>As we already got the password string, Let us use <code>yarascan</code>.</p>
+<pre class=" language-bash"><code class="language-bash">$ volatility -f memdump.mem --profile<span class="token operator">=</span>Win7SP1x64 yarascan -Y <span class="token string">"wow_this_is_an_uncrackable_password"</span></code></pre>
+<p><img src="yarascan.png" alt="yarascan output"></p>
+<p>From the above image, we can see the application as <code>WINWORD.EXE</code> with PID <code>3180</code> and the Virtual Offset where the password string is stored on the application memory is found at <code>0x02180a2d</code>.</p>
+<p>Upon searching for the document files(.doc or .docx) in files, nothing found useful. So let’s try out the <code>handles</code> plugin as it will give us all the open handles for a process. </p>
+<pre class=" language-bash"><code class="language-bash">$ volatility -f memdump.mem --profile<span class="token operator">=</span>Win7SP1x64 handles -p 3180 -t File
+Volatility Foundation Volatility Framework 2.6
+Offset<span class="token punctuation">(</span>V<span class="token punctuation">)</span>             Pid             Handle             Access Type             Details
+------------------ ------ ------------------ ------------------ ---------------- -------
+<span class="token punctuation">[</span>snip<span class="token punctuation">]</span>
+0xfffffa80326de810   3180              0x9c4           0x12019f File             \Device\HarddiskVolume1\Users\Warren\AppData\Roaming\Microsoft\Word\AutoRecovery save of Document1.asd
+<span class="token punctuation">[</span>snip<span class="token punctuation">]</span></code></pre>
+<p>We can see an open handle for <code>AutoRecovery save of Document1.asd</code> file and upon opening it we got the conversation that the user had with themselves.</p>
+<pre class=" language-text"><code class="language-text">Hmmm mmaybe I should change my password to: “wow_this_is_an_uncrackable_password”
+
+Great idea warren
+
+Thank you warren
+
+You’re so smart warren
+
+I know I am Warren</code></pre>
+<p>Now we got the file, the application in which the user opened this file, and the virtual offset for the password string.</p>
+<p>According to the description, we need the md5 sum of this file.</p>
+<pre class=" language-bash"><code class="language-bash">$ md5sum AutoRecovery\ save\ of\ Document1.asd
+af1c3038dca8c7387e47226b88ea6e23  AutoRecovery save of Document1.asd</code></pre>
+<h3 id="Flag-1"><a href="#Flag-1" class="headerlink" title="Flag"></a>Flag</h3><p><code>af1c3038dca8c7387e47226b88ea6e23</code></p>
+<h2 id="Answering-Part-3"><a href="#Answering-Part-3" class="headerlink" title="Answering Part - 3"></a>Answering Part - 3</h2><h3 id="Description-1"><a href="#Description-1" class="headerlink" title="Description"></a>Description</h3><blockquote>
+<p>What is the birth object ID for the file which contained the password?</p>
+</blockquote>
+<p>As we already got the filename, we can use the <code>mftparser</code> plugin and get the <code>Birth Object ID</code>.</p>
+<pre class=" language-bash"><code class="language-bash">$ volatility -f memdump.mem --profile<span class="token operator">=</span>Win7SP1x64 mftparser --output-file<span class="token operator">=</span>mftparser.txt</code></pre>
+<p>Upon greping for the filename in <code>mftparser.txt</code>, here is what we got</p>
+<pre class=" language-bash"><code class="language-bash">$ <span class="token function">grep</span> -A 10 <span class="token string">'AutoRecovery save of Document1.asd'</span> mftparser.txt
+
+2020-04-20 23:22:36 UTC+0000 2020-04-20 23:22:36 UTC+0000   2020-04-20 23:22:36 UTC+0000   2020-04-20 23:22:36 UTC+0000   Users\Warren\AppData\Roaming\MICROS~1\Word\AutoRecovery save of Document1.asd
+
+<span class="token variable">$DATA</span>
+
+
+<span class="token variable">$OBJECT_ID</span>
+Object ID: 40000000-0000-0000-0060-000000000000
+Birth Volume ID: 005a0000-0000-0000-0056-000000000000
+Birth Object ID: 31013058-7f31-01c8-6b08-210191061101
+Birth Domain ID: f81101e8-3101-3d66-f800-000000000000</code></pre>
+<p>So we got the birth object id, so we got the flag.</p>
+<h3 id="Flag-2"><a href="#Flag-2" class="headerlink" title="Flag"></a>Flag</h3><p><code>31013058-7f31-01c8-6b08-210191061101</code></p>
+<h2 id="Answering-Part-4"><a href="#Answering-Part-4" class="headerlink" title="Answering Part - 4"></a>Answering Part - 4</h2><h3 id="Description-2"><a href="#Description-2" class="headerlink" title="Description"></a>Description</h3><blockquote>
+<p>What is the name of the user and their unique identifier which you can attribute the creation of the file document to?</p>
+<p>Format: #### (Name)</p>
+</blockquote>
+<p>Now we need to find the owner of this file and the Unique identifier for the owner of this file.<br>We can get these details, by using the <code>getsids</code> plugin to find the owner of this process that eventually gives the owner of this file.</p>
+<pre class=" language-bash"><code class="language-bash">$ volatility -f memdump.mem --profile<span class="token operator">=</span>Win7SP1x64 getsids <span class="token operator">|</span> <span class="token function">grep</span> <span class="token string">'WINWORD.EXE\|3180'</span>
+
+WINWORD.EXE <span class="token punctuation">(</span>3180<span class="token punctuation">)</span>: S-1-5-21-4288132831-552422005-3632184702-1000 <span class="token punctuation">(</span>Warren<span class="token punctuation">)</span>
+WINWORD.EXE <span class="token punctuation">(</span>3180<span class="token punctuation">)</span>: S-1-5-21-4288132831-552422005-3632184702-513 <span class="token punctuation">(</span>Domain Users<span class="token punctuation">)</span>
+WINWORD.EXE <span class="token punctuation">(</span>3180<span class="token punctuation">)</span>: S-1-1-0 <span class="token punctuation">(</span>Everyone<span class="token punctuation">)</span>
+WINWORD.EXE <span class="token punctuation">(</span>3180<span class="token punctuation">)</span>: S-1-5-114 <span class="token punctuation">(</span>Local Account <span class="token punctuation">(</span>Member of Administrators<span class="token punctuation">))</span>
+WINWORD.EXE <span class="token punctuation">(</span>3180<span class="token punctuation">)</span>: S-1-5-32-544 <span class="token punctuation">(</span>Administrators<span class="token punctuation">)</span>
+WINWORD.EXE <span class="token punctuation">(</span>3180<span class="token punctuation">)</span>: S-1-5-32-545 <span class="token punctuation">(</span>Users<span class="token punctuation">)</span>
+WINWORD.EXE <span class="token punctuation">(</span>3180<span class="token punctuation">)</span>: S-1-5-4 <span class="token punctuation">(</span>Interactive<span class="token punctuation">)</span>
+WINWORD.EXE <span class="token punctuation">(</span>3180<span class="token punctuation">)</span>: S-1-2-1 <span class="token punctuation">(</span>Console Logon <span class="token punctuation">(</span>Users <span class="token function">who</span> are logged onto the physical console<span class="token punctuation">))</span>
+WINWORD.EXE <span class="token punctuation">(</span>3180<span class="token punctuation">)</span>: S-1-5-11 <span class="token punctuation">(</span>Authenticated Users<span class="token punctuation">)</span>
+WINWORD.EXE <span class="token punctuation">(</span>3180<span class="token punctuation">)</span>: S-1-5-15 <span class="token punctuation">(</span>This Organization<span class="token punctuation">)</span>
+WINWORD.EXE <span class="token punctuation">(</span>3180<span class="token punctuation">)</span>: S-1-5-113 <span class="token punctuation">(</span>Local Account<span class="token punctuation">)</span>
+WINWORD.EXE <span class="token punctuation">(</span>3180<span class="token punctuation">)</span>: S-1-5-5-0-691206 <span class="token punctuation">(</span>Logon Session<span class="token punctuation">)</span>
+WINWORD.EXE <span class="token punctuation">(</span>3180<span class="token punctuation">)</span>: S-1-2-0 <span class="token punctuation">(</span>Local <span class="token punctuation">(</span>Users with the ability to log <span class="token keyword">in</span> locally<span class="token punctuation">))</span>
+WINWORD.EXE <span class="token punctuation">(</span>3180<span class="token punctuation">)</span>: S-1-5-64-10 <span class="token punctuation">(</span>NTLM Authentication<span class="token punctuation">)</span>
+WINWORD.EXE <span class="token punctuation">(</span>3180<span class="token punctuation">)</span>: S-1-16-12288 <span class="token punctuation">(</span>High Mandatory Level<span class="token punctuation">)</span></code></pre>
+<p>From the 1st line in the above text, we can confirm that the Unique Identifier is <code>1000</code> and the User/Owner of this process as <code>Warren</code>.</p>
+<h3 id="Flag-3"><a href="#Flag-3" class="headerlink" title="Flag"></a>Flag</h3><p><code>1000 (Warren)</code></p>
+<h2 id="Answering-Part-5"><a href="#Answering-Part-5" class="headerlink" title="Answering Part - 5"></a>Answering Part - 5</h2><h3 id="Description-3"><a href="#Description-3" class="headerlink" title="Description"></a>Description</h3><blockquote>
+<p>What is the version of software used to create the file containing the password?</p>
+<p>Format ## (Whole version number, don’t worry about decimals)</p>
+</blockquote>
+<p>I think there are a lot of ways to get the version of the software used to create the file containing the password.<br>I followed this, we can use the <code>procdump</code> plugin and dump the <code>WINWORD.EXE</code> and examining it gives the version of the software.</p>
+<pre class=" language-bash"><code class="language-bash">$ volatility -f memdump.mem --profile<span class="token operator">=</span>Win7SP1x64 procdump -p 3180 -D dump
+Volatility Foundation Volatility Framework 2.6
+Process<span class="token punctuation">(</span>V<span class="token punctuation">)</span>         ImageBase          Name                 Result
+------------------ ------------------ -------------------- ------
+0xfffffa803177bb00 0x000000013f9f0000 WINWORD.EXE          OK: executable.3180.exe</code></pre>
+<p>Now we got the executable. we can now proceed and check the <code>little-endian</code> strings of this executable.</p>
+<pre class=" language-bash"><code class="language-bash">$ strings -el dump/executable.3180.exe
+<span class="token punctuation">[</span>snip<span class="token punctuation">]</span>
+StringFileInfo
+000004E4
+CompanyName
+Microsoft Corporation
+FileDescription
+Microsoft Word
+FileVersion
+15.0.5233.1000
+InternalName
+WinWord
+<span class="token punctuation">[</span>snip<span class="token punctuation">]</span></code></pre>
+<p>We got the version of the software used to create the file containing the password.</p>
+<h3 id="Flag-4"><a href="#Flag-4" class="headerlink" title="Flag"></a>Flag</h3><p><code>15</code></p>
+<h2 id="Answering-Part-6"><a href="#Answering-Part-6" class="headerlink" title="Answering Part - 6"></a>Answering Part - 6</h2><h3 id="Description-4"><a href="#Description-4" class="headerlink" title="Description"></a>Description</h3><blockquote>
+<p>What is the virtual memory address offset where the password string is located in the memory image?</p>
+<p>Format: 0x########</p>
+</blockquote>
+<p>While answering part -2, yarascan gives the output from an application perspective, so we can use that address as the virtual address.</p>
+<h3 id="Flag-5"><a href="#Flag-5" class="headerlink" title="Flag"></a>Flag</h3><p><code>0x02180a2d</code></p>
+<h2 id="Answering-Part-7"><a href="#Answering-Part-7" class="headerlink" title="Answering Part - 7"></a>Answering Part - 7</h2><h3 id="Description-5"><a href="#Description-5" class="headerlink" title="Description"></a>Description</h3><blockquote>
+<p>What is the physical memory address offset where the password string is located in the memory image?</p>
+<p>Format: 0x#######</p>
+</blockquote>
+<p>We need the offset from the memory perspective, so let us load the memory image into a hex editor and search for our password.</p>
+<p><img src="part7.png" alt="Memory dump loaded in HxD"></p>
+<p>At the bottom of the image, you can see the offset where our password string started and we can use that as a physical memory address.</p>
+<h3 id="Flag-6"><a href="#Flag-6" class="headerlink" title="Flag"></a>Flag</h3><p><code>0x0AF12A2D</code></p>
+<h2 id="References"><a href="#References" class="headerlink" title="References"></a>References</h2><ul>
+<li>Volatility Command reference: <a href="https://github.com/volatilityfoundation/volatility/wiki/Command-Reference">https://github.com/volatilityfoundation/volatility/wiki/Command-Reference</a></li>
+</ul>
+]]></content>
+      <categories>
+        <category>Memory Forensics</category>
+      </categories>
+      <tags>
+        <tag>Volatility</tag>
+        <tag>Memory</tag>
+        <tag>Magnet Weekly CTF</tag>
       </tags>
   </entry>
 </search>
