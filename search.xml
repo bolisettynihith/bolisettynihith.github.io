@@ -1058,7 +1058,7 @@ q<span class="token operator">=</span><span class="token string">''</span>
       </tags>
   </entry>
   <entry>
-    <title>Warren&#39;s Memory - Week 9 - Magnet Weekly CTF</title>
+    <title>Week 9 - Magnet Weekly CTF</title>
     <url>/Magnet-Weekly-CTF/Week-9-Magnet-Weekly-CTF/</url>
     <content><![CDATA[<p>This week’s Memory Forensics challenge is divided into 7 really interesting parts. You can download the memory image <a href="https://drive.google.com/drive/folders/1iCxOKhfoHvxoBRNXJlm2VBiAVgDD_p5d?usp=sharing">here</a>.</p>
 <p>If you are new to Memory Forensics, you can check out <a href="https://github.com/stuxnet999/Memlabs">Memlabs</a> created by <a href="https://www.twitter.com/_abhiramkumar">Abhiram Kumar</a>. Here are my <a href="https://bolisettynihith.github.io/categories/Memlabs/">writeups</a> for the same.</p>
